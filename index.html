@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Events Tracker Finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Plan : un tableau de bord sobre, encre marine + accent cobalt ; résumé en tête, filtres, puis events regroupés par géographie. */
+:root {
+  --bg: #f5f6f9;
+  --surface: #ffffff;
+  --ink: #141a2e;
+  --muted: #5d6478;
+  --line: #e2e5ee;
+  --accent: #2346c8;
+  --accent-soft: #e8edfd;
+  --ok: #17794a; --ok-bg: #e3f5eb;
+  --warn: #a8560b; --warn-bg: #fdf0df;
+  --soon: #2346c8; --soon-bg: #e8edfd;
+  --off: #6b7180; --off-bg: #eef0f4;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1320; --surface: #171c2c; --ink: #e8ebf4; --muted: #9aa1b5; --line: #2a3045;
+    --accent: #8ea6ff; --accent-soft: #232d52;
+    --ok: #5fd39a; --ok-bg: #173527; --warn: #f2b067; --warn-bg: #3a2a15;
+    --soon: #8ea6ff; --soon-bg: #232d52; --off: #9aa1b5; --off-bg: #222839;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1320; --surface: #171c2c; --ink: #e8ebf4; --muted: #9aa1b5; --line: #2a3045;
+  --accent: #8ea6ff; --accent-soft: #232d52;
+  --ok: #5fd39a; --ok-bg: #173527; --warn: #f2b067; --warn-bg: #3a2a15;
+  --soon: #8ea6ff; --soon-bg: #232d52; --off: #9aa1b5; --off-bg: #222839;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 32px 20px 64px; display: grid; gap: 24px; }
+header { display: grid; gap: 8px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 68ch; margin: 0; }
+.meta { font-size: 13px; color: var(--muted); }
+.note { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; padding: 12px 14px; font-size: 13.5px; color: var(--muted); max-width: 90ch; }
+
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 2px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.tile:hover { border-color: var(--accent); }
+.tile[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.tile b { font-family: var(--font-display); font-size: 28px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.tile span { font-size: 13px; color: var(--muted); }
+
+.controls { display: grid; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.row > .lbl { font-size: 12px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); min-width: 92px; }
+.chip { border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 5px 12px; font: inherit; font-size: 13.5px; cursor: pointer; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+input[type="search"], select { font: inherit; font-size: 14px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; }
+input[type="search"] { flex: 1 1 260px; min-width: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.zone { display: grid; gap: 10px; }
+.zone h2 { font-family: var(--font-display); font-size: 22px; margin: 8px 0 0; display: flex; gap: 10px; align-items: baseline; }
+.zone h2 small { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--muted); }
+.tablebox { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; min-width: 980px; }
+th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-size: 12px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 500; background: var(--bg); white-space: nowrap; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.firm { font-weight: 600; }
+.city { font-size: 12.5px; color: var(--muted); }
+.ev { font-weight: 500; }
+.elig { font-size: 12.5px; color: var(--muted); margin-top: 2px; max-width: 44ch; }
+.tag { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); margin: 0 4px 4px 0; white-space: nowrap; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.s-open { background: var(--ok-bg); color: var(--ok); }
+.s-soon { background: var(--warn-bg); color: var(--warn); }
+.s-upcoming { background: var(--soon-bg); color: var(--soon); }
+.s-closed { background: var(--off-bg); color: var(--off); }
+.small { font-size: 12.5px; color: var(--muted); }
+a.apply { display: inline-block; text-decoration: none; font-weight: 600; font-size: 13.5px; color: var(--surface); background: var(--accent); padding: 6px 12px; border-radius: 7px; white-space: nowrap; }
+a.apply:hover { filter: brightness(1.08); }
+a.apply.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+tr.closed td { opacity: .72; }
+.empty { padding: 24px; text-align: center; color: var(--muted); background: var(--surface); border: 1px dashed var(--line); border-radius: 10px; }
+footer { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+
+@media (max-width: 760px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  table { min-width: 0; }
+  thead { display: none; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  tr { border-bottom: 1px solid var(--line); padding: 10px 4px; }
+  td { border: 0; padding: 4px 10px; }
+  td[data-k]::before { content: attr(data-k); display: block; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--muted); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Saison 2026-2027 · Events banques &amp; marchés</div>
+    <h1>Events Tracker Finance</h1>
+    <p class="sub">Women in Finance, insight days, office visits et compétitions organisés par les banques et les firmes de marché, classés par géographie, avec le lien d'inscription officiel.</p>
+    <div class="meta">Liste mise à jour automatiquement toutes les 30 minutes · chargée le <span id="checked">…</span></div>
+  </header>
+
+  <div class="note">Les dates viennent des pages officielles des banques. Quand une date n'est pas publiée, c'est indiqué. Vérifie toujours sur la page d'inscription avant de postuler : beaucoup d'events sont traités au fil de l'eau et ferment dès qu'ils sont complets.</div>
+
+  <section class="tiles" aria-label="Résumé">
+    <button class="tile" id="t-open" data-status="open" aria-pressed="false"><b id="n-open">0</b><span>Ouverts</span></button>
+    <button class="tile" id="t-soon" data-status="soon" aria-pressed="false"><b id="n-soon">0</b><span>Ferment sous 14 jours</span></button>
+    <button class="tile" id="t-upcoming" data-status="upcoming" aria-pressed="false"><b id="n-upcoming">0</b><span>À venir</span></button>
+    <button class="tile" id="t-closed" data-status="closed" aria-pressed="false"><b id="n-closed">0</b><span>Passés (revient l'an prochain)</span></button>
+  </section>
+
+  <section class="controls" aria-label="Filtres">
+    <div class="row">
+      <label class="lbl" for="q">Recherche</label>
+      <input type="search" id="q" placeholder="Banque, event, ville…">
+      <label class="lbl" for="sort" style="min-width:auto">Trier</label>
+      <select id="sort">
+        <option value="deadline">Deadline la plus proche</option>
+        <option value="event">Date de l'event</option>
+        <option value="recent">Ajout le plus récent</option>
+        <option value="az">Banque A → Z</option>
+      </select>
+    </div>
+    <div class="row" id="f-zone"><span class="lbl">Zone</span></div>
+    <div class="row" id="f-type"><span class="lbl">Type</span></div>
+    <div class="row" id="f-cat"><span class="lbl">Catégorie</span></div>
+  </section>
+
+  <main id="list"><div class="empty">Chargement des events…</div></main>
+
+  <footer>
+    <div>Statuts calculés automatiquement à partir de la date du jour et des deadlines.</div>
+    <div>Ton suivi (« Mon statut ») est enregistré uniquement dans ce navigateur.</div>
+  </footer>
+</div>
+
+<script>
+// ============ RÉGLAGES : colle ici tes 2 valeurs Supabase (étape 3 du guide) ============
+const SUPABASE_URL = "COLLE_ICI_TON_PROJECT_URL";            // ex : https://abcdefgh.supabase.co
+const SUPABASE_PUBLISHABLE_KEY = "COLLE_ICI_TA_PUBLISHABLE_KEY"; // commence par sb_publishable_
+// ======================================================================================
+
+let EVENTS = [];
+
+async function loadEvents() {
+  const res = await fetch(SUPABASE_URL + "/rest/v1/events?select=*&order=first_seen.desc", {
+    headers: { apikey: SUPABASE_PUBLISHABLE_KEY }
+  });
+  if (!res.ok) throw new Error("Supabase a répondu " + res.status);
+  const rows = await res.json();
+  return rows.map(r => ({
+    id: r.id, firm: r.firm, cat: r.cat || "—", type: r.type || "Networking",
+    title: r.title, zone: r.zone || "Autre", city: r.city || "",
+    eventStart: r.event_start, eventLabel: r.event_label, opens: r.opens, deadline: r.deadline,
+    rolling: !!r.rolling, elig: r.elig || "", prev: r.prev || "—",
+    url: r.url, linkLabel: r.link_label || "S'inscrire", added: (r.first_seen || "").slice(0, 10)
+  }));
+}
+
+const ZONE_ORDER = ["France", "Royaume-Uni", "Europe", "Virtuel", "États-Unis", "Asie", "Autre"];
+const MY_OPTIONS = ["—", "À postuler", "Postulé", "Invitée", "Refusé", "Pas pour moi"];
+
+const DAY = 86400000;
+function today() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+function parse(s) { if (!s) return null; const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
+const fmt = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+function show(s) { const d = parse(s); return d ? fmt.format(d) : null; }
+
+function status(e) {
+  const t = today();
+  const opens = parse(e.opens), dl = parse(e.deadline), ev = parse(e.eventStart);
+  if (opens && opens > t) return { key: "upcoming", label: "Ouvre le " + show(e.opens) };
+  if (dl && dl < t) return { key: "closed", label: "Fermé" };
+  if (!dl && ev && ev < t) return { key: "closed", label: "Fermé" };
+  if (!dl && !ev && e.opens == null) return { key: "upcoming", label: "À venir" };
+  if (dl) {
+    const days = Math.round((dl - t) / DAY);
+    if (days <= 14) return { key: "soon", label: days === 0 ? "Ferme aujourd'hui" : "Ferme dans " + days + " j" };
+  }
+  return { key: "open", label: e.rolling ? "Ouvert · au fil de l'eau" : "Ouvert" };
+}
+
+// État des filtres
+const state = { q: "", sort: "deadline", zone: "Toutes", type: "Tous", cat: "Toutes", status: null };
+
+function store() { try { return JSON.parse(localStorage.getItem("ev-tracker-my") || "{}"); } catch (e) { return {}; } }
+function save(obj) { try { localStorage.setItem("ev-tracker-my", JSON.stringify(obj)); } catch (e) {} }
+let mine = store();
+
+function chips(containerId, values, key, allLabel) {
+  const box = document.getElementById(containerId);
+  [allLabel, ...values].forEach(v => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.textContent = v;
+    b.setAttribute("aria-pressed", String(state[key] === v));
+    b.addEventListener("click", () => {
+      state[key] = v;
+      box.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c.textContent === v)));
+      render();
+    });
+    box.appendChild(b);
+  });
+}
+
+document.getElementById("q").addEventListener("input", e => { state.q = e.target.value.trim().toLowerCase(); render(); });
+document.getElementById("sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+document.querySelectorAll(".tile").forEach(t => t.addEventListener("click", () => {
+  state.status = state.status === t.dataset.status ? null : t.dataset.status;
+  document.querySelectorAll(".tile").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.status === state.status)));
+  render();
+}));
+
+function sorter(a, b) {
+  const far = 8.64e15;
+  if (state.sort === "az") return a.firm.localeCompare(b.firm, "fr");
+  if (state.sort === "recent") return (parse(b.added) || 0) - (parse(a.added) || 0);
+  if (state.sort === "event") return ((parse(a.eventStart) || far) - (parse(b.eventStart) || far));
+  // deadline : ouverts d'abord, puis à venir, puis fermés
+  const rank = { soon: 0, open: 1, upcoming: 2, closed: 3 };
+  const ra = rank[a._s.key], rb = rank[b._s.key];
+  if (ra !== rb) return ra - rb;
+  const da = parse(a.deadline) || parse(a.opens) || far, db = parse(b.deadline) || parse(b.opens) || far;
+  return a._s.key === "closed" ? db - da : da - db;
+}
+
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+function render() {
+  const all = EVENTS.map(e => ({ ...e, _s: status(e) }));
+  ["open", "soon", "upcoming", "closed"].forEach(k => {
+    document.getElementById("n-" + k).textContent = all.filter(e => e._s.key === k).length;
+  });
+
+  const rows = all.filter(e =>
+    (state.zone === "Toutes" || e.zone === state.zone) &&
+    (state.type === "Tous" || e.type === state.type) &&
+    (state.cat === "Toutes" || e.cat === state.cat) &&
+    (!state.status || e._s.key === state.status) &&
+    (!state.q || [e.firm, e.title, e.city, e.zone, e.type, e.cat, e.elig].join(" ").toLowerCase().includes(state.q))
+  ).sort(sorter);
+
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  if (!rows.length) { list.innerHTML = '<div class="empty">Aucun event ne correspond à ces filtres.</div>'; return; }
+
+  const zones = ZONE_ORDER.filter(z => rows.some(r => r.zone === z));
+  zones.forEach(z => {
+    const zr = rows.filter(r => r.zone === z);
+    const openCount = zr.filter(r => r._s.key === "open" || r._s.key === "soon").length;
+    const sec = document.createElement("section");
+    sec.className = "zone";
+    sec.innerHTML = `<h2>${esc(z)} <small>${zr.length} event${zr.length > 1 ? "s" : ""} · ${openCount} ouvert${openCount > 1 ? "s" : ""}</small></h2>
+      <div class="tablebox"><table>
+        <thead><tr><th>Banque</th><th>Event</th><th>Statut</th><th>Date de l'event</th><th>Deadline</th><th>Édition précédente</th><th>Candidature</th><th>Mon statut</th></tr></thead>
+        <tbody></tbody></table></div>`;
+    const tb = sec.querySelector("tbody");
+    zr.forEach(e => {
+      const tr = document.createElement("tr");
+      if (e._s.key === "closed") tr.className = "closed";
+      const evDate = e.eventLabel || show(e.eventStart) || "—";
+      const dl = e.deadline ? show(e.deadline) : (e.rolling ? "Au fil de l'eau" : (e.opens ? "Ouvre le " + show(e.opens) : "Non publiée"));
+      const sel = `<select id="my-${e.id}" aria-label="Mon statut pour ${esc(e.title)}">${MY_OPTIONS.map(o => `<option${(mine[e.id] || "—") === o ? " selected" : ""}>${o}</option>`).join("")}</select>`;
+      tr.innerHTML = `
+        <td data-k="Banque"><div class="firm">${esc(e.firm)}</div><div class="city">${esc(e.city)} · ${esc(e.cat)}</div></td>
+        <td data-k="Event"><div class="ev">${esc(e.title)}</div><div><span class="tag">${esc(e.type)}</span></div><div class="elig">${esc(e.elig)}</div></td>
+        <td data-k="Statut"><span class="pill s-${e._s.key}">${esc(e._s.label)}</span></td>
+        <td data-k="Date de l'event" class="num">${esc(evDate)}</td>
+        <td data-k="Deadline" class="num">${esc(dl)}</td>
+        <td data-k="Édition précédente" class="small">${esc(e.prev)}</td>
+        <td data-k="Candidature"><a class="apply${e._s.key === "closed" || e._s.key === "upcoming" ? " ghost" : ""}" href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.linkLabel)} →</a></td>
+        <td data-k="Mon statut">${sel}</td>`;
+      tr.querySelector("select").addEventListener("change", ev => { mine[e.id] = ev.target.value; save(mine); });
+      tb.appendChild(tr);
+    });
+    list.appendChild(sec);
+  });
+}
+const uniq = k => [...new Set(EVENTS.map(e => e[k]))];
+loadEvents().then(data => {
+  EVENTS = data;
+  chips("f-zone", ZONE_ORDER.filter(z => uniq("zone").includes(z)), "zone", "Toutes");
+  chips("f-type", uniq("type").sort(), "type", "Tous");
+  chips("f-cat", uniq("cat").sort(), "cat", "Toutes");
+  document.getElementById("checked").textContent = new Intl.DateTimeFormat("fr-FR", { dateStyle: "long", timeStyle: "short" }).format(new Date());
+  render();
+}).catch(err => {
+  document.getElementById("list").innerHTML = '<div class="empty">Impossible de charger les events (' + esc(err.message) + '). Vérifie SUPABASE_URL et SUPABASE_PUBLISHABLE_KEY en haut du script.</div>';
+});
+</script>
+</body>
+</html>

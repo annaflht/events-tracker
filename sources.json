@@ -1,0 +1,37 @@
+{
+  "_explications": "Liste des pages que le robot surveille. type 'talnet' = liste d'events sur tal.net (le robot lit chaque event). type 'page' = page fixe : le robot te prévient quand son texte change.",
+  "sources": [
+    {
+      "id": "ms-campus-events",
+      "type": "talnet",
+      "firm": "Morgan Stanley",
+      "cat": "Bulge Bracket",
+      "url": "https://morganstanley.tal.net/vx/lang-en-GB/mobile-0/brand-2/xf-69c3955e6630/candidate/jobboard/vacancy/2/adv/"
+    },
+    {
+      "id": "evercore-events-fairs",
+      "type": "talnet",
+      "firm": "Evercore",
+      "cat": "Elite Boutique",
+      "url": "https://evercore.tal.net/vx/lang-en-GB/mobile-0/appcentre-ext/brand-7/candidate/jobboard/vacancy/1/adv/"
+    },
+    {
+      "id": "citadel-discover",
+      "type": "page",
+      "firm": "Citadel",
+      "url": "https://www.citadel.com/careers/programs-and-events/discover-citadel/"
+    },
+    {
+      "id": "rbc-programs",
+      "type": "page",
+      "firm": "RBC Capital Markets",
+      "url": "https://www.rbccm.com/en/careers/programs"
+    },
+    {
+      "id": "evercore-students-europe",
+      "type": "page",
+      "firm": "Evercore",
+      "url": "https://www.evercore.com/careers/students-graduates/students-graduates-europe-asia/"
+    }
+  ]
+}

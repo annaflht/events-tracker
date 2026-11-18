@@ -1,0 +1,46 @@
+name: Robot Events Tracker
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"   # toutes les 30 minutes (à h07 et h37, heure UTC)
+  workflow_dispatch:          # ajoute un bouton "Run workflow" pour le lancer à la main
+    inputs:
+      force_digest:
+        description: "Envoyer aussi le récap des deadlines (1 = oui)"
+        required: false
+        default: "0"
+
+permissions:
+  contents: read
+  actions: write              # nécessaire pour l'étape "garder le robot en vie"
+
+jobs:
+  robot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les librairies
+        run: pip install -r requirements.txt
+
+      - name: Lancer le robot
+        run: python robot/run.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          FORCE_DIGEST: ${{ github.event.inputs.force_digest }}
+
+      # GitHub met en pause les tâches planifiées d'un repo sans activité depuis 60 jours.
+      # Cette étape l'en empêche, sans rien modifier dans ton code.
+      - name: Garder le robot en vie
+        uses: gautamkrishnar/keepalive-workflow@v2

@@ -31,7 +31,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Lancer le robot
-        run: python robot/run.py
+        run: python run.py
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}

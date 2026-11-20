@@ -1,5 +1,5 @@
 {
-  "_explications": "Liste des pages que le robot surveille. type 'talnet' = liste d'events sur tal.net (le robot lit chaque event). type 'page' = page fixe : le robot te prévient quand son texte change.",
+  "_explications": "Liste des sources surveillées. talnet = liste tal.net ; workday / oracle = sites carrières Workday / Oracle (lus via leur API publique) ; links = page dont on lit les liens ; page = page fixe dont on surveille les changements.",
   "sources": [
     {
       "id": "ms-campus-events",
@@ -9,11 +9,170 @@
       "url": "https://morganstanley.tal.net/vx/lang-en-GB/mobile-0/brand-2/xf-69c3955e6630/candidate/jobboard/vacancy/2/adv/"
     },
     {
+      "id": "ms-global-programs",
+      "type": "talnet",
+      "firm": "Morgan Stanley",
+      "cat": "Bulge Bracket",
+      "url": "https://morganstanley.tal.net/vx/lang-en-GB/mobile-0/brand-2/candidate/jobboard/vacancy/1/adv/"
+    },
+    {
+      "id": "bofa-campus-1",
+      "type": "talnet",
+      "firm": "Bank of America",
+      "cat": "Bulge Bracket",
+      "url": "https://bankcampuscareers.tal.net/vx/lang-en-GB/mobile-0/brand-0/candidate/jobboard/vacancy/1/adv/"
+    },
+    {
+      "id": "bofa-campus-2",
+      "type": "talnet",
+      "firm": "Bank of America",
+      "cat": "Bulge Bracket",
+      "url": "https://bankcampuscareers.tal.net/vx/lang-en-GB/mobile-0/brand-5/candidate/jobboard/vacancy/2/adv/"
+    },
+    {
+      "id": "rothschild-1",
+      "type": "talnet",
+      "firm": "Rothschild & Co",
+      "cat": "Elite Boutique",
+      "url": "https://rothschildandco.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/1/adv/"
+    },
+    {
+      "id": "rothschild-2",
+      "type": "talnet",
+      "firm": "Rothschild & Co",
+      "cat": "Elite Boutique",
+      "url": "https://rothschildandco.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/2/adv/"
+    },
+    {
       "id": "evercore-events-fairs",
       "type": "talnet",
       "firm": "Evercore",
       "cat": "Elite Boutique",
       "url": "https://evercore.tal.net/vx/lang-en-GB/mobile-0/appcentre-ext/brand-7/candidate/jobboard/vacancy/1/adv/"
+    },
+    {
+      "id": "jefferies-1",
+      "type": "talnet",
+      "firm": "Jefferies",
+      "cat": "Banque d'investissement",
+      "url": "https://jefferies.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/1/adv/"
+    },
+    {
+      "id": "jefferies-2",
+      "type": "talnet",
+      "firm": "Jefferies",
+      "cat": "Banque d'investissement",
+      "url": "https://jefferies.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/2/adv/"
+    },
+    {
+      "id": "blackrock",
+      "type": "talnet",
+      "firm": "BlackRock",
+      "cat": "Asset Mgmt",
+      "url": "https://blackrock.tal.net/vx/lang-en-GB/mobile-0/brand-3/candidate/jobboard/vacancy/1/adv/"
+    },
+    {
+      "id": "fidelity",
+      "type": "talnet",
+      "firm": "Fidelity International",
+      "cat": "Asset Mgmt",
+      "url": "https://fidelityinternational.tal.net/vx/lang-en-GB/mobile-0/brand-5/candidate/jobboard/vacancy/1/adv/"
+    },
+    {
+      "id": "blackstone",
+      "type": "workday",
+      "firm": "Blackstone",
+      "cat": "Private Equity",
+      "host": "blackstone.wd1.myworkdayjobs.com",
+      "tenant": "blackstone",
+      "site": "Blackstone_Campus_Careers",
+      "url": "https://blackstone.wd1.myworkdayjobs.com/en-US/Blackstone_Campus_Careers"
+    },
+    {
+      "id": "houlihan-lokey",
+      "type": "workday",
+      "firm": "Houlihan Lokey",
+      "cat": "Banque d'investissement",
+      "host": "hl.wd1.myworkdayjobs.com",
+      "tenant": "hl",
+      "site": "Campus",
+      "url": "https://hl.wd1.myworkdayjobs.com/en-US/Campus"
+    },
+    {
+      "id": "deutsche-bank",
+      "type": "workday",
+      "firm": "Deutsche Bank",
+      "cat": "Bulge Bracket",
+      "host": "db.wd3.myworkdayjobs.com",
+      "tenant": "db",
+      "site": "DBWebsite",
+      "url": "https://db.wd3.myworkdayjobs.com/en-US/DBWebsite"
+    },
+    {
+      "id": "citi",
+      "type": "workday",
+      "firm": "Citi",
+      "cat": "Bulge Bracket",
+      "host": "citi.wd5.myworkdayjobs.com",
+      "tenant": "citi",
+      "site": "2",
+      "url": "https://citi.wd5.myworkdayjobs.com/en-US/2"
+    },
+    {
+      "id": "wells-fargo",
+      "type": "workday",
+      "firm": "Wells Fargo",
+      "cat": "Banque d'investissement",
+      "host": "wd1.myworkdaysite.com",
+      "tenant": "wf",
+      "site": "WellsFargoJobs",
+      "url": "https://wd1.myworkdaysite.com/en-US/WellsFargoJobs"
+    },
+    {
+      "id": "barclays",
+      "type": "workday",
+      "firm": "Barclays",
+      "cat": "Bulge Bracket",
+      "host": "barclays.wd3.myworkdayjobs.com",
+      "tenant": "barclays",
+      "site": "External_Career_Site_Barclays",
+      "url": "https://barclays.wd3.myworkdayjobs.com/en-US/External_Career_Site_Barclays"
+    },
+    {
+      "id": "ubs",
+      "type": "workday",
+      "firm": "UBS",
+      "cat": "Bulge Bracket",
+      "host": "ubs.wd3.myworkdayjobs.com",
+      "tenant": "ubs",
+      "site": "UBS_Graduates_and_Interns",
+      "url": "https://ubs.wd3.myworkdayjobs.com/en-US/UBS_Graduates_and_Interns"
+    },
+    {
+      "id": "macquarie",
+      "type": "workday",
+      "firm": "Macquarie",
+      "cat": "Banque d'investissement",
+      "host": "mq.wd3.myworkdayjobs.com",
+      "tenant": "mq",
+      "site": "CareersatMQ",
+      "url": "https://mq.wd3.myworkdayjobs.com/en-US/CareersatMQ"
+    },
+    {
+      "id": "jpmorgan",
+      "type": "oracle",
+      "firm": "J.P. Morgan",
+      "cat": "Bulge Bracket",
+      "host": "jpmc.fa.oraclecloud.com",
+      "site": "CX_1001",
+      "url": "https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001"
+    },
+    {
+      "id": "hsbc-insight",
+      "type": "links",
+      "firm": "HSBC",
+      "cat": "Bulge Bracket",
+      "url": "https://www.hsbc.com/careers/students-and-graduates/insight-programmes?page=1&take=50"
     },
     {
       "id": "rbc-programs",
@@ -26,6 +185,12 @@
       "type": "page",
       "firm": "Evercore",
       "url": "https://www.evercore.com/careers/students-graduates/students-graduates-europe-asia/"
+    },
+    {
+      "id": "piper-sandler-london",
+      "type": "page",
+      "firm": "Piper Sandler",
+      "url": "https://www.pipersandler.com/careers/students/early-careers-london"
     }
   ]
 }

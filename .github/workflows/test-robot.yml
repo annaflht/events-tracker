@@ -27,4 +27,4 @@ jobs:
         run: python run.py
         env:
           DRY_RUN: "1"
-          ONLY: ${{ github.event.inputs.only || 'gh-jshiddenevents,barclays,citi-tb,gh-optiverus,gh-gsacapital' }}
+          ONLY: ${{ github.event.inputs.only }}

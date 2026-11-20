@@ -50,7 +50,7 @@ EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth fo
                  "graduate programme", "graduate program", "summer analyst", "full time", "full-time",
                  "off-cycle internship", "industrial placement", "interest list", "recruiting news",
                  "summer internship", "summer intern", "placement year", "12-month", "full-time analyst",
-                 "graduate scheme", "analyst program -", "associate program"]
+                 "graduate scheme", "analyst program -", "associate program", "fellowship"]
 CURRENT_YEAR = dt.date.today().year
 
 CITIES = {
@@ -464,7 +464,7 @@ def scan_greenhouse(src, known_ids):
         text = visible_text(_html.unescape(j.get("content") or ""))
         loc = (j.get("location") or {}).get("name", "")
         it = build_item(src, event_id, j.get("absolute_url"), title, text, loc)
-        if it and src.get("kind"):
+        if it and src.get("kind") and not re.search(r"visit day|insight day|open day", title, re.I):
             it["kind"] = src["kind"]
             if it["kind"] == "spring" and it["type"] != "Women in Finance":
                 it["type"] = "Spring Insight"

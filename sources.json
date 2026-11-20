@@ -209,15 +209,6 @@
       "href_contains": "/job/"
     },
     {
-      "id": "blackrock-search",
-      "type": "links",
-      "firm": "BlackRock",
-      "cat": "Asset Mgmt",
-      "url": "https://careers.blackrock.com/search-jobs/insight",
-      "follow": true,
-      "href_contains": "/job/"
-    },
-    {
       "id": "jpmorgan",
       "type": "oracle",
       "firm": "J.P. Morgan",

@@ -3,6 +3,9 @@ name: Robot Events Tracker
 on:
   schedule:
     - cron: "7,37 * * * *"   # toutes les 30 minutes (à h07 et h37, heure UTC)
+  push:                       # se lance aussi dès que la liste des sources ou le robot change
+    branches: [main]
+    paths: ["run.py", "sources.json"]
   workflow_dispatch:          # bouton "Run workflow" pour le lancer à la main
     inputs:
       force_digest:
@@ -17,7 +20,7 @@ permissions:
 jobs:
   robot:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v5

@@ -214,14 +214,6 @@
       "url": "https://jobs.citi.com/search-jobs"
     },
     {
-      "id": "blackrock-tb",
-      "type": "talentbrew",
-      "firm": "BlackRock",
-      "cat": "Asset Mgmt",
-      "base": "https://careers.blackrock.com",
-      "url": "https://careers.blackrock.com/search-jobs"
-    },
-    {
       "id": "bnp-uk",
       "type": "links",
       "firm": "BNP Paribas",

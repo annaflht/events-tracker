@@ -352,7 +352,7 @@ def _keep(title, event_id, known_ids, seen, accept_all=False):
         return False
     if accept_all:
         years = [int(y) for y in re.findall(r"\b(20\d\d)\b", title)]
-        if years and max(years) < CURRENT_YEAR:
+        if (years and max(years) < CURRENT_YEAR) or any(w in title.lower() for w in EXCLUDE_WORDS):
             return False
     elif not looks_like_student_event(title):
         return False

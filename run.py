@@ -358,14 +358,21 @@ def scan_workday(src, known_ids):
     host, tenant, site = src["host"], src["tenant"], src["site"]
     api = f"https://{host}/wday/cxs/{tenant}/{site}"
     found, seen, ok = [], set(), False
-    wd_headers = {**HEADERS_WEB, "Content-Type": "application/json", "Accept": "application/json",
+    browser_ua = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/130.0 Safari/537.36")
+    wd_headers = {"User-Agent": browser_ua, "Content-Type": "application/json", "Accept": "application/json",
                   "Accept-Language": "en-US", "Origin": f"https://{host}", "Referer": f"https://{host}/en-US/{site}"}
+    sess = requests.Session()
+    try:
+        sess.get(f"https://{host}/en-US/{site}", headers={"User-Agent": browser_ua}, timeout=30)
+    except requests.RequestException:
+        pass
     for word in src.get("search", ["spring", "insight", "women", "discover"]):
         r = None
         for attempt in range(2):
             time.sleep(3 if attempt == 0 else 15)
             try:
-                r = requests.post(f"{api}/jobs", timeout=30, headers=wd_headers,
+                r = sess.post(f"{api}/jobs", timeout=30, headers=wd_headers,
                                   json={"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": word})
             except requests.RequestException as e:
                 log(f"  ! erreur réseau : {e}"); r = None
@@ -384,7 +391,7 @@ def scan_workday(src, known_ids):
             time.sleep(1)
             text = ""
             try:
-                d = requests.get(f"{api}{path}", headers=wd_headers, timeout=30).json()
+                d = sess.get(f"{api}{path}", headers=wd_headers, timeout=30).json()
                 text = visible_text(d.get("jobPostingInfo", {}).get("jobDescription", ""))
             except Exception:
                 pass
@@ -420,6 +427,77 @@ def scan_oracle(src, known_ids):
             loc = str(j.get("PrimaryLocation") or "")
             it = build_item(src, event_id, f"https://{host}/hcmUI/CandidateExperience/en/sites/{site_nb}/job/{jid}",
                             title, text, loc)
+            if it:
+                found.append(it); log_item(it)
+    log(f"  {len(found)} nouveau(x) trouvé(s)")
+    return found, ok
+
+
+def scan_greenhouse(src, known_ids):
+    """Tableau d'offres Greenhouse (sociétés de trading, hedge funds…). API publique officielle."""
+    token = src["token"]
+    r = None
+    try:
+        r = requests.get(f"https://boards-api.greenhouse.io/v1/boards/{token}/jobs?content=true",
+                         headers=HEADERS_WEB, timeout=30)
+    except requests.RequestException as e:
+        log(f"  ! erreur réseau : {e}")
+    if r is None or r.status_code != 200:
+        log(f"  ! Greenhouse '{token}' : {getattr(r, 'status_code', 'pas de réponse')}")
+        return [], False
+    import html as _html
+    jobs = r.json().get("jobs", [])
+    log(f"  {len(jobs)} offres sur le tableau")
+    found, seen = [], set()
+    for j in jobs:
+        title, jid = (j.get("title") or "").strip(), str(j.get("id"))
+        event_id = f"greenhouse:{token}:{jid}"
+        if not _keep(title, event_id, known_ids, seen):
+            continue
+        text = visible_text(_html.unescape(j.get("content") or ""))
+        loc = (j.get("location") or {}).get("name", "")
+        it = build_item(src, event_id, j.get("absolute_url"), title, text, loc)
+        if it:
+            found.append(it); log_item(it)
+    log(f"  {len(found)} nouveau(x) trouvé(s)")
+    return found, True
+
+
+def scan_talentbrew(src, known_ids):
+    """Sites carrières Radancy/TalentBrew (Barclays, Citi, BlackRock…) : ils chargent leurs résultats en JSON."""
+    base = src["base"].rstrip("/")
+    found, seen, ok = [], set(), False
+    for word in src.get("search", ["spring", "insight"]):
+        url = (f"{base}/search-jobs/results?ActiveFacetID=0&CurrentPage=1&RecordsPerPage=100&Distance=50"
+               f"&RadiusUnitType=0&Keywords={word}&Location=&ShowRadius=False&IsPagination=False&CustomFacetName="
+               f"&FacetTerm=&FacetType=0&SearchResultsModuleName=Search+Results&SearchFiltersModuleName=Search+Filters"
+               f"&SortCriteria=0&SortDirection=0&SearchType=5")
+        try:
+            r = requests.get(url, headers={**HEADERS_WEB, "X-Requested-With": "XMLHttpRequest",
+                                           "Accept": "application/json"}, timeout=30)
+        except requests.RequestException as e:
+            log(f"  ! erreur réseau : {e}"); continue
+        if r.status_code != 200:
+            log(f"  ! recherche '{word}' : {r.status_code}"); continue
+        try:
+            html_part = r.json().get("results", "")
+        except ValueError:
+            html_part = r.text
+        ok = True
+        soup = BeautifulSoup(html_part, "html.parser")
+        for a in soup.find_all("a", href=True):
+            if "/job/" not in a["href"]:
+                continue
+            head = a.find(["h2", "h3"])
+            title = re.sub(r"\s+", " ", (head or a).get_text(" ")).strip()
+            href = urljoin(base + "/", a["href"])
+            event_id = "talentbrew:" + href
+            if not _keep(title, event_id, known_ids, seen):
+                continue
+            time.sleep(1)
+            page = get_page(href)
+            it = build_item(src, event_id, href, title, visible_text(page) if page else "",
+                            re.sub(r"\s+", " ", a.get_text(" ")))
             if it:
                 found.append(it); log_item(it)
     log(f"  {len(found)} nouveau(x) trouvé(s)")
@@ -534,9 +612,9 @@ def main():
         log(f"\n== {src['id']} ({src['type']})")
         st = states.get(src["id"], {})
         digest = st.get("last_hash")
-        if src["type"] in ("talnet", "workday", "oracle", "links"):
+        if src["type"] in ("talnet", "workday", "oracle", "links", "greenhouse", "talentbrew"):
             scanner = {"talnet": scan_talnet, "workday": scan_workday, "oracle": scan_oracle,
-                       "links": scan_links}[src["type"]]
+                       "links": scan_links, "greenhouse": scan_greenhouse, "talentbrew": scan_talentbrew}[src["type"]]
             try:
                 new, ok = scanner(src, known_ids)
             except Exception as e:          # une source qui plante ne doit pas bloquer les autres

@@ -191,24 +191,6 @@
       ]
     },
     {
-      "id": "barclays-search",
-      "type": "links",
-      "firm": "Barclays",
-      "cat": "Bulge Bracket",
-      "url": "https://search.jobs.barclays/search-jobs/spring",
-      "follow": true,
-      "href_contains": "/job/"
-    },
-    {
-      "id": "citi-search",
-      "type": "links",
-      "firm": "Citi",
-      "cat": "Bulge Bracket",
-      "url": "https://jobs.citi.com/search-jobs/spring",
-      "follow": true,
-      "href_contains": "/job/"
-    },
-    {
       "id": "jpmorgan",
       "type": "oracle",
       "firm": "J.P. Morgan",
@@ -242,6 +224,334 @@
       "type": "page",
       "firm": "Piper Sandler",
       "url": "https://www.pipersandler.com/careers/students/early-careers-london"
+    },
+    {
+      "id": "barclays",
+      "type": "talentbrew",
+      "firm": "Barclays",
+      "cat": "Bulge Bracket",
+      "base": "https://search.jobs.barclays",
+      "url": "https://search.jobs.barclays/search-jobs"
+    },
+    {
+      "id": "citi-tb",
+      "type": "talentbrew",
+      "firm": "Citi",
+      "cat": "Bulge Bracket",
+      "base": "https://jobs.citi.com",
+      "url": "https://jobs.citi.com/search-jobs"
+    },
+    {
+      "id": "blackrock-tb",
+      "type": "talentbrew",
+      "firm": "BlackRock",
+      "cat": "Asset Mgmt",
+      "base": "https://careers.blackrock.com",
+      "url": "https://careers.blackrock.com/search-jobs"
+    },
+    {
+      "id": "bnp-group",
+      "type": "links",
+      "firm": "BNP Paribas",
+      "cat": "Banque d'investissement",
+      "url": "https://group.bnpparibas/en/careers/all-job-offers?q=spring%20insight",
+      "follow": true,
+      "href_contains": "/careers/job-offer/"
+    },
+    {
+      "id": "bnp-uk",
+      "type": "links",
+      "firm": "BNP Paribas",
+      "cat": "Banque d'investissement",
+      "url": "https://www.bnpparibas.co.uk/en/jobs/",
+      "follow": true,
+      "href_contains": "/en/jobs/"
+    },
+    {
+      "id": "socgen",
+      "type": "links",
+      "firm": "Société Générale",
+      "cat": "Banque d'investissement",
+      "url": "https://careers.societegenerale.com/en/search?query=insight",
+      "follow": true,
+      "href_contains": "offers"
+    },
+    {
+      "id": "lazard-events",
+      "type": "links",
+      "firm": "Lazard",
+      "cat": "Elite Boutique",
+      "url": "https://www.lazard.com/careers/events/",
+      "follow": true,
+      "href_contains": "/careers/events/"
+    },
+    {
+      "id": "lazard-uk-early-careers",
+      "type": "page",
+      "firm": "Lazard",
+      "url": "https://lazard.com/about-lazard/locations/united-kingdom/careers/early-career-programmes-in-the-uk/"
+    },
+    {
+      "id": "goldman-students",
+      "type": "page",
+      "firm": "Goldman Sachs",
+      "url": "https://www.goldmansachs.com/careers/students"
+    },
+    {
+      "id": "db-students",
+      "type": "page",
+      "firm": "Deutsche Bank",
+      "url": "https://careers.db.com/students-graduates"
+    },
+    {
+      "id": "ubs-students",
+      "type": "page",
+      "firm": "UBS",
+      "url": "https://www.ubs.com/global/en/careers/early-careers.html"
+    },
+    {
+      "id": "macquarie-students",
+      "type": "page",
+      "firm": "Macquarie",
+      "url": "https://www.macquarie.com/uk/en/careers/students-and-graduates.html"
+    },
+    {
+      "id": "citadel-sec-discover",
+      "type": "page",
+      "firm": "Citadel Securities",
+      "url": "https://www.citadelsecurities.com/careers/programs-and-events/"
+    },
+    {
+      "id": "gh-jshiddenevents",
+      "type": "greenhouse",
+      "firm": "Jane Street",
+      "cat": "Trading & Quant",
+      "token": "jshiddenevents",
+      "url": "https://job-boards.greenhouse.io/jshiddenevents"
+    },
+    {
+      "id": "gh-janestreet",
+      "type": "greenhouse",
+      "firm": "Jane Street",
+      "cat": "Trading & Quant",
+      "token": "janestreet",
+      "url": "https://job-boards.greenhouse.io/janestreet"
+    },
+    {
+      "id": "gh-gsacapital",
+      "type": "greenhouse",
+      "firm": "GSA Capital",
+      "cat": "Trading & Quant",
+      "token": "gsacapital",
+      "url": "https://job-boards.greenhouse.io/gsacapital"
+    },
+    {
+      "id": "gh-mavensecuritiesholdingltd",
+      "type": "greenhouse",
+      "firm": "Maven Securities",
+      "cat": "Trading & Quant",
+      "token": "mavensecuritiesholdingltd",
+      "url": "https://job-boards.greenhouse.io/mavensecuritiesholdingltd"
+    },
+    {
+      "id": "gh-point72",
+      "type": "greenhouse",
+      "firm": "Point72",
+      "cat": "Hedge Fund",
+      "token": "point72",
+      "url": "https://job-boards.greenhouse.io/point72"
+    },
+    {
+      "id": "gh-dvtrading",
+      "type": "greenhouse",
+      "firm": "DV Trading",
+      "cat": "Trading & Quant",
+      "token": "dvtrading",
+      "url": "https://job-boards.greenhouse.io/dvtrading"
+    },
+    {
+      "id": "gh-imc",
+      "type": "greenhouse",
+      "firm": "IMC Trading",
+      "cat": "Trading & Quant",
+      "token": "imc",
+      "url": "https://job-boards.greenhouse.io/imc"
+    },
+    {
+      "id": "gh-drweng",
+      "type": "greenhouse",
+      "firm": "DRW",
+      "cat": "Trading & Quant",
+      "token": "drweng",
+      "url": "https://job-boards.greenhouse.io/drweng"
+    },
+    {
+      "id": "gh-wehrtyou",
+      "type": "greenhouse",
+      "firm": "Hudson River Trading",
+      "cat": "Trading & Quant",
+      "token": "wehrtyou",
+      "url": "https://job-boards.greenhouse.io/wehrtyou"
+    },
+    {
+      "id": "gh-jumptrading",
+      "type": "greenhouse",
+      "firm": "Jump Trading",
+      "cat": "Trading & Quant",
+      "token": "jumptrading",
+      "url": "https://job-boards.greenhouse.io/jumptrading"
+    },
+    {
+      "id": "gh-flowtraders",
+      "type": "greenhouse",
+      "firm": "Flow Traders",
+      "cat": "Trading & Quant",
+      "token": "flowtraders",
+      "url": "https://job-boards.greenhouse.io/flowtraders"
+    },
+    {
+      "id": "gh-optiverus",
+      "type": "greenhouse",
+      "firm": "Optiver",
+      "cat": "Trading & Quant",
+      "token": "optiverus",
+      "url": "https://job-boards.greenhouse.io/optiverus"
+    },
+    {
+      "id": "gh-squarepointcapital",
+      "type": "greenhouse",
+      "firm": "Squarepoint Capital",
+      "cat": "Hedge Fund",
+      "token": "squarepointcapital",
+      "url": "https://job-boards.greenhouse.io/squarepointcapital"
+    },
+    {
+      "id": "gh-quberesearchtechnologies",
+      "type": "greenhouse",
+      "firm": "Qube Research & Technologies",
+      "cat": "Hedge Fund",
+      "token": "quberesearchtechnologies",
+      "url": "https://job-boards.greenhouse.io/quberesearchtechnologies"
+    },
+    {
+      "id": "gh-marshallwace",
+      "type": "greenhouse",
+      "firm": "Marshall Wace",
+      "cat": "Hedge Fund",
+      "token": "marshallwace",
+      "url": "https://job-boards.greenhouse.io/marshallwace"
+    },
+    {
+      "id": "gh-capula",
+      "type": "greenhouse",
+      "firm": "Capula",
+      "cat": "Hedge Fund",
+      "token": "capula",
+      "url": "https://job-boards.greenhouse.io/capula"
+    },
+    {
+      "id": "gh-virtu",
+      "type": "greenhouse",
+      "firm": "Virtu Financial",
+      "cat": "Trading & Quant",
+      "token": "virtu",
+      "url": "https://job-boards.greenhouse.io/virtu"
+    },
+    {
+      "id": "gh-aquaticcapitalmanagement",
+      "type": "greenhouse",
+      "firm": "Aquatic Capital",
+      "cat": "Trading & Quant",
+      "token": "aquaticcapitalmanagement",
+      "url": "https://job-boards.greenhouse.io/aquaticcapitalmanagement"
+    },
+    {
+      "id": "gh-brevanhoward",
+      "type": "greenhouse",
+      "firm": "Brevan Howard",
+      "cat": "Hedge Fund",
+      "token": "brevanhoward",
+      "url": "https://job-boards.greenhouse.io/brevanhoward"
+    },
+    {
+      "id": "gh-tower",
+      "type": "greenhouse",
+      "firm": "Tower Research Capital",
+      "cat": "Trading & Quant",
+      "token": "tower",
+      "url": "https://job-boards.greenhouse.io/tower"
+    },
+    {
+      "id": "gh-xtxmarkets",
+      "type": "greenhouse",
+      "firm": "XTX Markets",
+      "cat": "Trading & Quant",
+      "token": "xtxmarkets",
+      "url": "https://job-boards.greenhouse.io/xtxmarkets"
+    },
+    {
+      "id": "gh-gresearch",
+      "type": "greenhouse",
+      "firm": "G-Research",
+      "cat": "Trading & Quant",
+      "token": "gresearch",
+      "url": "https://job-boards.greenhouse.io/gresearch"
+    },
+    {
+      "id": "gh-deshaw",
+      "type": "greenhouse",
+      "firm": "D.E. Shaw",
+      "cat": "Hedge Fund",
+      "token": "deshaw",
+      "url": "https://job-boards.greenhouse.io/deshaw"
+    },
+    {
+      "id": "gh-blackstone",
+      "type": "greenhouse",
+      "firm": "Blackstone",
+      "cat": "Private Equity",
+      "token": "blackstone",
+      "url": "https://job-boards.greenhouse.io/blackstone"
+    },
+    {
+      "id": "gh-aresmanagement",
+      "type": "greenhouse",
+      "firm": "Ares Management",
+      "cat": "Private Equity",
+      "token": "aresmanagement",
+      "url": "https://job-boards.greenhouse.io/aresmanagement"
+    },
+    {
+      "id": "gh-perellaweinbergpartners",
+      "type": "greenhouse",
+      "firm": "Perella Weinberg",
+      "cat": "Elite Boutique",
+      "token": "perellaweinbergpartners",
+      "url": "https://job-boards.greenhouse.io/perellaweinbergpartners"
+    },
+    {
+      "id": "gh-pjtpartners",
+      "type": "greenhouse",
+      "firm": "PJT Partners",
+      "cat": "Elite Boutique",
+      "token": "pjtpartners",
+      "url": "https://job-boards.greenhouse.io/pjtpartners"
+    },
+    {
+      "id": "gh-moelis",
+      "type": "greenhouse",
+      "firm": "Moelis",
+      "cat": "Elite Boutique",
+      "token": "moelis",
+      "url": "https://job-boards.greenhouse.io/moelis"
+    },
+    {
+      "id": "gh-centerviewpartners",
+      "type": "greenhouse",
+      "firm": "Centerview Partners",
+      "cat": "Elite Boutique",
+      "token": "centerviewpartners",
+      "url": "https://job-boards.greenhouse.io/centerviewpartners"
     }
   ]
 }

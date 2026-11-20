@@ -3,9 +3,10 @@ Robot du Events Tracker.
 GitHub le lance automatiquement (voir .github/workflows/robot.yml).
 
 Ce qu'il fait à chaque passage :
-  1. lit la liste des sources dans robot/sources.json ;
-  2. pour les listes tal.net : repère les nouveaux events, lit leur page, devine le type,
-     la ville et les dates, puis les ajoute dans Supabase ;
+  1. lit la liste des sources dans sources.json ;
+  2. pour chaque plateforme de recrutement (tal.net, Workday, Oracle) : repère les nouveaux
+     events et spring weeks, lit leur page, devine le type, la ville et les dates,
+     puis les ajoute dans Supabase ;
   3. pour les pages fixes : regarde si le texte a changé depuis la dernière fois ;
   4. t'envoie UN mail récapitulatif s'il y a du nouveau (nouvel event, page modifiée, source cassée) ;
   5. le lundi matin, t'envoie en plus le récap des deadlines des 14 prochains jours.
@@ -32,6 +33,8 @@ SUPABASE_SECRET_KEY = os.environ.get("SUPABASE_SECRET_KEY", "")
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 ALERT_EMAIL = os.environ.get("ALERT_EMAIL", "")
 SITE_URL = os.environ.get("SITE_URL", "")
+DRY_RUN = os.environ.get("DRY_RUN") == "1"   # 1 = mode test : n'écrit rien, affiche tout ce qui serait ajouté
+ONLY = os.environ.get("ONLY", "").strip()    # mode test : ne lancer qu'une source (son id)
 
 HEADERS_WEB = {"User-Agent": "Mozilla/5.0 (EventsTracker; usage personnel, 1 passage / 30 min)"}
 MAX_NEW_PAGES_PER_SOURCE = 25   # limite de pages d'events lues par source et par passage (politesse)
@@ -44,7 +47,10 @@ EVENT_WORDS = ["insight", "event", "women", "discover", "open day", "office visi
 EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth form", "school leaver",
                  "step in, step up", "career pathways", "high school", "secondary school",
                  "graduate programme", "graduate program", "summer analyst", "full time", "full-time",
-                 "off-cycle internship", "industrial placement", "interest list", "recruiting news"]
+                 "off-cycle internship", "industrial placement", "interest list", "recruiting news",
+                 "summer internship", "summer intern", "placement year", "12-month", "full-time analyst",
+                 "graduate scheme", "analyst program -", "associate program"]
+CURRENT_YEAR = dt.date.today().year
 
 CITIES = {
     # ville affichée : (zone, mots à chercher)
@@ -187,7 +193,43 @@ def looks_like_event(title):
     t = title.lower()
     if any(w in t for w in EXCLUDE_WORDS):
         return False
+    # annonces d'anciennes années (ex : "2025 Spring Insight") : on les ignore
+    years = [int(y) for y in re.findall(r"\b(20\d\d)\b", t)]
+    if years and max(years) < CURRENT_YEAR:
+        return False
     return any(w in t for w in EVENT_WORDS)
+
+
+def build_item(src, event_id, url, title, text, extra_text=""):
+    """Transforme une annonce (titre + texte de sa page) en ligne pour Supabase. None = à ignorer."""
+    full = (extra_text + " " + text).strip()
+    low = full.lower()
+    if any(w in low for w in PAGE_EXCLUDE_WORDS):
+        log(f"  - ignoré (pour lycéens) : {title}")
+        return None
+    zone, city = guess_place(title, extra_text + " " + full)
+    deadline = date_after(r"closing date|application deadline|deadline|apply by|applications close|applications will close|close on", full)
+    event_start = date_after(r"event date|date of event|event will take place|takes place on|will take place from|programme dates|program dates", full)
+    if event_start == deadline:
+        event_start = None
+    if not event_start:
+        later = [d for d in all_dates(full) if (not deadline or d > deadline)]
+        event_start = later[0] if later and deadline else (parse_date(title) or None)
+    kind = guess_kind(title, full)
+    typ = guess_type(title, full)
+    return {
+        "id": event_id, "firm": src["firm"], "title": title, "kind": kind,
+        "type": "Spring Insight" if kind == "spring" and typ != "Women in Finance" else typ,
+        "cat": src.get("cat"), "zone": zone, "city": city,
+        "event_start": event_start, "deadline": deadline,
+        "rolling": bool(re.search(r"rolling basis|on a rolling", full, re.I)),
+        "elig": "Détecté automatiquement : vérifie l'éligibilité sur la page.",
+        "url": url, "link_label": "S'inscrire", "source": src["id"],
+    }
+
+
+def log_item(it):
+    log(f"  + NOUVEAU ({it['kind']}) : {it['title']} ({it['city']}, dates {it['event_start']}, deadline {it['deadline']})")
 
 
 # =========================================================
@@ -250,33 +292,117 @@ def scan_talnet(src, known_ids):
             break
         time.sleep(1)             # on ne surcharge pas le site de la banque
         page = get_page(url)
-        text = visible_text(page) if page else ""
-        low = text.lower()
-        if any(w in low for w in PAGE_EXCLUDE_WORDS):
-            log(f"  - ignoré (pour lycéens) : {title}")
-            continue
-        zone, city = guess_place(title, text)
-        deadline = date_after(r"closing date|application deadline|deadline|apply by|applications close", text)
-        event_start = date_after(r"event date|date of event|event will take place|takes place on", text)
-        if event_start == deadline:
-            event_start = None
-        if not event_start:
-            # un event a lieu après la date limite : on prend la 1re date trouvée après la deadline
-            later = [d for d in all_dates(text) if (not deadline or d > deadline)]
-            event_start = later[0] if later and deadline else (parse_date(title) or None)
-        rolling = bool(re.search(r"rolling basis|rolling", text, re.I))
-        new_events.append({
-            "id": event_id, "firm": src["firm"], "title": title,
-            "kind": guess_kind(title, text),
-            "type": "Spring Insight" if guess_kind(title, text) == "spring" and guess_type(title, text) != "Women in Finance"
-                    else guess_type(title, text),
-            "cat": src.get("cat"), "zone": zone, "city": city,
-            "event_start": event_start, "deadline": deadline, "rolling": rolling,
-            "elig": "Détecté automatiquement : vérifie l'éligibilité sur la page.",
-            "url": url, "link_label": "S'inscrire", "source": src["id"],
-        })
-        log(f"  + NOUVEAU ({new_events[-1]['kind']}) : {title} ({city}, dates {event_start}, deadline {deadline})")
+        it = build_item(src, event_id, url, title, visible_text(page) if page else "")
+        if it:
+            new_events.append(it)
+            log_item(it)
     return new_events, True
+
+
+def _keep(title, event_id, known_ids, seen):
+    if event_id in known_ids or event_id in seen:
+        return False
+    if not looks_like_event(title):
+        return False
+    seen.add(event_id)
+    return True
+
+
+def scan_workday(src, known_ids):
+    """Site carrières Workday (ex : Blackstone, Houlihan Lokey). Utilise l'API JSON publique du site."""
+    host, tenant, site = src["host"], src["tenant"], src["site"]
+    api = f"https://{host}/wday/cxs/{tenant}/{site}"
+    found, seen, ok = [], set(), False
+    for word in src.get("search", ["spring", "insight", "women", "discover", "event"]):
+        try:
+            r = requests.post(f"{api}/jobs", timeout=30, headers={**HEADERS_WEB, "Content-Type": "application/json"},
+                              json={"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": word})
+        except requests.RequestException as e:
+            log(f"  ! erreur réseau : {e}"); continue
+        if r.status_code != 200:
+            log(f"  ! recherche '{word}' : {r.status_code}"); continue
+        ok = True
+        for j in r.json().get("jobPostings", []):
+            path, title = j.get("externalPath", ""), (j.get("title") or "").strip()
+            event_id = f"workday:{tenant}:{path.rsplit('_', 1)[-1]}"
+            if not _keep(title, event_id, known_ids, seen):
+                continue
+            time.sleep(1)
+            text = ""
+            try:
+                d = requests.get(f"{api}{path}", headers=HEADERS_WEB, timeout=30).json()
+                text = visible_text(d.get("jobPostingInfo", {}).get("jobDescription", ""))
+            except Exception:
+                pass
+            it = build_item(src, event_id, f"https://{host}/en-US/{site}{path}", title, text, j.get("locationsText", ""))
+            if it:
+                found.append(it); log_item(it)
+    log(f"  {len(found)} nouveau(x) trouvé(s)")
+    return found, ok
+
+
+def scan_oracle(src, known_ids):
+    """Site carrières Oracle Recruiting Cloud (ex : J.P. Morgan)."""
+    host, site_nb = src["host"], src["site"]
+    found, seen, ok = [], set(), False
+    for word in src.get("search", ["spring", "insight", "women", "event"]):
+        url = (f"https://{host}/hcmRestApi/resources/latest/recruitingCEJobRequisitions?onlyData=true"
+               f"&expand=requisitionList&finder=findReqs;siteNumber={site_nb},limit=50,keyword=%22{word}%22")
+        try:
+            r = requests.get(url, headers=HEADERS_WEB, timeout=30)
+        except requests.RequestException as e:
+            log(f"  ! erreur réseau : {e}"); continue
+        if r.status_code != 200:
+            log(f"  ! recherche '{word}' : {r.status_code}"); continue
+        ok = True
+        items = r.json().get("items", [])
+        reqs = items[0].get("requisitionList", []) if items else []
+        for j in reqs:
+            title, jid = (j.get("Title") or "").strip(), str(j.get("Id"))
+            event_id = f"oracle:{host.split('.')[0]}:{jid}"
+            if not _keep(title, event_id, known_ids, seen):
+                continue
+            text = " ".join(str(j.get(k) or "") for k in ("ShortDescriptionStr", "PrimaryLocation", "ExternalQualificationsStr"))
+            loc = str(j.get("PrimaryLocation") or "")
+            it = build_item(src, event_id, f"https://{host}/hcmUI/CandidateExperience/en/sites/{site_nb}/job/{jid}",
+                            title, text, loc)
+            if it:
+                found.append(it); log_item(it)
+    log(f"  {len(found)} nouveau(x) trouvé(s)")
+    return found, ok
+
+
+def scan_links(src, known_ids):
+    """Page carrières classique (ex : HSBC) : lit tous les liens qui ressemblent à un event ou une spring week,
+    avec le texte autour (souvent les dates d'ouverture et de clôture)."""
+    html = get_page(src["url"])
+    if html is None:
+        return [], False
+    soup = BeautifulSoup(html, "html.parser")
+    found, seen = [], set()
+    for a in soup.find_all("a", href=True):
+        title = re.sub(r"\s+", " ", a.get_text(" ")).replace("(opens in new window)", "").strip()
+        if len(title) < 12:
+            continue
+        href = urljoin(src["url"], a["href"]).split("#")[0]
+        event_id = "link:" + href
+        if not _keep(title, event_id, known_ids, seen):
+            continue
+        # le bloc autour du lien contient souvent les dates (Opening Date, Closing Date, Start Date)
+        block = a
+        for _ in range(4):
+            if block.parent is not None and len(block.parent.get_text(" ")) < 1500:
+                block = block.parent
+        context = re.sub(r"\s+", " ", block.get_text(" "))
+        if src.get("follow"):
+            time.sleep(1)
+            page = get_page(href)
+            context += " " + (visible_text(page) if page else "")
+        it = build_item(src, event_id, href, title, context)
+        if it:
+            found.append(it); log_item(it)
+    log(f"  {len(found)} nouveau(x) trouvé(s)")
+    return found, True
 
 
 def scan_page(src, state):
@@ -326,13 +452,18 @@ def event_line(e):
 # Programme principal
 # =========================================================
 def main():
-    if not (SUPABASE_URL and SUPABASE_SECRET_KEY):
-        log("ERREUR : SUPABASE_URL ou SUPABASE_SECRET_KEY manquant dans les Secrets GitHub.")
-        sys.exit(1)
-
     sources = json.loads(Path(__file__).with_name("sources.json").read_text(encoding="utf-8"))["sources"]
-    known_ids = {row["id"] for row in sb_get("events", "select=id")}
-    states = {row["source_id"]: row for row in sb_get("source_state", "select=*")}
+    if ONLY:
+        sources = [s for s in sources if s["id"] in ONLY.split(",")]
+    if DRY_RUN:
+        log("MODE TEST : rien ne sera écrit dans Supabase.")
+        known_ids, states = set(), {}
+    else:
+        if not (SUPABASE_URL and SUPABASE_SECRET_KEY):
+            log("ERREUR : SUPABASE_URL ou SUPABASE_SECRET_KEY manquant dans les Secrets GitHub.")
+            sys.exit(1)
+        known_ids = {row["id"] for row in sb_get("events", "select=id")}
+        states = {row["source_id"]: row for row in sb_get("source_state", "select=*")}
     now = dt.datetime.now(dt.timezone.utc).isoformat()
 
     all_new, changed_pages, broken = [], [], []
@@ -342,8 +473,15 @@ def main():
         log(f"\n== {src['id']} ({src['type']})")
         st = states.get(src["id"], {})
         digest = st.get("last_hash")
-        if src["type"] == "talnet":
-            new, ok = scan_talnet(src, known_ids)
+        if src["type"] in ("talnet", "workday", "oracle", "links"):
+            scanner = {"talnet": scan_talnet, "workday": scan_workday, "oracle": scan_oracle,
+                       "links": scan_links}[src["type"]]
+            try:
+                new, ok = scanner(src, known_ids)
+            except Exception as e:          # une source qui plante ne doit pas bloquer les autres
+                log(f"  ! erreur : {e}")
+                new, ok = [], False
+            new = [n for n in new if n["id"] not in {x["id"] for x in all_new}]
             all_new += new
         else:
             changed, ok, d = scan_page(src, st)
@@ -357,6 +495,9 @@ def main():
         new_states.append({"source_id": src["id"], "last_hash": digest, "fail_count": fails,
                            "last_ok": now if ok else st.get("last_ok")})
 
+    if DRY_RUN:
+        log(f"\nMODE TEST — {len(all_new)} annonce(s) seraient ajoutées.")
+        return
     sb_upsert("events", all_new)
     sb_upsert("source_state", new_states)
     log(f"\nRésumé : {len(all_new)} nouvel(s) event(s), {len(changed_pages)} page(s) modifiée(s), {len(broken)} source(s) cassée(s)")

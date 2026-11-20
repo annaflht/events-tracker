@@ -1,0 +1,30 @@
+name: Test du robot (sans écriture)
+
+on:
+  push:
+    branches: [robot-test]
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Ne tester qu'une source (son id), vide = toutes"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Lancer le robot en mode test
+        run: python run.py
+        env:
+          DRY_RUN: "1"
+          ONLY: ${{ github.event.inputs.only }}

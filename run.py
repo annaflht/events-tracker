@@ -90,6 +90,10 @@ VIRTUAL_WORDS = ["virtual", "zoom", "teams", "online", "webinar", "en ligne"]
 MONTHS = {m: i for i, m in enumerate(
     ["january", "february", "march", "april", "may", "june", "july", "august",
      "september", "october", "november", "december"], start=1)}
+# abréviations anglaises (Sep 28, 2026), placées après les noms complets pour que "march" passe avant "mar"
+MONTHS.update({m: i for i, m in enumerate(
+    ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], start=1)})
+MONTHS["sept"] = 9
 
 
 # =========================================================
@@ -431,10 +435,14 @@ def scan_links(src, known_ids):
     soup = BeautifulSoup(html, "html.parser")
     found, seen = [], set()
     for a in soup.find_all("a", href=True):
-        title = re.sub(r"\s+", " ", a.get_text(" ")).replace("(opens in new window)", "").strip()
+        head = a.find(["h2", "h3", "h4"])
+        title = re.sub(r"\s+", " ", (head or a).get_text(" ")).replace("(opens in new window)", "").strip()
+        title = re.split(r"\s+Location:", title)[0].strip()
         if len(title) < 12:
             continue
         href = urljoin(src["url"], a["href"]).split("#")[0]
+        if src.get("href_contains") and src["href_contains"] not in href:
+            continue
         event_id = "link:" + href
         if not _keep(title, event_id, known_ids, seen):
             continue

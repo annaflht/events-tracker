@@ -196,7 +196,8 @@
       "firm": "Barclays",
       "cat": "Bulge Bracket",
       "url": "https://search.jobs.barclays/search-jobs/spring",
-      "follow": true
+      "follow": true,
+      "href_contains": "/job/"
     },
     {
       "id": "citi-search",
@@ -204,7 +205,8 @@
       "firm": "Citi",
       "cat": "Bulge Bracket",
       "url": "https://jobs.citi.com/search-jobs/spring",
-      "follow": true
+      "follow": true,
+      "href_contains": "/job/"
     },
     {
       "id": "blackrock-search",
@@ -212,7 +214,8 @@
       "firm": "BlackRock",
       "cat": "Asset Mgmt",
       "url": "https://careers.blackrock.com/search-jobs/insight",
-      "follow": true
+      "follow": true,
+      "href_contains": "/job/"
     },
     {
       "id": "jpmorgan",

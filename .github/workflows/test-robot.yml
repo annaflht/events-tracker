@@ -27,4 +27,4 @@ jobs:
         run: python run.py
         env:
           DRY_RUN: "1"
-          ONLY: ${{ github.event.inputs.only || 'barclays,citi-tb,blackrock-tb,bnp-group,bnp-uk,socgen,lazard-events,lazard-uk-early-careers,goldman-students,db-students,ubs-students,macquarie-students,citadel-sec-discover,gh-jshiddenevents,gh-janestreet,gh-gsacapital,gh-mavensecuritiesholdingltd,gh-point72,gh-dvtrading,gh-imc,gh-drweng,gh-wehrtyou,gh-jumptrading,gh-flowtraders,gh-optiverus,gh-squarepointcapital,gh-quberesearchtechnologies,gh-marshallwace,gh-capula,gh-virtu,gh-aquaticcapitalmanagement,gh-brevanhoward,gh-tower,gh-xtxmarkets,gh-gresearch,gh-deshaw,gh-blackstone,gh-aresmanagement,gh-perellaweinbergpartners,gh-pjtpartners,gh-moelis,gh-centerviewpartners' }}
+          ONLY: ${{ github.event.inputs.only || 'gh-jshiddenevents,barclays,citi-tb,gh-optiverus,gh-gsacapital' }}

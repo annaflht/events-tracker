@@ -183,7 +183,8 @@ def date_after(label_regex, text, window=120):
 def guess_kind(title, text):
     """'spring' pour une spring week / un programme d'insight de plusieurs jours, sinon 'event'."""
     t = title.lower()
-    if any(w in t for w in ["spring", "insight week", "insight programme", "insight program"]):
+    if any(w in t for w in ["spring", "insight week", "insight programme", "insight program", "insight 20",
+                            "kickstarter", "immersion", "fttp", "discovery programme"]):
         return "spring"
     if re.search(r"\b(two|three|four|five|2|3|4|5)[- ]day (programme|program|insight|event)", text.lower()):
         return "spring"
@@ -227,7 +228,8 @@ def looks_like_event(title):
     return any(w in t for w in EVENT_WORDS)
 
 
-STUDENT_WORDS = ["spring", "insight", "discover", "women in", "immersion", "explore ", "open day", "taster",
+STUDENT_WORDS = ["spring", "insight program", "insight day", "insight week", "insight event", "insight experience",
+                 "insight evening", "insights event", "insight 20", "insight series", "discover", "women in", "immersion", "explore ", "open day", "taster",
                  "early insights", "virtual experience", "mentorship", "first year", "1st year", "winternship"]
 JOB_WORDS = ["manager", "vice president", "director", "engineer", "banker", "associate", "analyst", "representative",
              "specialist", "lead ", "head of", "officer", "planner", "designer", "professional", "hiring event",
@@ -239,7 +241,8 @@ def looks_like_student_event(title):
     t = " " + title.lower() + " "
     if not looks_like_event(title):
         return False
-    programme_words = ["spring", "insight program", "insight day", "insight week", "insight event", "early insights"]
+    programme_words = ["spring", "insight program", "insight day", "insight week", "insight event", "early insights",
+                       "insight 20", "kickstarter"]
     if any(w in t for w in JOB_WORDS) and not any(w in t for w in programme_words):
         return False
     return any(w in t for w in STUDENT_WORDS)
@@ -344,10 +347,14 @@ def scan_talnet(src, known_ids):
     return new_events, True
 
 
-def _keep(title, event_id, known_ids, seen):
+def _keep(title, event_id, known_ids, seen, accept_all=False):
     if event_id in known_ids or event_id in seen:
         return False
-    if not looks_like_student_event(title):
+    if accept_all:
+        years = [int(y) for y in re.findall(r"\b(20\d\d)\b", title)]
+        if years and max(years) < CURRENT_YEAR:
+            return False
+    elif not looks_like_student_event(title):
         return False
     seen.add(event_id)
     return True
@@ -452,11 +459,15 @@ def scan_greenhouse(src, known_ids):
     for j in jobs:
         title, jid = (j.get("title") or "").strip(), str(j.get("id"))
         event_id = f"greenhouse:{token}:{jid}"
-        if not _keep(title, event_id, known_ids, seen):
+        if not _keep(title, event_id, known_ids, seen, src.get("accept_all", False)):
             continue
         text = visible_text(_html.unescape(j.get("content") or ""))
         loc = (j.get("location") or {}).get("name", "")
         it = build_item(src, event_id, j.get("absolute_url"), title, text, loc)
+        if it and src.get("kind"):
+            it["kind"] = src["kind"]
+            if it["kind"] == "spring" and it["type"] != "Women in Finance":
+                it["type"] = "Spring Insight"
         if it:
             found.append(it); log_item(it)
     log(f"  {len(found)} nouveau(x) trouvé(s)")

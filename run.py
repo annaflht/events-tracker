@@ -253,7 +253,7 @@ def build_item(src, event_id, url, title, text, extra_text=""):
         log(f"  - ignoré (pour lycéens) : {title}")
         return None
     zone, city = guess_place(title, extra_text + " " + full)
-    deadline = date_after(r"closing date|application deadline|deadline|apply by|applications close|applications will close|close on", full)
+    deadline = date_after(r"closing date|application deadline|deadline|apply by|applications close|applications will close|close on|closes on|window closes", full)
     event_start = date_after(r"event date|date of event|event will take place|takes place on|will take place from|programme dates|program dates", full)
     if event_start == deadline:
         event_start = None

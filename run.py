@@ -43,7 +43,8 @@ MAX_NEW_PAGES_PER_SOURCE = 25   # limite de pages d'events lues par source et pa
 # Un lien est gardé seulement s'il ressemble à un EVENT, et pas à un stage ou à un apprentissage.
 EVENT_WORDS = ["insight", "event", "women", "discover", "open day", "office visit", "networking",
                "webinar", "spotlight", "breakfast", "evening", "panel", "masterclass", "workshop",
-               "challenge", "competition", "spring week", "fair", "session"]
+               "challenge", "competition", "spring week", "fair", "session", "spring into", "spring insight",
+               "immersion", "winternship"]
 EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth form", "school leaver",
                  "step in, step up", "career pathways", "high school", "secondary school",
                  "graduate programme", "graduate program", "summer analyst", "full time", "full-time",
@@ -58,6 +59,14 @@ CITIES = {
     "Londres": ("Royaume-Uni", ["london", "londres"]),
     "Glasgow": ("Royaume-Uni", ["glasgow"]),
     "Édimbourg": ("Royaume-Uni", ["edinburgh"]),
+    "Chester": ("Royaume-Uni", ["chester"]),
+    "Bournemouth": ("Royaume-Uni", ["bournemouth"]),
+    "Sheffield": ("Royaume-Uni", ["sheffield"]),
+    "Birmingham": ("Royaume-Uni", ["birmingham"]),
+    "Leeds": ("Royaume-Uni", ["leeds"]),
+    "Manchester": ("Royaume-Uni", ["manchester"]),
+    "Belfast": ("Royaume-Uni", ["belfast"]),
+    "Bristol": ("Royaume-Uni", ["bristol"]),
     "Francfort": ("Europe", ["frankfurt", "francfort"]),
     "Madrid": ("Europe", ["madrid"]),
     "Milan": ("Europe", ["milan"]),
@@ -65,6 +74,10 @@ CITIES = {
     "Zurich": ("Europe", ["zurich", "zürich"]),
     "Dublin": ("Europe", ["dublin"]),
     "Luxembourg": ("Europe", ["luxembourg"]),
+    "Munich": ("Europe", ["munich", "münchen"]),
+    "Bruxelles": ("Europe", ["brussels", "bruxelles"]),
+    "Genève": ("Europe", ["geneva", "genève"]),
+    "Stockholm": ("Europe", ["stockholm"]),
     "New York": ("États-Unis", ["new york"]),
     "Hong Kong": ("Asie", ["hong kong"]),
     "Singapour": ("Asie", ["singapore", "singapour"]),
@@ -124,6 +137,16 @@ def parse_date(text):
         except ValueError:
             continue
     return None
+
+
+RANGE_SAME_MONTH = re.compile(r"\b(\d{1,2})(?:st|nd|rd|th)?\s*(?:-|–|to)\s*\d{1,2}(?:st|nd|rd|th)?\s+(" + "|".join(MONTHS) + r")\s+(\d{4})")
+RANGE_TWO_MONTHS = re.compile(r"\b(\d{1,2})(?:st|nd|rd|th)?\s+(" + "|".join(MONTHS) + r")\s*(?:-|–|to)\s*\d{1,2}(?:st|nd|rd|th)?\s+(?:" + "|".join(MONTHS) + r")\s+(\d{4})")
+
+
+def normalize_ranges(text):
+    """Remplace '14th - 16th April 2027' par '14 April 2027' (on garde le 1er jour)."""
+    t = RANGE_TWO_MONTHS.sub(lambda m: f"{m.group(1)} {m.group(2)} {m.group(3)}", text.lower())
+    return RANGE_SAME_MONTH.sub(lambda m: f"{m.group(1)} {m.group(2)} {m.group(3)}", t)
 
 
 def all_dates(text):
@@ -200,9 +223,27 @@ def looks_like_event(title):
     return any(w in t for w in EVENT_WORDS)
 
 
+STUDENT_WORDS = ["spring", "insight", "discover", "women in", "immersion", "explore ", "open day", "taster",
+                 "early insights", "virtual experience", "mentorship", "first year", "1st year", "winternship"]
+JOB_WORDS = ["manager", "vice president", "director", "engineer", "banker", "associate", "analyst", "representative",
+             "specialist", "lead ", "head of", "officer", "planner", "designer", "professional", "hiring event",
+             "investor", "consultant", "developer", "advisor", "executive", "intern ", "internship"]
+
+
+def looks_like_student_event(title):
+    """Version stricte pour les sites qui mélangent offres d'emploi et programmes étudiants."""
+    t = " " + title.lower() + " "
+    if not looks_like_event(title):
+        return False
+    programme_words = ["spring", "insight program", "insight day", "insight week", "insight event", "early insights"]
+    if any(w in t for w in JOB_WORDS) and not any(w in t for w in programme_words):
+        return False
+    return any(w in t for w in STUDENT_WORDS)
+
+
 def build_item(src, event_id, url, title, text, extra_text=""):
     """Transforme une annonce (titre + texte de sa page) en ligne pour Supabase. None = à ignorer."""
-    full = (extra_text + " " + text).strip()
+    full = normalize_ranges((extra_text + " " + text).strip())
     low = full.lower()
     if any(w in low for w in PAGE_EXCLUDE_WORDS):
         log(f"  - ignoré (pour lycéens) : {title}")
@@ -302,7 +343,7 @@ def scan_talnet(src, known_ids):
 def _keep(title, event_id, known_ids, seen):
     if event_id in known_ids or event_id in seen:
         return False
-    if not looks_like_event(title):
+    if not looks_like_student_event(title):
         return False
     seen.add(event_id)
     return True
@@ -313,12 +354,21 @@ def scan_workday(src, known_ids):
     host, tenant, site = src["host"], src["tenant"], src["site"]
     api = f"https://{host}/wday/cxs/{tenant}/{site}"
     found, seen, ok = [], set(), False
-    for word in src.get("search", ["spring", "insight", "women", "discover", "event"]):
-        try:
-            r = requests.post(f"{api}/jobs", timeout=30, headers={**HEADERS_WEB, "Content-Type": "application/json"},
-                              json={"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": word})
-        except requests.RequestException as e:
-            log(f"  ! erreur réseau : {e}"); continue
+    wd_headers = {**HEADERS_WEB, "Content-Type": "application/json", "Accept": "application/json",
+                  "Accept-Language": "en-US", "Origin": f"https://{host}", "Referer": f"https://{host}/en-US/{site}"}
+    for word in src.get("search", ["spring", "insight", "women", "discover"]):
+        r = None
+        for attempt in range(2):
+            time.sleep(3 if attempt == 0 else 15)
+            try:
+                r = requests.post(f"{api}/jobs", timeout=30, headers=wd_headers,
+                                  json={"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": word})
+            except requests.RequestException as e:
+                log(f"  ! erreur réseau : {e}"); r = None
+            if r is not None and r.status_code != 429:
+                break
+        if r is None:
+            continue
         if r.status_code != 200:
             log(f"  ! recherche '{word}' : {r.status_code}"); continue
         ok = True
@@ -330,7 +380,7 @@ def scan_workday(src, known_ids):
             time.sleep(1)
             text = ""
             try:
-                d = requests.get(f"{api}{path}", headers=HEADERS_WEB, timeout=30).json()
+                d = requests.get(f"{api}{path}", headers=wd_headers, timeout=30).json()
                 text = visible_text(d.get("jobPostingInfo", {}).get("jobDescription", ""))
             except Exception:
                 pass
@@ -390,9 +440,12 @@ def scan_links(src, known_ids):
             continue
         # le bloc autour du lien contient souvent les dates (Opening Date, Closing Date, Start Date)
         block = a
-        for _ in range(4):
-            if block.parent is not None and len(block.parent.get_text(" ")) < 1500:
-                block = block.parent
+        for _ in range(6):
+            if block.parent is None or len(block.parent.get_text(" ")) > 2500:
+                break
+            block = block.parent
+            if re.search(r"closing date|deadline|start date", block.get_text(" "), re.I):
+                break
         context = re.sub(r"\s+", " ", block.get_text(" "))
         if src.get("follow"):
             time.sleep(1)

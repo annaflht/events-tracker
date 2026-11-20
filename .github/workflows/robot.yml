@@ -3,7 +3,7 @@ name: Robot Events Tracker
 on:
   schedule:
     - cron: "7,37 * * * *"   # toutes les 30 minutes (à h07 et h37, heure UTC)
-  workflow_dispatch:          # ajoute un bouton "Run workflow" pour le lancer à la main
+  workflow_dispatch:          # bouton "Run workflow" pour le lancer à la main
     inputs:
       force_digest:
         description: "Envoyer aussi le récap des deadlines (1 = oui)"
@@ -41,6 +41,8 @@ jobs:
           FORCE_DIGEST: ${{ github.event.inputs.force_digest }}
 
       # GitHub met en pause les tâches planifiées d'un repo sans activité depuis 60 jours.
-      # Cette étape l'en empêche, sans rien modifier dans ton code.
+      # Cette commande "réactive" le robot à chaque passage pour éviter ça.
       - name: Garder le robot en vie
-        uses: gautamkrishnar/keepalive-workflow@v2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/robot.yml/enable"

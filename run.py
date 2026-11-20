@@ -42,6 +42,7 @@ EVENT_WORDS = ["insight", "event", "women", "discover", "open day", "office visi
                "webinar", "spotlight", "breakfast", "evening", "panel", "masterclass", "workshop",
                "challenge", "competition", "spring week", "fair", "session"]
 EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth form", "school leaver",
+                 "step in, step up", "career pathways", "high school", "secondary school",
                  "graduate programme", "graduate program", "summer analyst", "full time", "full-time",
                  "off-cycle internship", "industrial placement", "interest list", "recruiting news"]
 
@@ -62,6 +63,9 @@ CITIES = {
     "Hong Kong": ("Asie", ["hong kong"]),
     "Singapour": ("Asie", ["singapore", "singapour"]),
 }
+# Si la page d'un event contient un de ces mots, il s'adresse à des lycéens : on l'écarte.
+PAGE_EXCLUDE_WORDS = ["year 13", "year 12", "sixth form", "a-level", "a level students", "school students",
+                      "secondary school", "high school"]
 VIRTUAL_WORDS = ["virtual", "zoom", "teams", "online", "webinar", "en ligne"]
 
 MONTHS = {m: i for i, m in enumerate(
@@ -116,12 +120,41 @@ def parse_date(text):
     return None
 
 
+def all_dates(text):
+    """Toutes les dates trouvées dans un texte (format ISO), dans l'ordre."""
+    t = text.lower()
+    found = []
+    pats = [
+        (r"\b(\d{1,2})/(\d{1,2})/(\d{4})\b", lambda m: (int(m.group(3)), int(m.group(2)), int(m.group(1)))),
+        (r"\b(\d{1,2})(?:st|nd|rd|th)?\s+(" + "|".join(MONTHS) + r")\s+(\d{4})", lambda m: (int(m.group(3)), MONTHS[m.group(2)], int(m.group(1)))),
+        (r"\b(" + "|".join(MONTHS) + r")\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})", lambda m: (int(m.group(3)), MONTHS[m.group(1)], int(m.group(2)))),
+    ]
+    for pat, conv in pats:
+        for m in re.finditer(pat, t):
+            try:
+                y, mo, d = conv(m)
+                found.append((m.start(), dt.date(y, mo, d).isoformat()))
+            except ValueError:
+                pass
+    return [d for _, d in sorted(found)]
+
+
 def date_after(label_regex, text, window=120):
     """Cherche une date juste après un mot-clé (ex : 'Event Date', 'Closing date')."""
     m = re.search(label_regex, text, flags=re.I)
     if not m:
         return None
     return parse_date(text[m.end(): m.end() + window])
+
+
+def guess_kind(title, text):
+    """'spring' pour une spring week / un programme d'insight de plusieurs jours, sinon 'event'."""
+    t = title.lower()
+    if any(w in t for w in ["spring", "insight week", "insight programme", "insight program"]):
+        return "spring"
+    if re.search(r"\b(two|three|four|five|2|3|4|5)[- ]day (programme|program|insight|event)", text.lower()):
+        return "spring"
+    return "event"
 
 
 def guess_type(title, text):
@@ -203,7 +236,8 @@ def scan_talnet(src, known_ids):
             links[f"talnet:{host}:{m.group(1)}"] = (href.split("?")[0], title)
     log(f"  {len(links)} annonces trouvées sur la liste")
     if not links:
-        return [], False          # une liste vide = la page a sûrement changé de forme
+        log("  liste vide : aucun event publié pour l'instant (ou la page a changé de forme)")
+        return [], True
 
     new_events = []
     for event_id, (url, title) in list(links.items()):
@@ -217,19 +251,31 @@ def scan_talnet(src, known_ids):
         time.sleep(1)             # on ne surcharge pas le site de la banque
         page = get_page(url)
         text = visible_text(page) if page else ""
+        low = text.lower()
+        if any(w in low for w in PAGE_EXCLUDE_WORDS):
+            log(f"  - ignoré (pour lycéens) : {title}")
+            continue
         zone, city = guess_place(title, text)
-        event_start = (date_after(r"event date|date and time|event will take place", text)
-                       or parse_date(title))
         deadline = date_after(r"closing date|application deadline|deadline|apply by|applications close", text)
+        event_start = date_after(r"event date|date of event|event will take place|takes place on", text)
+        if event_start == deadline:
+            event_start = None
+        if not event_start:
+            # un event a lieu après la date limite : on prend la 1re date trouvée après la deadline
+            later = [d for d in all_dates(text) if (not deadline or d > deadline)]
+            event_start = later[0] if later and deadline else (parse_date(title) or None)
         rolling = bool(re.search(r"rolling basis|rolling", text, re.I))
         new_events.append({
-            "id": event_id, "firm": src["firm"], "title": title, "type": guess_type(title, text),
+            "id": event_id, "firm": src["firm"], "title": title,
+            "kind": guess_kind(title, text),
+            "type": "Spring Insight" if guess_kind(title, text) == "spring" and guess_type(title, text) != "Women in Finance"
+                    else guess_type(title, text),
             "cat": src.get("cat"), "zone": zone, "city": city,
             "event_start": event_start, "deadline": deadline, "rolling": rolling,
             "elig": "Détecté automatiquement : vérifie l'éligibilité sur la page.",
             "url": url, "link_label": "S'inscrire", "source": src["id"],
         })
-        log(f"  + NOUVEL EVENT : {title} ({city}, event {event_start}, deadline {deadline})")
+        log(f"  + NOUVEAU ({new_events[-1]['kind']}) : {title} ({city}, dates {event_start}, deadline {deadline})")
     return new_events, True
 
 

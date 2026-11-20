@@ -53,6 +53,11 @@ h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 40px); line-h
 .meta { font-size: 13px; color: var(--muted); }
 .note { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 8px; padding: 12px 14px; font-size: 13.5px; color: var(--muted); max-width: 90ch; }
 
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); }
+.tab { font: inherit; font-weight: 600; font-size: 15px; color: var(--muted); background: none; border: 0; border-bottom: 3px solid transparent; padding: 10px 16px; cursor: pointer; text-decoration: none; }
+.tab:hover { color: var(--ink); }
+.tab[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
+.tab .count { font-family: var(--font-mono); font-size: 12px; font-weight: 500; margin-left: 6px; color: var(--muted); }
 .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 2px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
 .tile:hover { border-color: var(--accent); }
@@ -112,11 +117,16 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow">Saison 2026-2027 · Events banques &amp; marchés</div>
+    <div class="eyebrow">Saison 2026-2027 · Banques &amp; marchés</div>
     <h1>Events Tracker Finance</h1>
-    <p class="sub">Women in Finance, insight days, office visits et compétitions organisés par les banques et les firmes de marché, classés par géographie, avec le lien d'inscription officiel.</p>
+    <p class="sub" id="pageSub"></p>
     <div class="meta">Liste mise à jour automatiquement toutes les 30 minutes · chargée le <span id="checked">…</span></div>
   </header>
+
+  <nav class="tabs" aria-label="Pages">
+    <a class="tab" href="#events" id="tab-events">Events<span class="count" id="c-events"></span></a>
+    <a class="tab" href="#spring" id="tab-spring">Spring<span class="count" id="c-spring"></span></a>
+  </nav>
 
   <div class="note">Les dates viennent des pages officielles des banques. Quand une date n'est pas publiée, c'est indiqué. Vérifie toujours sur la page d'inscription avant de postuler : beaucoup d'events sont traités au fil de l'eau et ferment dès qu'ils sont complets.</div>
 
@@ -154,8 +164,8 @@ footer { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
 
 <script>
 // ============ RÉGLAGES : colle ici tes 2 valeurs Supabase (étape 3 du guide) ============
-const SUPABASE_URL = "https://hxrzcdmlipzsmtszbjqo.supabase.co";            // ex : https://abcdefgh.supabase.co
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_WnuTcYrNCMHbK00d9Xc3Bw_qeiAQd2L"; // commence par sb_publishable_
+const SUPABASE_URL = "https://hxrzcdmlipzsmtszbjqo.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_WnuTcYrNCMHbK00d9Xc3Bw_qeiAQd2L";
 // ======================================================================================
 
 let EVENTS = [];
@@ -168,6 +178,7 @@ async function loadEvents() {
   const rows = await res.json();
   return rows.map(r => ({
     id: r.id, firm: r.firm, cat: r.cat || "—", type: r.type || "Networking",
+    kind: r.kind === "spring" ? "spring" : "event",
     title: r.title, zone: r.zone || "Autre", city: r.city || "",
     eventStart: r.event_start, eventLabel: r.event_label, opens: r.opens, deadline: r.deadline,
     rolling: !!r.rolling, elig: r.elig || "", prev: r.prev || "—",
@@ -198,6 +209,15 @@ function status(e) {
   return { key: "open", label: e.rolling ? "Ouvert · au fil de l'eau" : "Ouvert" };
 }
 
+// Les 2 pages du site
+const PAGES = {
+  events: { sub: "Women in Finance, insight days, office visits et compétitions organisés par les banques et les firmes de marché, classés par géographie, avec le lien d'inscription officiel.",
+            col: "Event", noun: "event" },
+  spring: { sub: "Spring weeks et programmes d'insight de plusieurs jours pour les étudiants de 1re et 2e année, classés par géographie, avec le lien d'inscription officiel.",
+            col: "Programme", noun: "programme" }
+};
+function currentPage() { return location.hash === "#spring" ? "spring" : "events"; }
+
 // État des filtres
 const state = { q: "", sort: "deadline", zone: "Toutes", type: "Tous", cat: "Toutes", status: null };
 
@@ -207,6 +227,8 @@ let mine = store();
 
 function chips(containerId, values, key, allLabel) {
   const box = document.getElementById(containerId);
+  box.querySelectorAll(".chip").forEach(c => c.remove());
+  state[key] = allLabel;
   [allLabel, ...values].forEach(v => {
     const b = document.createElement("button");
     b.className = "chip"; b.type = "button"; b.textContent = v;
@@ -244,7 +266,13 @@ function sorter(a, b) {
 function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
 
 function render() {
-  const all = EVENTS.map(e => ({ ...e, _s: status(e) }));
+  const page = currentPage(), P = PAGES[page];
+  document.getElementById("pageSub").textContent = P.sub;
+  ["events", "spring"].forEach(k => {
+    document.getElementById("tab-" + k).setAttribute("aria-current", k === page ? "page" : "false");
+    document.getElementById("c-" + (k)).textContent = EVENTS.filter(e => (e.kind === "spring" ? "spring" : "events") === k).length;
+  });
+  const all = EVENTS.filter(e => (e.kind === "spring" ? "spring" : "events") === page).map(e => ({ ...e, _s: status(e) }));
   ["open", "soon", "upcoming", "closed"].forEach(k => {
     document.getElementById("n-" + k).textContent = all.filter(e => e._s.key === k).length;
   });
@@ -259,7 +287,7 @@ function render() {
 
   const list = document.getElementById("list");
   list.innerHTML = "";
-  if (!rows.length) { list.innerHTML = '<div class="empty">Aucun event ne correspond à ces filtres.</div>'; return; }
+  if (!rows.length) { list.innerHTML = `<div class="empty">Aucun ${P.noun} ne correspond à ces filtres.</div>`; return; }
 
   const zones = ZONE_ORDER.filter(z => rows.some(r => r.zone === z));
   zones.forEach(z => {
@@ -267,9 +295,9 @@ function render() {
     const openCount = zr.filter(r => r._s.key === "open" || r._s.key === "soon").length;
     const sec = document.createElement("section");
     sec.className = "zone";
-    sec.innerHTML = `<h2>${esc(z)} <small>${zr.length} event${zr.length > 1 ? "s" : ""} · ${openCount} ouvert${openCount > 1 ? "s" : ""}</small></h2>
+    sec.innerHTML = `<h2>${esc(z)} <small>${zr.length} ${P.noun}${zr.length > 1 ? "s" : ""} · ${openCount} ouvert${openCount > 1 ? "s" : ""}</small></h2>
       <div class="tablebox"><table>
-        <thead><tr><th>Banque</th><th>Event</th><th>Statut</th><th>Date de l'event</th><th>Deadline</th><th>Édition précédente</th><th>Candidature</th><th>Mon statut</th></tr></thead>
+        <thead><tr><th>Banque</th><th>${P.col}</th><th>Statut</th><th>Dates</th><th>Deadline</th><th>Édition précédente</th><th>Candidature</th><th>Mon statut</th></tr></thead>
         <tbody></tbody></table></div>`;
     const tb = sec.querySelector("tbody");
     zr.forEach(e => {
@@ -280,9 +308,9 @@ function render() {
       const sel = `<select id="my-${e.id}" aria-label="Mon statut pour ${esc(e.title)}">${MY_OPTIONS.map(o => `<option${(mine[e.id] || "—") === o ? " selected" : ""}>${o}</option>`).join("")}</select>`;
       tr.innerHTML = `
         <td data-k="Banque"><div class="firm">${esc(e.firm)}</div><div class="city">${esc(e.city)} · ${esc(e.cat)}</div></td>
-        <td data-k="Event"><div class="ev">${esc(e.title)}</div><div><span class="tag">${esc(e.type)}</span></div><div class="elig">${esc(e.elig)}</div></td>
+        <td data-k="${P.col}"><div class="ev">${esc(e.title)}</div><div><span class="tag">${esc(e.type)}</span></div><div class="elig">${esc(e.elig)}</div></td>
         <td data-k="Statut"><span class="pill s-${e._s.key}">${esc(e._s.label)}</span></td>
-        <td data-k="Date de l'event" class="num">${esc(evDate)}</td>
+        <td data-k="Dates" class="num">${esc(evDate)}</td>
         <td data-k="Deadline" class="num">${esc(dl)}</td>
         <td data-k="Édition précédente" class="small">${esc(e.prev)}</td>
         <td data-k="Candidature"><a class="apply${e._s.key === "closed" || e._s.key === "upcoming" ? " ghost" : ""}" href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.linkLabel)} →</a></td>
@@ -293,12 +321,19 @@ function render() {
     list.appendChild(sec);
   });
 }
-const uniq = k => [...new Set(EVENTS.map(e => e[k]))];
-loadEvents().then(data => {
-  EVENTS = data;
+function pageEvents() { const p = currentPage(); return EVENTS.filter(e => (e.kind === "spring" ? "spring" : "events") === p); }
+const uniq = k => [...new Set(pageEvents().map(e => e[k]))];
+function buildFilters() {
   chips("f-zone", ZONE_ORDER.filter(z => uniq("zone").includes(z)), "zone", "Toutes");
   chips("f-type", uniq("type").sort(), "type", "Tous");
   chips("f-cat", uniq("cat").sort(), "cat", "Toutes");
+  state.status = null;
+  document.querySelectorAll(".tile").forEach(x => x.setAttribute("aria-pressed", "false"));
+}
+window.addEventListener("hashchange", () => { buildFilters(); render(); });
+loadEvents().then(data => {
+  EVENTS = data;
+  buildFilters();
   document.getElementById("checked").textContent = new Intl.DateTimeFormat("fr-FR", { dateStyle: "long", timeStyle: "short" }).format(new Date());
   render();
 }).catch(err => {

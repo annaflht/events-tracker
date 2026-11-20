@@ -86,7 +86,11 @@
       "host": "blackstone.wd1.myworkdayjobs.com",
       "tenant": "blackstone",
       "site": "Blackstone_Campus_Careers",
-      "url": "https://blackstone.wd1.myworkdayjobs.com/en-US/Blackstone_Campus_Careers"
+      "url": "https://blackstone.wd1.myworkdayjobs.com/en-US/Blackstone_Campus_Careers",
+      "search": [
+        "spring",
+        "insight"
+      ]
     },
     {
       "id": "houlihan-lokey",
@@ -96,7 +100,11 @@
       "host": "hl.wd1.myworkdayjobs.com",
       "tenant": "hl",
       "site": "Campus",
-      "url": "https://hl.wd1.myworkdayjobs.com/en-US/Campus"
+      "url": "https://hl.wd1.myworkdayjobs.com/en-US/Campus",
+      "search": [
+        "spring",
+        "insight"
+      ]
     },
     {
       "id": "deutsche-bank",
@@ -106,7 +114,11 @@
       "host": "db.wd3.myworkdayjobs.com",
       "tenant": "db",
       "site": "DBWebsite",
-      "url": "https://db.wd3.myworkdayjobs.com/en-US/DBWebsite"
+      "url": "https://db.wd3.myworkdayjobs.com/en-US/DBWebsite",
+      "search": [
+        "spring",
+        "insight"
+      ]
     },
     {
       "id": "citi",
@@ -116,7 +128,11 @@
       "host": "citi.wd5.myworkdayjobs.com",
       "tenant": "citi",
       "site": "2",
-      "url": "https://citi.wd5.myworkdayjobs.com/en-US/2"
+      "url": "https://citi.wd5.myworkdayjobs.com/en-US/2",
+      "search": [
+        "spring",
+        "insight"
+      ]
     },
     {
       "id": "wells-fargo",
@@ -126,7 +142,11 @@
       "host": "wd1.myworkdaysite.com",
       "tenant": "wf",
       "site": "WellsFargoJobs",
-      "url": "https://wd1.myworkdaysite.com/en-US/WellsFargoJobs"
+      "url": "https://wd1.myworkdaysite.com/en-US/WellsFargoJobs",
+      "search": [
+        "spring",
+        "insight"
+      ]
     },
     {
       "id": "barclays",
@@ -136,7 +156,11 @@
       "host": "barclays.wd3.myworkdayjobs.com",
       "tenant": "barclays",
       "site": "External_Career_Site_Barclays",
-      "url": "https://barclays.wd3.myworkdayjobs.com/en-US/External_Career_Site_Barclays"
+      "url": "https://barclays.wd3.myworkdayjobs.com/en-US/External_Career_Site_Barclays",
+      "search": [
+        "spring",
+        "insight"
+      ]
     },
     {
       "id": "ubs",
@@ -146,7 +170,11 @@
       "host": "ubs.wd3.myworkdayjobs.com",
       "tenant": "ubs",
       "site": "UBS_Graduates_and_Interns",
-      "url": "https://ubs.wd3.myworkdayjobs.com/en-US/UBS_Graduates_and_Interns"
+      "url": "https://ubs.wd3.myworkdayjobs.com/en-US/UBS_Graduates_and_Interns",
+      "search": [
+        "spring",
+        "insight"
+      ]
     },
     {
       "id": "macquarie",
@@ -156,7 +184,35 @@
       "host": "mq.wd3.myworkdayjobs.com",
       "tenant": "mq",
       "site": "CareersatMQ",
-      "url": "https://mq.wd3.myworkdayjobs.com/en-US/CareersatMQ"
+      "url": "https://mq.wd3.myworkdayjobs.com/en-US/CareersatMQ",
+      "search": [
+        "spring",
+        "insight"
+      ]
+    },
+    {
+      "id": "barclays-search",
+      "type": "links",
+      "firm": "Barclays",
+      "cat": "Bulge Bracket",
+      "url": "https://search.jobs.barclays/search-jobs/spring",
+      "follow": true
+    },
+    {
+      "id": "citi-search",
+      "type": "links",
+      "firm": "Citi",
+      "cat": "Bulge Bracket",
+      "url": "https://jobs.citi.com/search-jobs/spring",
+      "follow": true
+    },
+    {
+      "id": "blackrock-search",
+      "type": "links",
+      "firm": "BlackRock",
+      "cat": "Asset Mgmt",
+      "url": "https://careers.blackrock.com/search-jobs/insight",
+      "follow": true
     },
     {
       "id": "jpmorgan",
@@ -172,7 +228,8 @@
       "type": "links",
       "firm": "HSBC",
       "cat": "Bulge Bracket",
-      "url": "https://www.hsbc.com/careers/students-and-graduates/insight-programmes?page=1&take=50"
+      "url": "https://www.hsbc.com/careers/students-and-graduates/insight-programmes?page=1&take=50",
+      "follow": true
     },
     {
       "id": "rbc-programs",

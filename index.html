@@ -17,7 +17,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
 a{color:inherit} button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
 .wrap{max-width:1360px;margin:0 auto;padding:0 24px}
@@ -29,21 +29,42 @@ header.top{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px so
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-.02em}
 .mark{width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:500}
 nav.main{display:flex;align-items:stretch;gap:6px;height:100%;margin:0 auto}
-nav.main>a,nav.main>button{display:flex;align-items:center;gap:8px;padding:0 14px;border:0;background:none;text-decoration:none;color:var(--ink2);font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+nav.main>a,nav.main>button{display:flex;align-items:center;gap:8px;padding:0 16px;font-size:16.5px;border:0;background:none;text-decoration:none;color:var(--ink2);font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
 nav.main>a:hover,nav.main>button:hover{color:var(--ink)}
-nav.main [aria-current="page"]{color:var(--accent);border-bottom-color:var(--accent)}
+nav.main [aria-current="page"],nav.main [aria-expanded="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+nav.main [aria-expanded="true"] .chev{transform:rotate(-135deg) translateY(-1px)}
 .chev{width:8px;height:8px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg) translateY(-3px);display:inline-block}
 .btn{border:0;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;background:var(--accent);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .btn:hover{background:var(--accent2)}
 .btn.dark{background:var(--navy)} .btn.dark:hover{background:#0b1430}
 .btn svg{width:17px;height:17px}
 
-.mega{position:absolute;left:0;right:0;top:64px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 24px 48px -24px #0d122033;z-index:39}
-.mega .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;padding-top:24px;padding-bottom:28px}
-.mega h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
-.mega a{display:flex;justify-content:space-between;gap:12px;padding:6px 8px;margin:0 -8px;border-radius:7px;text-decoration:none;font-size:14.5px}
-.mega a:hover{background:var(--bg2)} .mega a span{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
-.mega a.all{font-weight:600}
+/* Menus déroulants de l'en-tête (cartes flottantes) */
+.pop{position:absolute;top:72px;left:50%;transform:translateX(-50%);z-index:45;background:#fff;border:1px solid var(--line);border-radius:20px;
+  box-shadow:0 30px 60px -20px #0d12202e,0 8px 20px -10px #0d12201a;padding:26px 30px 28px;width:min(760px,calc(100vw - 32px))}
+.pop.small{width:min(620px,calc(100vw - 32px))}
+.pop .lead{display:flex;gap:16px;align-items:center;text-decoration:none;padding:6px;margin:-6px -6px 18px;border-radius:12px}
+.pop .lead:hover{background:var(--bg2)}
+.pop .ico{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.pop .ico svg{width:21px;height:21px}
+.pop .lead b{display:block;color:var(--accent);font-size:17px;font-weight:600}
+.pop .lead span{color:var(--ink2);font-size:15px}
+.pop hr{border:0;border-top:1px solid var(--line);margin:0 0 20px}
+.pop .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 28px}
+.pop h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 12px;font-weight:600}
+.pop .cols a{display:block;padding:7px 10px;margin:0 -10px;border-radius:9px;text-decoration:none;font-size:16.5px;color:var(--ink)}
+.pop .cols a:hover{background:var(--bg2);color:var(--accent)}
+.pop .cols a small{color:var(--muted);font-size:13px;margin-left:8px;font-family:var(--mono)}
+.pop .kindrow{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 20px}
+.pop .kindrow a{border:1px solid var(--line2);border-radius:999px;padding:6px 13px;text-decoration:none;font-size:14.5px;color:var(--ink2)}
+.pop .kindrow a:hover{border-color:var(--accent);color:var(--accent)}
+.pop .eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);font-weight:600;margin:0 0 18px}
+.pop .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pop .two a{display:flex;gap:16px;text-decoration:none;padding:10px;margin:-10px;border-radius:12px}
+.pop .two a:hover{background:var(--bg2)}
+.pop .two b{display:block;font-size:17px;margin-bottom:4px}
+.pop .two span{color:var(--ink2);font-size:15px;line-height:1.45}
+@media (max-width:640px){.pop .cols,.pop .two{grid-template-columns:1fr}.pop{top:66px;padding:20px}}
 
 .title{padding:28px 0 18px}
 .title h1{font-size:clamp(24px,3vw,32px);letter-spacing:-.025em;margin:0;line-height:1.15}
@@ -52,7 +73,7 @@ nav.main [aria-current="page"]{color:var(--accent);border-bottom-color:var(--acc
 .crumbs a{text-decoration:none} .crumbs a:hover{text-decoration:underline}
 
 .kinds{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.kinds button{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:9px 18px;font-size:15px;cursor:pointer;font-weight:500;display:flex;gap:8px;align-items:center}
+.kinds button{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:11px 20px;font-size:16.5px;cursor:pointer;font-weight:500;display:flex;gap:8px;align-items:center}
 .kinds button span{font-family:var(--mono);font-size:13px;color:var(--muted)}
 .kinds button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
 .kinds button[aria-pressed="true"] span{color:#c9d1e6}
@@ -60,18 +81,23 @@ nav.main [aria-current="page"]{color:var(--accent);border-bottom-color:var(--acc
 .panel{border:1px solid var(--line);border-radius:16px;background:#fff}
 .searchrow{display:flex;gap:12px;align-items:center;padding:10px 10px 10px 18px;border-bottom:1px solid var(--line)}
 .searchrow svg{width:19px;height:19px;color:var(--muted);flex:none}
-.searchrow input{flex:1;border:0;outline:0;font-size:16px;padding:8px 0;min-width:0;background:transparent}
+.searchrow input{flex:1;border:0;outline:0;font-size:17px;padding:8px 0;min-width:0;background:transparent}
 .filters{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;padding:8px 12px}
 .dd{position:relative}
-.dd>button{border:0;background:none;border-radius:9px;padding:9px 12px;cursor:pointer;display:flex;gap:8px;align-items:center;color:var(--ink2);font-size:14.5px}
-.dd>button:hover{background:var(--bg2)}
+.dd>button{border:0;background:none;border-radius:10px;padding:10px 14px;cursor:pointer;display:flex;gap:9px;align-items:center;color:var(--ink);font-size:16px}
+.dd>button:hover,.dd>button[aria-expanded="true"]{background:var(--bg2)}
 .dd>button.on{background:var(--accent-soft);color:var(--accent)}
 .dd>button .n{background:var(--accent);color:#fff;border-radius:999px;font-size:11.5px;min-width:19px;height:19px;display:grid;place-items:center;padding:0 5px}
-.menu{position:absolute;top:calc(100% + 6px);left:0;z-index:30;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px -16px #0d122040;min-width:250px;max-height:360px;overflow:auto;padding:6px}
-.menu label{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:14px}
+.menu{position:absolute;top:calc(100% + 8px);left:0;z-index:30;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 50px -18px #0d12202e,0 6px 16px -8px #0d12201a;min-width:290px;padding:10px}
+.menu .list{max-height:330px;overflow:auto;margin:0 -4px;padding:0 4px}
+.menu .msearch{width:100%;border:1px solid var(--line2);border-radius:10px;padding:9px 12px;font-size:15px;margin-bottom:8px}
+.menu .mfoot{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin:8px -10px -10px;padding:10px 14px}
+.menu .mfoot button{border:0;background:none;cursor:pointer;font-size:14.5px;color:var(--muted)}
+.menu .mfoot button.ok{color:var(--accent);font-weight:600}
+.menu label{display:flex;gap:12px;align-items:center;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:15.5px}
 .menu label:hover{background:var(--bg2)}
 .menu label .c{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)}
-.menu input{accent-color:var(--accent);width:15px;height:15px}
+.menu input[type=checkbox],.menu input[type=radio]{accent-color:var(--accent);width:17px;height:17px;flex:none}
 .menu .mh{font-size:12px;color:var(--muted);padding:8px 10px}
 .filters .sp{flex:1}
 .clear{border:0;background:none;color:var(--muted);cursor:pointer;padding:9px 10px;font-size:14px}
@@ -100,27 +126,29 @@ nav.main [aria-current="page"]{color:var(--accent);border-bottom-color:var(--acc
 
 .tbox{border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .tscroll{overflow-x:auto}
-table{border-collapse:separate;border-spacing:0;width:100%;min-width:1320px}
-thead th{background:var(--bg2);text-align:left;font-weight:500;color:var(--ink2);font-size:14px;padding:14px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
-tbody td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:14.5px;background:#fff}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1420px}
+thead th{background:var(--bg2);text-align:left;font-weight:500;color:var(--ink2);font-size:15.5px;padding:17px 18px;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody td{padding:20px 18px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:16px;background:#fff}
 tbody tr:last-child td{border-bottom:0}
 tbody tr:hover td{background:#fbfcfe}
 .stick{position:sticky;z-index:1}
 th.stick{z-index:2}
-.stick1{right:72px;box-shadow:-10px 0 12px -10px #0d122030}
-.stick2{right:0;width:72px;text-align:center}
-.det{white-space:nowrap;color:var(--ink2)}
+.stick1{right:84px;box-shadow:-10px 0 12px -10px #0d122030}
+.stick2{right:0;width:84px;text-align:center}
+.more{position:absolute;left:-17px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;border:1px solid var(--line2);background:#fff;cursor:pointer;font-size:20px;line-height:1;color:var(--ink2);box-shadow:0 2px 6px #0d12201a}
+.more:hover{color:var(--accent);border-color:var(--accent)}
+.det{white-space:nowrap;color:var(--ink2);font-size:16px}
 .det.new{color:var(--green);font-weight:500}
 .det.new::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#1aa36a;margin-right:8px;vertical-align:1px}
 .co{display:flex;align-items:center;gap:12px;min-width:190px}
-.co b{font-weight:600}
-.logo{flex:none;width:36px;height:36px;border-radius:9px;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-weight:600;font-size:12px;color:var(--accent);background:#f4f6fd}
+.co b{font-weight:600;font-size:16.5px}
+.logo{flex:none;width:42px;height:42px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-weight:600;font-size:12px;color:var(--accent);background:#f4f6fd}
 .logo img{width:72%;height:72%;object-fit:contain}
 .logo:has(img){background:#fff}
-.role{min-width:250px;max-width:340px}
-.role a{text-decoration:none;font-weight:500}
+.role{min-width:260px;max-width:360px;line-height:1.4}
+.role a{text-decoration:none;font-weight:400;font-size:16.5px}
 .role a:hover{color:var(--accent);text-decoration:underline}
-.tag{display:inline-block;border-radius:7px;padding:3px 9px;font-size:13px;white-space:nowrap;border:1px solid var(--line2);background:#fff;color:var(--ink2)}
+.tag{display:inline-block;border-radius:8px;padding:4px 11px;font-size:14.5px;white-space:nowrap;border:1px solid var(--line2);background:#fff;color:var(--ink2)}
 .t-type{border-color:#d6dcea;background:#f6f8fc}
 .t-bb{background:#eef0f5;border-color:#d3d8e3;color:#26324d}
 .t-cib{background:#ecf4ff;border-color:#bcd6f8;color:#1b5fae}
@@ -133,6 +161,7 @@ th.stick{z-index:2}
 .k-spring{background:#fff0f3;border-color:#f8c3cf;color:#c42a52}
 .k-summer{background:#ecf4ff;border-color:#bcd6f8;color:#1b5fae}
 .k-offcycle{background:#e9f6f6;border-color:#b9e1e1;color:#13706f}
+.k-graduate{background:#e7f6ee;border-color:#a9dcbf;color:#12804f}
 .s-tag{border-color:transparent;background:var(--accent-soft);color:var(--accent)}
 .s-Quant,.s-SalesTrading,.s-Research{background:#f1edff;color:#5b3fbf}
 .s-AssetManagement,.s-WealthManagement{background:#eaf7ef;color:#16794a}
@@ -142,10 +171,10 @@ th.stick{z-index:2}
 .s-RealEstate,.s-Infrastructure,.s-Restructuring,.s-CorporateBanking{background:#fff0e6;color:#b4541a}
 .loc{white-space:nowrap;color:var(--ink2)}
 .dl{white-space:nowrap}
-.dl small{display:block;color:var(--muted);font-size:13px}
+.dl small{display:block;color:var(--muted);font-size:14px}
 .dl.soon small{color:var(--red);font-weight:500}
 .mut{color:var(--muted)}
-.apply{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--navy);border-radius:10px;padding:8px 14px;text-decoration:none;font-weight:600;white-space:nowrap;background:#fff}
+.apply{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--navy);border-radius:11px;padding:10px 16px;font-size:16px;text-decoration:none;font-weight:600;white-space:nowrap;background:#fff}
 .apply:hover{background:var(--navy);color:#fff}
 .save{border:0;background:none;cursor:pointer;color:var(--ink2);padding:6px;border-radius:7px;display:grid;place-items:center;margin:auto}
 .save svg{width:20px;height:20px}
@@ -204,6 +233,11 @@ th.stick{z-index:2}
 .msg.err{display:block;background:var(--red-bg);color:var(--red)}
 @media (max-width:860px){.alert-page{grid-template-columns:1fr}}
 
+.apps .st{border:1px solid var(--line2);border-radius:9px;padding:8px 10px;font-size:15px;background:#fff}
+.apps .rm{border:0;background:none;color:var(--muted);cursor:pointer;font-size:14.5px;text-decoration:underline}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.stats span{border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:15px;color:var(--ink2)}
+.stats b{font-size:20px;color:var(--ink);margin-right:6px}
 footer{margin-top:64px;border-top:1px solid var(--line);padding:24px 0 36px;color:var(--muted);font-size:13.5px}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 @media (max-width:760px){
@@ -225,12 +259,20 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <div class="wrap">
     <a class="brand" href="#/"><span class="mark" aria-hidden="true">ET</span><span>Events Tracker</span></a>
     <nav class="main" aria-label="Pages">
-      <button type="button" id="navTracker" aria-expanded="false" aria-controls="mega">Tracker <i class="chev" aria-hidden="true"></i></button>
+      <button type="button" id="navTracker" aria-expanded="false" aria-controls="popTracker">Tracker <i class="chev" aria-hidden="true"></i></button>
+      <button type="button" id="navWatch" aria-expanded="false" aria-controls="popWatch">Ma watchlist <i class="chev" aria-hidden="true"></i></button>
       <a href="#/banques" id="navBanques">Banques</a>
     </nav>
     <a class="btn" href="#/alertes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="long">Recevoir les alertes</span></a>
   </div>
-  <div class="mega" id="mega" hidden><div class="wrap" id="megaBody"></div></div>
+  <div class="pop" id="popTracker" hidden></div>
+  <div class="pop small" id="popWatch" hidden>
+    <p class="eyebrow">Suis les offres qui t'intéressent</p>
+    <div class="two">
+      <a href="#/alertes"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></span><div><b>Mes alertes</b><span>Un mail dès qu'une offre qui te correspond sort.</span></div></a>
+      <a href="#/candidatures"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z" stroke-linejoin="round"/></svg></span><div><b>Mes candidatures</b><span>Suis chaque candidature, des tests jusqu'à l'offre.</span></div></a>
+    </div>
+  </div>
 </header>
 
 <main id="v-tracker" class="wrap">
@@ -275,6 +317,12 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <div class="firmgrid" id="firmgrid"></div>
 </main>
 
+<main id="v-candidatures" class="wrap" hidden>
+  <div class="title"><h1>Mes candidatures</h1><p>Les offres que tu as sauvegardées avec le signet. Mets à jour leur statut au fil du processus. Tout reste enregistré dans ce navigateur.</p></div>
+  <div class="stats" id="appStats"></div>
+  <div id="apps"></div>
+</main>
+
 <main id="v-alertes" class="wrap" hidden>
   <div class="alert-page">
     <div>
@@ -307,8 +355,8 @@ const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_WnuTcYrNCMHbK00d9Xc3Bw_qeiAQd2L
 const H = { apikey: SUPABASE_PUBLISHABLE_KEY };
 const DAY = 86400000, PER_PAGE = 50;
 
-const KINDS = [["all", "Toutes les offres"], ["event", "Events"], ["spring", "Spring weeks"], ["summer", "Summer internships"], ["offcycle", "Off-cycle"]];
-const KIND_LABEL = { event: "Event", spring: "Spring", summer: "Summer", offcycle: "Off-cycle" };
+const KINDS = [["all", "Toutes les offres"], ["event", "Events"], ["spring", "Spring weeks"], ["summer", "Summer internships"], ["offcycle", "Off-cycle"], ["graduate", "Graduate programmes"]];
+const KIND_LABEL = { event: "Event", spring: "Spring", summer: "Summer", offcycle: "Off-cycle", graduate: "Graduate" };
 const CONTINENTS = [
   ["Europe", ["France", "Royaume-Uni", "Allemagne", "Suisse", "Pays-Bas", "Irlande", "Espagne", "Italie", "Luxembourg", "Belgique", "Suède", "Danemark", "Norvège", "Finlande", "Pologne", "Portugal", "Autriche", "Tchéquie", "Chypre"]],
   ["Amérique du Nord", ["États-Unis", "Canada"]],
@@ -348,9 +396,10 @@ async function load() {
   const t = today();
   ALL = (await r.json()).map(e => {
     const country = e.country || CITY_COUNTRY[e.city] || ({ "France": "France", "Royaume-Uni": "Royaume-Uni", "États-Unis": "États-Unis", "Virtuel": "En ligne" }[e.zone]) || "Non précisé";
-    const posted = e.posted_at ? parse(e.posted_at) : (e.first_seen ? new Date(e.first_seen) : null);
+    // date de sortie : celle donnée par la banque, sinon l'heure où le robot l'a vue sortir ; inconnue sinon (affiche « — »)
+    const posted = e.posted_at ? parse(e.posted_at) : (e.detected_at ? new Date(e.detected_at) : null);
     const fm = firmOf(e.firm), dl = parse(e.deadline), ev = parse(e.event_start);
-    const kind = ["spring", "summer", "offcycle"].includes(e.kind) ? e.kind : "event";
+    const kind = ["spring", "summer", "offcycle", "graduate"].includes(e.kind) ? e.kind : "event";
     const closed = (dl && dl < t) || (!dl && ev && ev < t && kind === "event");
     return {
       id: e.id, firm: fm ? fm.name : e.firm, title: e.title, kind,
@@ -370,10 +419,11 @@ function route() {
   const h = location.hash.replace(/^#\/?/, "");
   if (h.startsWith("banques")) return { v: "banques" };
   if (h.startsWith("alertes")) return { v: "alertes" };
+  if (h.startsWith("candidatures")) return { v: "candidatures" };
   const m = h.match(/^pays\/([^/?]+)/);
   let country = null;
   if (m) for (const [, cs] of CONTINENTS) for (const c of cs) if (slug(c) === m[1]) country = c;
-  const k = (h.match(/(?:^|\/)(event|spring|summer|offcycle)$/) || [])[1] || "all";
+  const k = (h.match(/(?:^|\/)(event|spring|summer|offcycle|graduate)$/) || [])[1] || "all";
   return { v: "tracker", country, kind: k };
 }
 function go(country, kind) {
@@ -418,14 +468,20 @@ function openMenu(btn) {
     m.querySelectorAll("input").forEach(i => i.onchange = () => { F.posted = i.value; F.page = 1; refresh(); });
   } else {
     const opts = counts(base(k), k);
-    m.innerHTML = opts.length ? opts.map(([v, c]) => `<label><input type="checkbox" value="${esc(v)}" ${F[k].has(v) ? "checked" : ""}>${esc(v === "—" ? "Non précisé" : v)}<span class="c">${c}</span></label>`).join("") : `<div class="mh">Aucune option</div>`;
-    m.querySelectorAll("input").forEach(i => i.onchange = () => { i.checked ? F[k].add(i.value) : F[k].delete(i.value); F.page = 1; refresh(); });
+    m.innerHTML = (opts.length > 8 ? `<input class="msearch" type="search" placeholder="Rechercher" aria-label="Rechercher dans la liste">` : "") +
+      `<div class="list">${opts.length ? opts.map(([v, c]) => `<label data-t="${esc(norm(v))}"><input type="checkbox" value="${esc(v)}" ${F[k].has(v) ? "checked" : ""}>${esc(v === "—" ? "Non précisé" : v)}<span class="c">${c}</span></label>`).join("") : `<div class="mh">Aucune option</div>`}</div>
+      <div class="mfoot"><button type="button" class="rz">Effacer</button><button type="button" class="ok">Fermer</button></div>`;
+    m.querySelectorAll(".list input").forEach(i => i.onchange = () => { i.checked ? F[k].add(i.value) : F[k].delete(i.value); F.page = 1; refresh(); });
+    const ms = m.querySelector(".msearch");
+    if (ms) { ms.oninput = () => m.querySelectorAll(".list label").forEach(l => l.hidden = !l.dataset.t.includes(norm(ms.value))); setTimeout(() => ms.focus(), 0); }
+    m.querySelector(".rz").onclick = () => { F[k].clear(); m.querySelectorAll(".list input").forEach(i => i.checked = false); F.page = 1; refresh(); };
+    m.querySelector(".ok").onclick = closeMenus;
   }
   btn.parentNode.appendChild(m);
 }
 function closeMenus() { document.querySelectorAll(".menu").forEach(m => m.remove()); document.querySelectorAll("[data-dd]").forEach(b => b.setAttribute("aria-expanded", "false")); }
-document.addEventListener("click", () => { closeMenus(); toggleMega(false); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") { closeMenus(); toggleMega(false); } });
+document.addEventListener("click", () => { closeMenus(); togglePop(null); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeMenus(); togglePop(null); } });
 function refresh() {  // met à jour sans fermer le menu ouvert
   DD.forEach(([k, l]) => { const b = document.querySelector(`[data-dd="${k}"]`); if (!b) return; const [h, n] = ddLabel(k, l); b.className = n ? "on" : ""; b.innerHTML = h; });
   renderKinds(); renderResults();
@@ -450,7 +506,7 @@ function where(c) {
   return "en " + c;
 }
 function renderTitle() {
-  const what = { all: "Offres finance pour étudiants", event: "Events finance", spring: "Spring weeks", summer: "Summer internships", offcycle: "Stages off-cycle" }[F.kind];
+  const what = { all: "Offres finance pour étudiants", event: "Events finance", spring: "Spring weeks", summer: "Summer internships", offcycle: "Stages off-cycle", graduate: "Graduate programmes" }[F.kind];
   document.getElementById("h1").textContent = `${what} ${where(F.country)}`;
   const cont = F.country && CONTINENTS.find(([, cs]) => cs.includes(F.country));
   document.getElementById("crumbs").innerHTML = `<a href="#/">Tous les pays</a>${cont ? ` / ${esc(cont[0])} / <b>${esc(F.country)}</b>` : ""}`;
@@ -516,7 +572,7 @@ function renderResults() {
     </article>`).join("")}</div>${pager}`;
   } else {
     box.innerHTML = `<div class="tbox"><div class="tscroll"><table>
-      <thead><tr><th>Mise en ligne</th><th>Type de firme</th><th>Banque</th><th>Offre</th><th>Contrat</th><th>Deadline</th><th>Lieu</th><th>Spécialisation</th><th>Division</th><th>Début</th><th class="stick stick1">Lien</th><th class="stick stick2">Sauver</th></tr></thead>
+      <thead><tr><th>Mise en ligne</th><th>Type de firme</th><th>Banque</th><th>Offre</th><th>Contrat</th><th>Deadline</th><th>Lieu</th><th>Spécialisation</th><th>Division</th><th>Début</th><th class="stick stick1"><button type="button" class="more" id="scrollR" aria-label="Voir les colonnes suivantes">›</button>Lien</th><th class="stick stick2">Sauver</th></tr></thead>
       <tbody>${rows.map(e => `<tr>
         <td>${detected(e)}</td><td>${typeTag(e)}</td>
         <td><div class="co">${logo(e.firm)}<b>${esc(e.firm)}</b></div></td>
@@ -531,6 +587,9 @@ function renderResults() {
         <td class="stick stick2">${saveBtn(e)}</td>
       </tr>`).join("")}</tbody></table></div>${pager}</div>`;
   }
+  const sr = document.getElementById("scrollR");
+  if (sr) { const sc = box.querySelector(".tscroll"); const upd = () => sr.textContent = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 4 ? "‹" : "›";
+    sr.onclick = () => sc.scrollBy({ left: sr.textContent === "›" ? 420 : -2000, behavior: "smooth" }); sc.onscroll = upd; upd(); }
   box.querySelectorAll(".save").forEach(b => b.onclick = () => { const id = b.dataset.id; SAVED.has(id) ? SAVED.delete(id) : SAVED.add(id); saveSaved(); b.setAttribute("aria-pressed", String(SAVED.has(id))); });
   box.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { F.page = Number(b.dataset.p); renderResults(); document.querySelector(".resbar").scrollIntoView({ behavior: "smooth" }); });
 }
@@ -543,18 +602,48 @@ function pagerButtons(pages) {
 }
 function renderAll() { renderTitle(); renderKinds(); buildFilters(); renderResults(); }
 
-// ---------- Menu pays (par continent) ----------
-function buildMega() {
+// ---------- Menus de l'en-tête ----------
+const POP_COLS = [["Europe", CONTINENTS[0][1]], ["Asie-Pacifique", CONTINENTS[2][1]], ["Reste du monde", [...CONTINENTS[1][1], ...CONTINENTS[3][1], "En ligne"]]];
+const SEARCH_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>`;
+function buildPop() {
   const c = new Map(); ALL.forEach(e => c.set(e.country, (c.get(e.country) || 0) + 1));
-  document.getElementById("megaBody").innerHTML = `<div><h3>Tracker</h3><a class="all" href="#/">Tous les pays <span>${ALL.length}</span></a>${KINDS.slice(1).map(([k, l]) => `<a href="#/${k}">${l} <span>${ALL.filter(e => e.kind === k).length}</span></a>`).join("")}</div>` +
-    CONTINENTS.map(([name, cs]) => { const items = cs.filter(x => c.get(x)); return items.length ? `<div><h3>${esc(name)}</h3>${items.map(x => `<a href="#/pays/${slug(x)}">${esc(x)} <span>${c.get(x)}</span></a>`).join("")}</div>` : ""; }).join("");
-  document.getElementById("megaBody").onclick = e => { e.stopPropagation(); if (e.target.closest("a")) toggleMega(false); };
+  document.getElementById("popTracker").innerHTML = `<a class="lead" href="#/"><span class="ico">${SEARCH_SVG}</span><div><b>Toutes les offres</b><span>Toutes les offres suivies, dans tous les pays.</span></div></a>
+    <div class="kindrow">${KINDS.slice(1).map(([k, l]) => `<a href="#/${k}">${l}</a>`).join("")}</div><hr>
+    <div class="cols">${POP_COLS.map(([name, cs]) => { const items = cs.filter(x => c.get(x)); return `<div><h3>${esc(name)}</h3>${items.map(x => `<a href="#/pays/${slug(x)}">${esc(x)}<small>${c.get(x)}</small></a>`).join("") || `<span class="mut">Bientôt</span>`}</div>`; }).join("")}</div>`;
 }
-function toggleMega(open) {
-  const m = document.getElementById("mega"), b = document.getElementById("navTracker");
-  open = open ?? m.hidden; m.hidden = !open; b.setAttribute("aria-expanded", String(open));
+const POPS = { navTracker: "popTracker", navWatch: "popWatch" };
+function togglePop(btnId) {
+  Object.entries(POPS).forEach(([b, p]) => {
+    const open = b === btnId && document.getElementById(p).hidden;
+    document.getElementById(p).hidden = !open; document.getElementById(b).setAttribute("aria-expanded", String(open));
+  });
 }
-document.getElementById("navTracker").onclick = e => { e.stopPropagation(); closeMenus(); toggleMega(); };
+Object.entries(POPS).forEach(([b, p]) => {
+  document.getElementById(b).onclick = e => { e.stopPropagation(); closeMenus(); togglePop(b); };
+  document.getElementById(p).onclick = e => { e.stopPropagation(); if (e.target.closest("a")) togglePop(null); };
+});
+
+// ---------- Mes candidatures ----------
+const STATUSES = ["À postuler", "Postulé", "Tests en ligne", "Entretien", "Assessment centre", "Offre reçue", "Refusé"];
+let STATUS = {}; try { STATUS = JSON.parse(localStorage.getItem("et-status") || "{}"); } catch (e) {}
+const saveStatus = () => { try { localStorage.setItem("et-status", JSON.stringify(STATUS)); } catch (e) {} };
+function renderApps() {
+  const byId = new Map(ALL.map(e => [e.id, e]));
+  const list = [...SAVED].map(id => byId.get(id)).filter(Boolean).sort((a, b) => (a.deadline || 8.64e15) - (b.deadline || 8.64e15));
+  const cnt = s => list.filter(e => (STATUS[e.id] || "À postuler") === s).length;
+  document.getElementById("appStats").innerHTML = list.length ? [["Sauvegardées", list.length], ...STATUSES.filter(cnt).map(s => [s, cnt(s)])].map(([l, n]) => `<span><b>${n}</b>${esc(l)}</span>`).join("") : "";
+  const box = document.getElementById("apps");
+  if (!list.length) { box.innerHTML = `<div class="tbox"><div class="empty">Aucune offre sauvegardée pour l'instant. Dans le <a href="#/">tracker</a>, clique sur le signet d'une offre pour la retrouver ici.</div></div>`; return; }
+  box.innerHTML = `<div class="tbox apps"><div class="tscroll"><table style="min-width:980px"><thead><tr><th>Banque</th><th>Offre</th><th>Contrat</th><th>Deadline</th><th>Statut</th><th>Lien</th><th></th></tr></thead><tbody>${list.map(e => `<tr>
+    <td><div class="co">${logo(e.firm)}<b>${esc(e.firm)}</b></div></td>
+    <td class="role"><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a><div class="mut" style="font-size:14px">${place(e)}</div></td>
+    <td><span class="tag k-${e.kind}">${KIND_LABEL[e.kind]}</span></td><td>${deadline(e)}</td>
+    <td><label class="sr" for="st-${esc(e.id)}">Statut</label><select class="st" id="st-${esc(e.id)}" data-id="${esc(e.id)}">${STATUSES.map(s => `<option${(STATUS[e.id] || "À postuler") === s ? " selected" : ""}>${s}</option>`).join("")}</select></td>
+    <td><a class="apply" href="${esc(e.url)}" target="_blank" rel="noopener">Voir l'offre →</a></td>
+    <td><button class="rm" type="button" data-id="${esc(e.id)}">Retirer</button></td></tr>`).join("")}</tbody></table></div></div>`;
+  box.querySelectorAll(".st").forEach(x => x.onchange = () => { STATUS[x.dataset.id] = x.value; saveStatus(); renderApps(); });
+  box.querySelectorAll(".rm").forEach(x => x.onclick = () => { SAVED.delete(x.dataset.id); saveSaved(); renderApps(); });
+}
 
 // ---------- Banques ----------
 const TRACK = { auto: "Suivi automatique", page: "Page surveillée", lien: "Accès direct" };
@@ -608,19 +697,20 @@ document.querySelectorAll(".views button").forEach(b => b.onclick = () => { F.vi
 document.getElementById("freshBtn").onclick = () => { F.posted = "2"; F.page = 1; renderAll(); };
 function show() {
   const r = route();
-  ["tracker", "banques", "alertes"].forEach(v => document.getElementById("v-" + v).hidden = v !== r.v);
+  ["tracker", "banques", "alertes", "candidatures"].forEach(v => document.getElementById("v-" + v).hidden = v !== r.v);
   document.getElementById("navTracker").setAttribute("aria-current", r.v === "tracker" ? "page" : "false");
   document.getElementById("navBanques").setAttribute("aria-current", r.v === "banques" ? "page" : "false");
-  toggleMega(false); closeMenus();
+  togglePop(null); closeMenus();
   if (r.v === "tracker") { F.country = r.country; F.kind = r.kind; F.page = 1; renderAll(); }
   if (r.v === "banques") renderFirms();
+  if (r.v === "candidatures") renderApps();
   window.scrollTo(0, 0);
 }
 window.addEventListener("hashchange", show);
 document.querySelectorAll(".views button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.v === F.view)));
 buildAlertForm();
 load().then(() => {
-  buildMega();
+  buildPop();
   document.getElementById("foot").textContent = `${ALL.length} offres ouvertes · ${FIRMS.length} banques suivies · page chargée le ${new Intl.DateTimeFormat("fr-FR", { dateStyle: "long", timeStyle: "short" }).format(new Date())}`;
   show();
 }).catch(err => { document.getElementById("results").innerHTML = `<div class="tbox"><div class="empty">Impossible de charger les offres (${esc(err.message)}).</div></div>`; });

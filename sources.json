@@ -88,8 +88,12 @@
    "site": "Blackstone_Campus_Careers",
    "url": "https://blackstone.wd1.myworkdayjobs.com/en-US/Blackstone_Campus_Careers",
    "search": [
+    "intern",
+    "graduate",
     "spring",
-    "insight"
+    "insight",
+    "summer",
+    "off-cycle"
    ]
   },
   {
@@ -102,8 +106,12 @@
    "site": "Campus",
    "url": "https://hl.wd1.myworkdayjobs.com/en-US/Campus",
    "search": [
+    "intern",
+    "graduate",
     "spring",
-    "insight"
+    "insight",
+    "summer",
+    "off-cycle"
    ]
   },
   {
@@ -116,22 +124,12 @@
    "site": "DBWebsite",
    "url": "https://db.wd3.myworkdayjobs.com/en-US/DBWebsite",
    "search": [
+    "intern",
+    "graduate",
     "spring",
-    "insight"
-   ]
-  },
-  {
-   "id": "wells-fargo",
-   "type": "workday",
-   "firm": "Wells Fargo",
-   "cat": "Banque d'investissement",
-   "host": "wd1.myworkdaysite.com",
-   "tenant": "wf",
-   "site": "WellsFargoJobs",
-   "url": "https://wd1.myworkdaysite.com/en-US/WellsFargoJobs",
-   "search": [
-    "spring",
-    "insight"
+    "insight",
+    "summer",
+    "off-cycle"
    ]
   },
   {
@@ -144,8 +142,12 @@
    "site": "UBS_Graduates_and_Interns",
    "url": "https://ubs.wd3.myworkdayjobs.com/en-US/UBS_Graduates_and_Interns",
    "search": [
+    "intern",
+    "graduate",
     "spring",
-    "insight"
+    "insight",
+    "summer",
+    "off-cycle"
    ]
   },
   {
@@ -158,8 +160,12 @@
    "site": "CareersatMQ",
    "url": "https://mq.wd3.myworkdayjobs.com/en-US/CareersatMQ",
    "search": [
+    "intern",
+    "graduate",
     "spring",
-    "insight"
+    "insight",
+    "summer",
+    "off-cycle"
    ]
   },
   {

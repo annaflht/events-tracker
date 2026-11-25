@@ -50,9 +50,13 @@ INTERN_WORDS = ["intern", "internship", "summer analyst", "summer associate", "o
                 "placement", "stage ", "stagiaire", "co-op", "vacation scheme", "work experience"]
 EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth form", "school leaver",
                  "step in, step up", "career pathways", "high school", "secondary school",
-                 "graduate programme", "graduate program", "full time", "full-time",
+                 "full time", "full-time", "graduate research fellowship", "experienced hire", "lateral",
                  "interest list", "recruiting news", "talent community", "talent network", "expression of interest",
-                 "graduate scheme", "analyst program -", "associate program", "fellowship", "alternance"]
+                 "fellowship", "alternance", "phd fellowship"]
+# Graduate programmes (CDI de début de carrière avec un programme de formation)
+GRAD_RE = re.compile(r"\bgraduate\b|\bnew grad|\bcampus (analyst|associate|hire)|\b(analyst|associate|trainee|rotational|"
+                     r"leadership|development) (program|programme)\b|management trainee|\bv\.i\.e\b|\bvie\b|jeune diplômé", re.I)
+RULES_VERSION = "2026-11-25b"   # à changer quand les règles changent : les trouvailles suivantes ne comptent pas comme "nouvelles"
 # Ces mots désignent un poste de salarié, même si "internship" apparaît (ex : "Internship Program Manager")
 STAFF_WORDS = ["manager", "coordinator", "recruiter", "director", "vice president", "head of", "specialist",
                "planner", "officer", "administrator", "assistant to", "events coordinator", "dean "]
@@ -208,14 +212,20 @@ def is_intern(title):
     return bool(INTERN_RE.search(title))
 
 
+def is_grad(title):
+    return bool(GRAD_RE.search(title)) and not re.search(r"graduate (recruit|talent|campus manager)|undergraduate", title, re.I)
+
+
 OFFCYCLE_RE = re.compile(r"off[- ]?cycle|\b(6|six|3|three|4|four|5|five|12|twelve)[- ]months?\b|placement|winter intern|"
                          r"\b(january|february|march|september|october|november|q1|q3|q4|autumn|fall|h1|h2|janvier|février|mars|septembre|"
                          r"octobre|novembre)\b|stage de|long[- ]term", re.I)
 
 
 def guess_kind(title, text):
-    """'event', 'spring', 'summer' ou 'offcycle'."""
+    """'event', 'spring', 'summer', 'offcycle' ou 'graduate'."""
     t = title.lower()
+    if is_grad(title) and not is_intern(title):
+        return "graduate"
     if is_intern(title) and not any(w in t for w in ["spring week", "spring insight", "insight"]):
         if OFFCYCLE_RE.search(t):
             return "offcycle"
@@ -233,6 +243,8 @@ def guess_kind(title, text):
 
 def guess_type(title, text):
     s = (title + " " + text[:600]).lower()
+    if is_grad(title) and not is_intern(title):
+        return "Graduate programme"
     if any(w in s for w in ["women", "female", "femmes", "girls"]):
         return "Women in Finance"
     if any(w in s for w in ["challenge", "competition", "compétition"]):
@@ -328,6 +340,8 @@ def guess_start(title, kind, event_start, text):
     if event_start:
         d = dt.date.fromisoformat(event_start)
         return f"{MONTH_FR[d.month - 1]} {d.year}"
+    if kind == "graduate":
+        return y.group(1) if y else None
     if kind == "summer":
         yy = y.group(1) if y else str(CURRENT_YEAR + (1 if dt.date.today().month >= 7 else 0))
         return f"Été {yy}"
@@ -339,7 +353,8 @@ def guess_start(title, kind, event_start, text):
 
 def looks_like_event(title):
     t = title.lower()
-    if any(w in t for w in EXCLUDE_WORDS):
+    excl = [w for w in EXCLUDE_WORDS if not (is_grad(title) and w in ("full time", "full-time"))]
+    if any(w in t for w in excl):
         return False
     # annonces d'anciennes années (ex : "2025 Spring Insight") : on les ignore
     years = [int(y) for y in re.findall(r"\b(20\d\d)\b", t)]
@@ -348,9 +363,9 @@ def looks_like_event(title):
     if any(w in " " + t + " " for w in STAFF_WORDS):
         return False
     # stage d'une année déjà commencée (ex : "Summer 2026" vu en novembre 2026)
-    if is_intern(title) and years and max(years) < CURRENT_YEAR + (1 if dt.date.today().month >= 8 else 0):
+    if (is_intern(title) or is_grad(title)) and years and max(years) < CURRENT_YEAR + (1 if dt.date.today().month >= 8 else 0):
         return False
-    return any(w in t for w in EVENT_WORDS) or is_intern(title)
+    return any(w in t for w in EVENT_WORDS) or is_intern(title) or is_grad(title)
 
 
 STUDENT_WORDS = ["spring", "insight program", "insight day", "insight week", "insight event", "insight experience",
@@ -369,7 +384,7 @@ def looks_like_student_event(title):
         return False
     programme_words = ["spring", "insight program", "insight day", "insight week", "insight event", "early insights",
                        "insight 20", "kickstarter", "sneak peek", "launchpad", "accelerate -"]
-    if is_intern(title):
+    if is_intern(title) or is_grad(title):
         return True
     if any(w in t for w in JOB_WORDS) and not any(w in t for w in programme_words):
         return False
@@ -393,8 +408,17 @@ def build_item(src, event_id, url, title, text, extra_text="", posted=None):
         event_start = later[0] if later and deadline else (parse_date(title) or None)
     kind = guess_kind(title, full)
     typ = guess_type(title, full)
+    if kind == "spring" and not re.search(r"spring", title, re.I):
+        # pas "spring" dans le nom : spring seulement si plusieurs jours entre février et mai
+        mt = re.search(r"\b(" + "|".join(list(MONTHS)[:12]) + r")\b", title.lower())
+        month = MONTHS[mt.group(1)] if mt else (int(event_start[5:7]) if event_start else None)
+        if (month and not 2 <= month <= 5) or re.search(r"day-?long|one[- ]day|1[- ]day|half[- ]day", low):
+            kind = "event"
+            typ = typ if typ == "Women in Finance" else "Insight Day"
     if kind in ("summer", "offcycle"):
         typ = "Summer internship" if kind == "summer" else "Off-cycle"
+    elif kind == "graduate":
+        typ = "Graduate programme"
     elif kind == "spring" and typ != "Women in Finance":
         typ = "Spring Insight"
     spec, division = guess_spec(title, src.get("cat"))
@@ -488,7 +512,7 @@ def _keep(title, event_id, known_ids, seen, accept_all=False):
         return False
     if accept_all:
         years = [int(y) for y in re.findall(r"\b(20\d\d)\b", title)]
-        if (years and max(years) < CURRENT_YEAR) or any(w in title.lower() for w in EXCLUDE_WORDS + STAFF_WORDS):
+        if (years and max(years) < CURRENT_YEAR) or not looks_like_event(title) and any(w in title.lower() for w in EXCLUDE_WORDS + STAFF_WORDS):
             return False
     elif not looks_like_student_event(title):
         return False
@@ -522,7 +546,7 @@ def scan_workday(src, known_ids):
         sess.get(f"https://{host}/en-US/{site}", headers={"User-Agent": browser_ua}, timeout=30)
     except requests.RequestException:
         pass
-    for word in src.get("search", ["spring", "insight", "women", "discover", "intern", "summer", "off-cycle"]):
+    for word in src.get("search", ["spring", "insight", "women", "discover", "intern", "summer", "off-cycle", "graduate", "analyst program"]):
         r = None
         for attempt in range(2):
             time.sleep(3 if attempt == 0 else 15)
@@ -562,7 +586,7 @@ def scan_oracle(src, known_ids):
     """Site carrières Oracle Recruiting Cloud (ex : J.P. Morgan)."""
     host, site_nb = src["host"], src["site"]
     found, seen, ok = [], set(), False
-    for word in src.get("search", ["spring", "insight", "women", "event", "intern", "summer analyst", "off-cycle"]):
+    for word in src.get("search", ["spring", "insight", "women", "event", "intern", "summer analyst", "off-cycle", "graduate", "analyst program"]):
         url = (f"https://{host}/hcmRestApi/resources/latest/recruitingCEJobRequisitions?onlyData=true"
                f"&expand=requisitionList&finder=findReqs;siteNumber={site_nb},limit=50,keyword=%22{word}%22")
         try:
@@ -628,7 +652,7 @@ def scan_talentbrew(src, known_ids):
     """Sites carrières Radancy/TalentBrew (Barclays, Citi, BlackRock…) : ils chargent leurs résultats en JSON."""
     base = src["base"].rstrip("/")
     found, seen, ok = [], set(), False
-    for word in src.get("search", ["spring", "insight", "intern", "summer", "off-cycle"]):
+    for word in src.get("search", ["spring", "insight", "intern", "summer", "off-cycle", "graduate", "analyst programme"]):
         url = (f"{base}/search-jobs/results?ActiveFacetID=0&CurrentPage=1&RecordsPerPage=100&Distance=50"
                f"&RadiusUnitType=0&Keywords={word}&Location=&ShowRadius=False&IsPagination=False&CustomFacetName="
                f"&FacetTerm=&FacetType=0&SearchResultsModuleName=Search+Results&SearchFiltersModuleName=Search+Filters"
@@ -804,6 +828,11 @@ def main():
                 log(f"  ! erreur : {e}")
                 new, ok = [], False
             new = [n for n in new if n["id"] not in {x["id"] for x in all_new}]
+            # Date de détection fiable seulement si la source était déjà suivie avec les mêmes règles :
+            # sinon ce sont d'anciennes offres découvertes d'un coup, et on ne connaît pas leur date.
+            live = bool(st.get("last_ok")) and st.get("rules_version") == RULES_VERSION
+            for n in new:
+                n["detected_at"] = now if live else None
             all_new += new
         else:
             changed, ok, d = scan_page(src, st)
@@ -815,7 +844,8 @@ def main():
         if fails == 2:                       # on prévient une seule fois, au 2e échec d'affilée
             broken.append(src)
         new_states.append({"source_id": src["id"], "last_hash": digest, "fail_count": fails,
-                           "last_ok": now if ok else st.get("last_ok")})
+                           "last_ok": now if ok else st.get("last_ok"),
+                           "rules_version": RULES_VERSION if ok else st.get("rules_version")})
 
     if DRY_RUN:
         log(f"\nMODE TEST — {len(all_new)} annonce(s) seraient ajoutées.")

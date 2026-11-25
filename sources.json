@@ -256,8 +256,7 @@
    "cat": "Trading & Quant",
    "token": "jshiddenevents",
    "url": "https://job-boards.greenhouse.io/jshiddenevents",
-   "accept_all": true,
-   "kind": "spring"
+   "accept_all": true
   },
   {
    "id": "gh-janestreet",

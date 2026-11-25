@@ -732,6 +732,27 @@ def event_line(e):
 
 
 # =========================================================
+# Complète les anciennes lignes (pays, division, spécialisation, début)
+# =========================================================
+def backfill():
+    rows = sb_get("events", "select=id,firm,title,city,cat,kind,event_start,url,link_label&specialisation=is.null&limit=500")
+    if not rows:
+        return
+    out = []
+    for r in rows:
+        country = CITIES.get(r.get("city") or "", (None,))[0]
+        if r.get("city") == "En ligne":
+            country = "En ligne"
+        spec, division = guess_spec(r["title"], r.get("cat"))
+        out.append({"id": r["id"], "firm": r["firm"], "title": r["title"], "country": country,
+                    "division": division, "specialisation": spec,
+                    "start_label": guess_start(r["title"], r.get("kind") or "event", r.get("event_start"), ""),
+                    "link_label": "Voir l'offre"})
+    sb_upsert("events", out)
+    log(f"Lignes complétées : {len(out)}")
+
+
+# =========================================================
 # Programme principal
 # =========================================================
 def main():
@@ -783,6 +804,10 @@ def main():
         return
     sb_upsert("events", all_new)
     sb_upsert("source_state", new_states)
+    try:
+        backfill()
+    except Exception as e:
+        log(f"  ! complément des anciennes lignes : {e}")
     log(f"\nRésumé : {len(all_new)} nouvel(s) event(s), {len(changed_pages)} page(s) modifiée(s), {len(broken)} source(s) cassée(s)")
 
     # ---- Mail d'alerte (un seul par passage, seulement s'il y a du nouveau) ----

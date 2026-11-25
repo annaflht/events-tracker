@@ -126,16 +126,29 @@ main.view{padding:26px 0 40px}
 .menu .c2{margin-left:auto;font:12px var(--mono);color:var(--faint)}
 .menu input[type=checkbox],.menu input[type=radio]{accent-color:var(--blue);width:16px;height:16px;flex:none}
 .menu .mh{font:600 11.5px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 9px 4px}
+.menu.right{left:auto;right:0}
+.sopt{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;border:0;background:none;text-align:left;padding:9px 10px;border-radius:8px;cursor:pointer;min-width:270px}
+.sopt:hover{background:#f6f7f9}
+.sopt b{display:block;font-weight:500;font-size:14.5px}
+.sopt small{display:block;color:var(--muted);font-size:12.5px;margin-top:1px}
+.sopt.on b{color:var(--blue);font-weight:600}
+.sopt .tick{color:var(--blue);font-weight:700}
+.sortbtn{border-color:transparent;background:#f3f4f7}
+.sortbtn:hover{border-color:var(--line2)}
 .menu .mfoot{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin:6px -8px -8px;padding:9px 12px}
 .menu .mfoot button{border:0;background:none;cursor:pointer;font-size:14px;color:var(--muted)}
 .menu .mfoot .ok{color:var(--blue);font-weight:600}
-.freq{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0;font-size:14px}
+.freq{display:flex;align-items:center;gap:8px;margin:14px 0;font-size:14px}
+.freq .count,.freq .qlab,.freq .pill{flex:none}
+.qscroll{display:flex;gap:6px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent);padding-right:24px}
+.qscroll::-webkit-scrollbar{display:none}
+.qscroll button{flex:none}
 .freq .count{font-size:16px;font-weight:600;margin-right:6px}
-.freq button.q{border:1px solid var(--line);background:#fff;border-radius:var(--r);padding:5px 10px;cursor:pointer;font-size:14px}
+.freq button.q{border:1px solid var(--line);background:#fff;border-radius:var(--r);padding:5px 10px;cursor:pointer;font-size:14px;white-space:nowrap}
 .freq button.q:hover{border-color:var(--blue);color:var(--blue)}
 .pill{display:inline-flex;align-items:center;gap:5px;background:var(--blue-soft);color:var(--blue);border-radius:var(--r);padding:5px 6px 5px 10px;font-size:14px}
 .pill button{border:0;background:none;color:inherit;cursor:pointer;font-size:15px;line-height:1;padding:0 3px}
-.views{margin-left:auto;display:flex;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;background:#fff}
+.views{flex:none;margin-left:auto;display:flex;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;background:#fff}
 .views button{border:0;background:none;padding:6px 11px;cursor:pointer;color:var(--muted);font-size:14px}
 .views button[aria-pressed="true"]{background:var(--blue-soft);color:var(--blue)}
 .fresh{display:grid;grid-template-columns:auto 1fr auto auto;gap:20px;align-items:center;padding:14px 18px;margin-bottom:14px}
@@ -388,6 +401,14 @@ footer a{text-decoration:none;margin-right:16px} footer a:hover{color:var(--ink)
   <div class="wrap">
     <div class="card stats" id="hStats"></div>
 
+    <section class="hs" aria-labelledby="tHow">
+      <div class="shead"><div><h2 id="tHow">Comment ça marche</h2></div></div>
+      <div class="steps">
+        <div class="card"><span class="k">01 · toutes les 30 min</span><h3>Le robot visite les sites des banques</h3><p>Il lit directement leurs sites de candidature (tal.net, Greenhouse, Workday, Oracle…) et leurs pages étudiants.</p></div>
+        <div class="card"><span class="k">02 · tri automatique</span><h3>Chaque nouveauté est classée</h3><p>Type d'offre, pays, ville, spécialisation, division, début et deadline. Les CDI expérimentés et les programmes pour lycéens sont écartés.</p></div>
+        <div class="card"><span class="k">03 · publication</span><h3>L'offre apparaît ici</h3><p>Avec sa date de sortie et le lien vers la page officielle de l'offre. Les inscrits aux alertes seront prévenus par mail.</p></div>
+      </div>
+    </section>
     <section class="hs" aria-labelledby="tTiles">
       <div class="shead"><div><h2 id="tTiles">Choisis un type d'offre</h2><p>Chaque type a sa liste, filtrable par pays, spécialisation et deadline.</p></div></div>
       <div class="tiles" id="hTiles"></div>
@@ -405,14 +426,6 @@ footer a{text-decoration:none;margin-right:16px} footer a:hover{color:var(--ink)
       <div class="geo" id="hGeo"></div>
     </section>
 
-    <section class="hs" aria-labelledby="tHow">
-      <div class="shead"><div><h2 id="tHow">Comment ça marche</h2></div></div>
-      <div class="steps">
-        <div class="card"><span class="k">01 · toutes les 30 min</span><h3>Le robot visite les sites des banques</h3><p>Il lit directement leurs sites de candidature (tal.net, Greenhouse, Workday, Oracle…) et leurs pages étudiants.</p></div>
-        <div class="card"><span class="k">02 · tri automatique</span><h3>Chaque nouveauté est classée</h3><p>Type d'offre, pays, ville, spécialisation, division, début et deadline. Les CDI expérimentés et les programmes pour lycéens sont écartés.</p></div>
-        <div class="card"><span class="k">03 · publication</span><h3>L'offre apparaît ici</h3><p>Avec sa date de sortie et le lien vers la page officielle de l'offre. Les inscrits aux alertes seront prévenus par mail.</p></div>
-      </div>
-    </section>
 
     <section class="hs" aria-labelledby="tCov">
       <div class="shead"><div><h2 id="tCov">Les banques suivies</h2><p id="hCovSub"></p></div><a href="#/banques">Voir toutes les banques →</a></div>
@@ -444,7 +457,7 @@ footer a{text-decoration:none;margin-right:16px} footer a:hover{color:var(--ink)
   <div class="wrap">
     <div class="crumbs" id="crumbs"></div>
     <div class="thead">
-      <h1><span id="h1what">Tracker des offres finance pour</span> <label class="sr" for="specSel">Spécialisation</label><select id="specSel"></select></h1>
+      <h1 id="h1what">Tracker des offres finance</h1>
       <span class="upd" id="upd"></span>
     </div>
     <div class="kinds" id="kinds" role="group" aria-label="Type d'offre"></div>
@@ -458,7 +471,7 @@ footer a{text-decoration:none;margin-right:16px} footer a:hover{color:var(--ink)
     <div class="freq">
       <span class="count" id="count" aria-live="polite"></span>
       <span id="pills" style="display:contents"></span>
-      <span class="mut">Filtres fréquents :</span><span id="quick" style="display:contents"></span>
+      <span class="mut qlab">Filtres fréquents :</span><div class="qscroll" id="quick"></div>
       <div class="views" role="group" aria-label="Affichage"><button type="button" data-v="table" aria-pressed="true">☰ Tableau</button><button type="button" data-v="cards" aria-pressed="false">▦ Cartes</button></div>
     </div>
     <div class="card fresh" id="fresh" hidden>
@@ -641,16 +654,20 @@ function buildFilters() {
   const box = document.getElementById("filters");
   box.innerHTML = DD.map(([k, l]) => `<div class="dd"><button type="button" class="chip ${ddState(k) ? "on" : ""}" data-dd="${k}" aria-expanded="false">${ddLabel(k, l)}</button></div>`).join("") +
     `<span class="sp"></span><button type="button" class="clear" id="clear">✕ Effacer</button>
-     <label class="sort">⇅ Tri : <select id="sort"><option value="recent">plus récentes</option><option value="deadline">deadline la plus proche</option><option value="az">banque (A → Z)</option></select></label>`;
-  document.getElementById("sort").value = F.sort;
-  document.getElementById("sort").onchange = e => { F.sort = e.target.value; F.page = 1; renderResults(); };
+     <div class="dd"><button type="button" class="chip sortbtn" data-dd="sort" aria-expanded="false" aria-label="Trier les offres">${sortLabel()}</button></div>`;
   document.getElementById("clear").onclick = () => { SETS.forEach(k => F[k].clear()); F.posted = ""; F.q = ""; document.getElementById("q").value = ""; F.page = 1; if (F.country) go(null, F.kind); else refresh(); };
   box.querySelectorAll("[data-dd]").forEach(b => b.onclick = ev => { ev.stopPropagation(); const open = b.getAttribute("aria-expanded") === "true"; closeMenus(); togglePop(null); if (!open) openMenu(b); });
 }
+const SORTS = [["recent", "Plus récentes", "Les dernières offres sorties en premier"], ["deadline", "Deadline la plus proche", "Ce qui ferme bientôt en premier"], ["az", "Banque (A → Z)", "Par ordre alphabétique"]];
+function sortLabel() { return `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></svg><span class="mut">Tri :</span> ${SORTS.find(x => x[0] === F.sort)[1]}<i class="chev" aria-hidden="true"></i>`; }
 function openMenu(btn) {
   const k = btn.dataset.dd; btn.setAttribute("aria-expanded", "true");
   const m = document.createElement("div"); m.className = "menu"; m.onclick = e => e.stopPropagation();
-  if (k === "country") {
+  if (k === "sort") {
+    m.classList.add("right");
+    m.innerHTML = SORTS.map(([v, l, d]) => `<button type="button" class="sopt ${F.sort === v ? "on" : ""}" data-s="${v}" role="menuitemradio" aria-checked="${F.sort === v}"><span><b>${l}</b><small>${d}</small></span>${F.sort === v ? '<span class="tick">✓</span>' : ""}</button>`).join("");
+    m.querySelectorAll("[data-s]").forEach(b => b.onclick = () => { F.sort = b.dataset.s; F.page = 1; closeMenus(); btn.innerHTML = sortLabel(); renderResults(); });
+  } else if (k === "country") {
     const c = new Map(); base("country").forEach(e => c.set(e.country, (c.get(e.country) || 0) + 1));
     const kk = F.kind !== "all" ? "/" + F.kind : "";
     m.innerHTML = `<div class="list"><a class="c ${!F.country ? "on" : ""}" href="#/offres${kk}">Tous les pays<span class="c2">${[...c.values()].reduce((a, b) => a + b, 0)}</span></a>` +
@@ -674,27 +691,19 @@ function openMenu(btn) {
 function closeMenus() { document.querySelectorAll(".menu").forEach(m => m.remove()); document.querySelectorAll("[data-dd]").forEach(b => b.setAttribute("aria-expanded", "false")); }
 function refresh() {
   DD.forEach(([k, l]) => { const b = document.querySelector(`[data-dd="${k}"]`); if (b) { b.className = "chip " + (ddState(k) ? "on" : ""); b.innerHTML = ddLabel(k, l); } });
+  const sb = document.querySelector('[data-dd="sort"]'); if (sb) sb.innerHTML = sortLabel();
   renderSpecSel(); renderKinds(); renderResults();
 }
 
 // ---------- Rendu du tracker ----------
 function renderTitle() {
   const what = { all: "Tracker des offres finance", event: "Tracker des events finance", spring: "Tracker des spring weeks", summer: "Tracker des summer internships", offcycle: "Tracker des stages off-cycle", graduate: "Tracker des graduate programmes" }[F.kind];
-  document.getElementById("h1what").textContent = what + (F.country ? (F.country === "En ligne" ? " en ligne" : F.country === "Non précisé" ? " sans lieu précisé" : " · " + F.country) : "") + " pour";
+  document.getElementById("h1what").textContent = what + (F.country ? (F.country === "En ligne" ? " en ligne" : F.country === "Non précisé" ? " sans lieu précisé" : " · " + F.country) : "");
   const cont = F.country && CONTINENTS.find(([, cs]) => cs.includes(F.country));
   document.getElementById("crumbs").innerHTML = `<a href="#/">Accueil</a> / <a href="#/offres${F.kind !== "all" ? "/" + F.kind : ""}">Tous les pays</a>${cont ? ` / ${esc(cont[0])} / <b>${esc(F.country)}</b>` : ""}`;
   document.title = `${what}${F.country ? " · " + F.country : ""} · Events Tracker`;
 }
-function renderSpecSel() {
-  const s = document.getElementById("specSel");
-  const opts = counts(base("spec"), "spec").filter(([v]) => v !== "—");
-  const cur = F.spec.size === 1 ? [...F.spec][0] : F.spec.size > 1 ? "__multi" : "";
-  s.innerHTML = `<option value="">toutes les spécialisations</option>${F.spec.size > 1 ? `<option value="__multi">${F.spec.size} spécialisations</option>` : ""}` +
-    (F.spec.size === 1 && !opts.some(([v]) => v === cur) ? `<option value="${esc(cur)}">${esc(cur)}</option>` : "") +
-    opts.map(([v]) => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
-  s.value = cur;
-  s.onchange = () => { if (s.value === "__multi") return; F.spec = new Set(s.value ? [s.value] : []); F.page = 1; refresh(); };
-}
+function renderSpecSel() { return; }
 function renderKinds() {
   const list = base("kind");
   document.getElementById("kinds").innerHTML = KINDS.map(([k, l]) => {

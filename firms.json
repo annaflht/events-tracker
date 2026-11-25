@@ -1,0 +1,745 @@
+{
+ "_explications": "Annuaire des banques affiché sur le site. suivi = auto (le robot lit leur site de candidature), page (le robot surveille la page étudiants), lien (accès direct seulement).",
+ "firms": [
+  {
+   "name": "Goldman Sachs",
+   "domain": "goldmansachs.com",
+   "type": "Bulge bracket",
+   "country": "États-Unis",
+   "url": "https://www.goldmansachs.com/careers/students/programs-and-internships",
+   "suivi": "page",
+   "aliases": []
+  },
+  {
+   "name": "J.P. Morgan",
+   "domain": "jpmorgan.com",
+   "type": "Bulge bracket",
+   "country": "États-Unis",
+   "url": "https://www.jpmorganchase.com/careers/explore-opportunities/programs",
+   "suivi": "auto",
+   "aliases": [
+    "JPMorgan",
+    "JPMorgan Chase"
+   ]
+  },
+  {
+   "name": "Morgan Stanley",
+   "domain": "morganstanley.com",
+   "type": "Bulge bracket",
+   "country": "États-Unis",
+   "url": "https://www.morganstanley.com/careers/students-graduates/opportunities",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Bank of America",
+   "domain": "bankofamerica.com",
+   "type": "Bulge bracket",
+   "country": "États-Unis",
+   "url": "https://careers.bankofamerica.com/en-us/students/campus-experience",
+   "suivi": "auto",
+   "aliases": [
+    "BofA"
+   ]
+  },
+  {
+   "name": "Citi",
+   "domain": "citi.com",
+   "type": "Bulge bracket",
+   "country": "États-Unis",
+   "url": "https://jobs.citi.com/earlycareers-programs-preinternships",
+   "suivi": "auto",
+   "aliases": [
+    "Citigroup"
+   ]
+  },
+  {
+   "name": "Barclays",
+   "domain": "barclays.com",
+   "type": "Bulge bracket",
+   "country": "Royaume-Uni",
+   "url": "https://search.jobs.barclays/early-careers",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Deutsche Bank",
+   "domain": "db.com",
+   "type": "Bulge bracket",
+   "country": "Allemagne",
+   "url": "https://careers.db.com/students-graduates/",
+   "suivi": "page",
+   "aliases": []
+  },
+  {
+   "name": "UBS",
+   "domain": "ubs.com",
+   "type": "Bulge bracket",
+   "country": "Suisse",
+   "url": "https://www.ubs.com/global/en/careers/early-careers.html",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Jefferies",
+   "domain": "jefferies.com",
+   "type": "Bulge bracket",
+   "country": "États-Unis",
+   "url": "https://jefferies.tal.net/vx/lang-en-GB/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/1/adv/",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Wells Fargo",
+   "domain": "wellsfargo.com",
+   "type": "Bulge bracket",
+   "country": "États-Unis",
+   "url": "https://www.wellsfargojobs.com/en/early-careers/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "HSBC",
+   "domain": "hsbc.com",
+   "type": "Banque européenne",
+   "country": "Royaume-Uni",
+   "url": "https://www.hsbc.com/careers/students-and-graduates/insight-programmes",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "BNP Paribas",
+   "domain": "bnpparibas.com",
+   "type": "Banque européenne",
+   "country": "France",
+   "url": "https://www.bnpparibas.co.uk/en/jobs/",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Société Générale",
+   "domain": "societegenerale.com",
+   "type": "Banque européenne",
+   "country": "France",
+   "url": "https://careers.societegenerale.com/en/students-graduates",
+   "suivi": "auto",
+   "aliases": [
+    "Societe Generale",
+    "SG CIB"
+   ]
+  },
+  {
+   "name": "Crédit Agricole CIB",
+   "domain": "ca-cib.com",
+   "type": "Banque européenne",
+   "country": "France",
+   "url": "https://www.ca-cib.com/careers",
+   "suivi": "lien",
+   "aliases": [
+    "CACIB"
+   ]
+  },
+  {
+   "name": "Natixis CIB",
+   "domain": "natixis.com",
+   "type": "Banque européenne",
+   "country": "France",
+   "url": "https://recrutement.natixis.com/",
+   "suivi": "lien",
+   "aliases": [
+    "Natixis",
+    "Natixis IM (Groupe BPCE)"
+   ]
+  },
+  {
+   "name": "Nomura",
+   "domain": "nomura.com",
+   "type": "Banque européenne",
+   "country": "Japon",
+   "url": "https://www.nomura.com/europe/careers/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "MUFG",
+   "domain": "mufg.jp",
+   "type": "Banque européenne",
+   "country": "Japon",
+   "url": "https://www.mufgemea.com/careers/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Standard Chartered",
+   "domain": "sc.com",
+   "type": "Banque européenne",
+   "country": "Royaume-Uni",
+   "url": "https://www.sc.com/en/global-careers/early-careers/our-programmes/insight-programme",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "ING",
+   "domain": "ing.com",
+   "type": "Banque européenne",
+   "country": "Pays-Bas",
+   "url": "https://careers.ing.com/en",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Santander CIB",
+   "domain": "santander.com",
+   "type": "Banque européenne",
+   "country": "Espagne",
+   "url": "https://www.santandercib.com/about-us/careers",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "RBC Capital Markets",
+   "domain": "rbccm.com",
+   "type": "Banque européenne",
+   "country": "Canada",
+   "url": "https://www.rbccm.com/en/careers/programs",
+   "suivi": "page",
+   "aliases": [
+    "RBC"
+   ]
+  },
+  {
+   "name": "Macquarie",
+   "domain": "macquarie.com",
+   "type": "Banque européenne",
+   "country": "Australie",
+   "url": "https://www.macquarie.com/uk/en/careers/graduates-and-interns/our-programmes.html",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Oddo BHF",
+   "domain": "oddo-bhf.com",
+   "type": "Banque européenne",
+   "country": "France",
+   "url": "https://www.oddo-bhf.com/fr/carrieres/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Rothschild & Co",
+   "domain": "rothschildandco.com",
+   "type": "Boutique M&A",
+   "country": "France",
+   "url": "https://www.rothschildandco.com/en/careers/",
+   "suivi": "auto",
+   "aliases": [
+    "Rothschild"
+   ]
+  },
+  {
+   "name": "Lazard",
+   "domain": "lazard.com",
+   "type": "Boutique M&A",
+   "country": "France",
+   "url": "https://www.lazard.com/careers/",
+   "suivi": "page",
+   "aliases": []
+  },
+  {
+   "name": "Evercore",
+   "domain": "evercore.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://www.evercore.com/careers/students-graduates/students-graduates-europe-asia/",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "PJT Partners",
+   "domain": "pjtpartners.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://www.pjtpartners.com/careers",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Centerview Partners",
+   "domain": "centerviewpartners.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://www.centerviewpartners.com/careers",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Moelis",
+   "domain": "moelis.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://www.moelis.com/careers/",
+   "suivi": "lien",
+   "aliases": [
+    "Moelis & Company"
+   ]
+  },
+  {
+   "name": "Perella Weinberg",
+   "domain": "pwpartners.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://pwpartners.com/careers/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Houlihan Lokey",
+   "domain": "hl.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://hl.com/careers/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Piper Sandler",
+   "domain": "pipersandler.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://www.pipersandler.com/careers/students/early-careers-london",
+   "suivi": "page",
+   "aliases": []
+  },
+  {
+   "name": "William Blair",
+   "domain": "williamblair.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://www.williamblair.com/en/Careers/Campus-Recruiting",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Lincoln International",
+   "domain": "lincolninternational.com",
+   "type": "Boutique M&A",
+   "country": "États-Unis",
+   "url": "https://job-boards.greenhouse.io/lincolninternational",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Alantra",
+   "domain": "alantra.com",
+   "type": "Boutique M&A",
+   "country": "Espagne",
+   "url": "https://www.alantra.com/careers/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "BlackRock",
+   "domain": "blackrock.com",
+   "type": "Asset management",
+   "country": "États-Unis",
+   "url": "https://careers.blackrock.com/students-and-graduates",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Fidelity International",
+   "domain": "fidelityinternational.com",
+   "type": "Asset management",
+   "country": "Royaume-Uni",
+   "url": "https://careers.fidelityinternational.com/",
+   "suivi": "auto",
+   "aliases": [
+    "Fidelity"
+   ]
+  },
+  {
+   "name": "Schroders",
+   "domain": "schroders.com",
+   "type": "Asset management",
+   "country": "Royaume-Uni",
+   "url": "https://www.schroders.com/en/global/individual/careers/emerging-talent/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Blackstone",
+   "domain": "blackstone.com",
+   "type": "Private equity",
+   "country": "États-Unis",
+   "url": "https://www.blackstone.com/careers/campus-recruitment/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "KKR",
+   "domain": "kkr.com",
+   "type": "Private equity",
+   "country": "États-Unis",
+   "url": "https://www.kkr.com/careers",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Apollo",
+   "domain": "apollo.com",
+   "type": "Private equity",
+   "country": "États-Unis",
+   "url": "https://www.apollo.com/careers",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Carlyle",
+   "domain": "carlyle.com",
+   "type": "Private equity",
+   "country": "États-Unis",
+   "url": "https://www.carlyle.com/careers/students",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Ardian",
+   "domain": "ardian.com",
+   "type": "Private equity",
+   "country": "France",
+   "url": "https://www.ardian.com/join-us",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Citadel",
+   "domain": "citadel.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://www.citadel.com/careers/students/",
+   "suivi": "lien",
+   "aliases": [
+    "Citadel & Citadel Securities"
+   ]
+  },
+  {
+   "name": "Point72",
+   "domain": "point72.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://point72.com/point72-academy/",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Millennium",
+   "domain": "mlp.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://www.mlp.com/careers/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Marshall Wace",
+   "domain": "mwam.com",
+   "type": "Hedge fund",
+   "country": "Royaume-Uni",
+   "url": "https://www.mwam.com/join-us/early-careers/",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Man Group",
+   "domain": "man.com",
+   "type": "Hedge fund",
+   "country": "Royaume-Uni",
+   "url": "https://www.man.com/careers",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Schonfeld",
+   "domain": "schonfeld.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://job-boards.greenhouse.io/schonfeld",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Two Sigma",
+   "domain": "twosigma.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://careers.twosigma.com/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "D. E. Shaw",
+   "domain": "deshaw.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://www.deshaw.com/careers/students",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Squarepoint Capital",
+   "domain": "squarepoint-capital.com",
+   "type": "Hedge fund",
+   "country": "Royaume-Uni",
+   "url": "https://squarepoint-capital.com/early-careers",
+   "suivi": "auto",
+   "aliases": [
+    "Squarepoint"
+   ]
+  },
+  {
+   "name": "Qube Research & Technologies",
+   "domain": "qube-rt.com",
+   "type": "Hedge fund",
+   "country": "Royaume-Uni",
+   "url": "https://job-boards.greenhouse.io/quberesearchandtechnologies",
+   "suivi": "auto",
+   "aliases": [
+    "QRT",
+    "Qube"
+   ]
+  },
+  {
+   "name": "GSA Capital",
+   "domain": "gsacapital.com",
+   "type": "Hedge fund",
+   "country": "Royaume-Uni",
+   "url": "https://www.gsacapital.com/join-us",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Aquatic Capital",
+   "domain": "aquaticcapitalmanagement.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://job-boards.greenhouse.io/aquaticcapitalmanagement",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "WorldQuant",
+   "domain": "worldquant.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://job-boards.greenhouse.io/worldquant",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Winton",
+   "domain": "winton.com",
+   "type": "Hedge fund",
+   "country": "Royaume-Uni",
+   "url": "https://job-boards.greenhouse.io/winton",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Quadrature Capital",
+   "domain": "quadraturecapital.com",
+   "type": "Hedge fund",
+   "country": "Royaume-Uni",
+   "url": "https://job-boards.greenhouse.io/quadraturecapital",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "PDT Partners",
+   "domain": "pdtpartners.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://job-boards.greenhouse.io/pdtpartners",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Jane Street",
+   "domain": "janestreet.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://www.janestreet.com/join-jane-street/programs-and-events/",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Citadel Securities",
+   "domain": "citadelsecurities.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://www.citadelsecurities.com/careers/students/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Optiver",
+   "domain": "optiver.com",
+   "type": "Trading & quant",
+   "country": "Pays-Bas",
+   "url": "https://www.optiver.com/join-us/jobs/",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "IMC Trading",
+   "domain": "imc.com",
+   "type": "Trading & quant",
+   "country": "Pays-Bas",
+   "url": "https://www.imc.com/eu/careers/students-graduates/programs",
+   "suivi": "auto",
+   "aliases": [
+    "IMC"
+   ]
+  },
+  {
+   "name": "Hudson River Trading",
+   "domain": "hudsonrivertrading.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://www.hudsonrivertrading.com/campus-recruiting/",
+   "suivi": "auto",
+   "aliases": [
+    "HRT"
+   ]
+  },
+  {
+   "name": "Jump Trading",
+   "domain": "jumptrading.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://www.jumptrading.com/careers",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "DRW",
+   "domain": "drw.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://www.drw.com/work-at-drw",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Flow Traders",
+   "domain": "flowtraders.com",
+   "type": "Trading & quant",
+   "country": "Pays-Bas",
+   "url": "https://www.flowtraders.com/careers",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Maven Securities",
+   "domain": "mavensecurities.com",
+   "type": "Trading & quant",
+   "country": "Royaume-Uni",
+   "url": "https://www.mavensecurities.com/careers-overview/",
+   "suivi": "auto",
+   "aliases": [
+    "Maven"
+   ]
+  },
+  {
+   "name": "DV Trading",
+   "domain": "dvtrading.co",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://job-boards.greenhouse.io/dvtrading",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Virtu Financial",
+   "domain": "virtu.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://www.virtu.com/careers/",
+   "suivi": "auto",
+   "aliases": [
+    "Virtu"
+   ]
+  },
+  {
+   "name": "Susquehanna (SIG)",
+   "domain": "sig.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://sig.com/careers/interns-co-ops/",
+   "suivi": "lien",
+   "aliases": [
+    "Susquehanna",
+    "SIG"
+   ]
+  },
+  {
+   "name": "Tower Research Capital",
+   "domain": "tower-research.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://tower-research.com/open-positions/",
+   "suivi": "auto",
+   "aliases": [
+    "Tower Research"
+   ]
+  },
+  {
+   "name": "XTX Markets",
+   "domain": "xtxmarkets.com",
+   "type": "Trading & quant",
+   "country": "Royaume-Uni",
+   "url": "https://www.xtxmarkets.com/careers/",
+   "suivi": "auto",
+   "aliases": [
+    "XTX"
+   ]
+  },
+  {
+   "name": "Akuna Capital",
+   "domain": "akunacapital.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://akunacapital.com/careers/",
+   "suivi": "auto",
+   "aliases": [
+    "Akuna"
+   ]
+  },
+  {
+   "name": "Five Rings",
+   "domain": "fiverings.com",
+   "type": "Trading & quant",
+   "country": "États-Unis",
+   "url": "https://fiverings.com/careers/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "G-Research",
+   "domain": "gresearch.com",
+   "type": "Trading & quant",
+   "country": "Royaume-Uni",
+   "url": "https://www.gresearch.com/vacancies/",
+   "suivi": "lien",
+   "aliases": []
+  },
+  {
+   "name": "Transmarket Group",
+   "domain": "transmarketgroup.com",
+   "type": "Trading & quant",
+   "country": "Royaume-Uni",
+   "url": "https://job-boards.greenhouse.io/transmarketgroup",
+   "suivi": "auto",
+   "aliases": []
+  }
+ ]
+}

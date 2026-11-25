@@ -68,7 +68,7 @@
    "type": "Bulge bracket",
    "country": "Allemagne",
    "url": "https://careers.db.com/students-graduates/",
-   "suivi": "page",
+   "suivi": "auto",
    "aliases": []
   },
   {
@@ -455,7 +455,7 @@
    "type": "Hedge fund",
    "country": "Royaume-Uni",
    "url": "https://www.man.com/careers",
-   "suivi": "lien",
+   "suivi": "auto",
    "aliases": []
   },
   {
@@ -738,6 +738,24 @@
    "type": "Trading & quant",
    "country": "Royaume-Uni",
    "url": "https://job-boards.greenhouse.io/transmarketgroup",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "ExodusPoint",
+   "domain": "exoduspoint.com",
+   "type": "Hedge fund",
+   "country": "États-Unis",
+   "url": "https://job-boards.greenhouse.io/exoduspoint",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Mako Trading",
+   "domain": "mako.com",
+   "type": "Trading & quant",
+   "country": "Royaume-Uni",
+   "url": "https://job-boards.greenhouse.io/mako",
    "suivi": "auto",
    "aliases": []
   }

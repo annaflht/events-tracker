@@ -546,28 +546,42 @@ def scan_workday(src, known_ids):
         sess.get(f"https://{host}/en-US/{site}", headers={"User-Agent": browser_ua}, timeout=30)
     except requests.RequestException:
         pass
-    for word in src.get("search", ["spring", "insight", "women", "discover", "intern", "summer", "off-cycle", "graduate", "analyst program"]):
-        r = None
-        for attempt in range(2):
-            time.sleep(3 if attempt == 0 else 15)
-            try:
-                r = sess.post(f"{api}/jobs", timeout=30, headers=wd_headers,
-                                  json={"appliedFacets": {}, "limit": 20, "offset": 0, "searchText": word})
-            except requests.RequestException as e:
-                log(f"  ! erreur réseau : {e}"); r = None
-            if r is not None and r.status_code != 429:
+    # Workday limite fortement les robots : une requête toutes les 8 secondes, pagination limitée
+    postings = []
+    for word in src.get("search", ["intern", "graduate", "spring", "insight", "summer", "off-cycle", "women"]):
+        pages = 5 if word in ("intern", "graduate") else 1
+        for page in range(pages):
+            r = None
+            for attempt in range(2):
+                time.sleep(8 if attempt == 0 else 45)
+                try:
+                    r = sess.post(f"{api}/jobs", timeout=30, headers=wd_headers,
+                                  json={"appliedFacets": {}, "limit": 20, "offset": page * 20, "searchText": word})
+                except requests.RequestException as e:
+                    log(f"  ! erreur réseau : {e}"); r = None
+                if r is not None and r.status_code != 429:
+                    break
+            if r is None or r.status_code != 200:
+                log(f"  ! recherche '{word}' : {getattr(r, 'status_code', 'pas de réponse')}")
+                if r is not None and r.status_code == 429:
+                    break
+                continue
+            ok = True
+            got = r.json().get("jobPostings", [])
+            postings += got
+            if len(got) < 20:
                 break
-        if r is None:
-            continue
-        if r.status_code != 200:
-            log(f"  ! recherche '{word}' : {r.status_code}"); continue
-        ok = True
-        for j in r.json().get("jobPostings", []):
+        if not ok and postings == []:
+            break   # bloqué dès la première recherche : inutile d'insister
+    if True:
+        for j in postings:
             path, title = j.get("externalPath", ""), (j.get("title") or "").strip()
             event_id = f"workday:{tenant}:{path.rsplit('_', 1)[-1]}"
             if not _keep(title, event_id, known_ids, seen):
                 continue
-            time.sleep(1)
+            if len(found) >= MAX_NEW_PAGES_PER_SOURCE:
+                break
+            time.sleep(2)
             text = ""
             try:
                 d = sess.get(f"{api}{path}", headers=wd_headers, timeout=30).json()

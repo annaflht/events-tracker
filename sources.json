@@ -473,6 +473,30 @@
    "cat": "Trading & Quant",
    "token": "quadraturecapital",
    "url": "https://job-boards.greenhouse.io/quadraturecapital"
+  },
+  {
+   "id": "gh-exoduspoint",
+   "type": "greenhouse",
+   "firm": "ExodusPoint",
+   "cat": "Hedge Fund",
+   "token": "exoduspoint",
+   "url": "https://job-boards.greenhouse.io/exoduspoint"
+  },
+  {
+   "id": "gh-mangroup",
+   "type": "greenhouse",
+   "firm": "Man Group",
+   "cat": "Hedge Fund",
+   "token": "mangroup",
+   "url": "https://job-boards.greenhouse.io/mangroup"
+  },
+  {
+   "id": "gh-mako",
+   "type": "greenhouse",
+   "firm": "Mako Trading",
+   "cat": "Trading & Quant",
+   "token": "mako",
+   "url": "https://job-boards.greenhouse.io/mako"
   }
  ]
 }

@@ -44,7 +44,7 @@ MAX_NEW_PAGES_PER_SOURCE = 25   # limite de pages d'events lues par source et pa
 EVENT_WORDS = ["insight", "event", "women", "discover", "open day", "office visit", "networking",
                "webinar", "spotlight", "breakfast", "evening", "panel", "masterclass", "workshop",
                "challenge", "competition", "spring week", "fair", "session", "spring into", "spring insight",
-               "immersion", "winternship"]
+               "immersion", "winternship", "sneak peek", "launchpad", "accelerate -", "kickstarter"]
 EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth form", "school leaver",
                  "step in, step up", "career pathways", "high school", "secondary school",
                  "graduate programme", "graduate program", "summer analyst", "full time", "full-time",
@@ -184,7 +184,8 @@ def guess_kind(title, text):
     """'spring' pour une spring week / un programme d'insight de plusieurs jours, sinon 'event'."""
     t = title.lower()
     if any(w in t for w in ["spring", "insight week", "insight programme", "insight program", "insight 20",
-                            "kickstarter", "immersion", "fttp", "discovery programme"]):
+                            "kickstarter", "immersion", "fttp", "discovery programme", "sneak peek",
+                            "launchpad", "accelerate -"]):
         return "spring"
     if re.search(r"\b(two|three|four|five|2|3|4|5)[- ]day (programme|program|insight|event)", text.lower()):
         return "spring"
@@ -230,7 +231,8 @@ def looks_like_event(title):
 
 STUDENT_WORDS = ["spring", "insight program", "insight day", "insight week", "insight event", "insight experience",
                  "insight evening", "insights event", "insight 20", "insight series", "discover", "women in", "immersion", "explore ", "open day", "taster",
-                 "early insights", "virtual experience", "mentorship", "first year", "1st year", "winternship"]
+                 "early insights", "virtual experience", "mentorship", "first year", "1st year", "winternship",
+                 "sneak peek", "launchpad", "accelerate -", "kickstarter", "women's insight"]
 JOB_WORDS = ["manager", "vice president", "director", "engineer", "banker", "associate", "analyst", "representative",
              "specialist", "lead ", "head of", "officer", "planner", "designer", "professional", "hiring event",
              "investor", "consultant", "developer", "advisor", "executive", "intern ", "internship"]
@@ -242,7 +244,7 @@ def looks_like_student_event(title):
     if not looks_like_event(title):
         return False
     programme_words = ["spring", "insight program", "insight day", "insight week", "insight event", "early insights",
-                       "insight 20", "kickstarter"]
+                       "insight 20", "kickstarter", "sneak peek", "launchpad", "accelerate -"]
     if any(w in t for w in JOB_WORDS) and not any(w in t for w in programme_words):
         return False
     return any(w in t for w in STUDENT_WORDS)

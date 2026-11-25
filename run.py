@@ -761,7 +761,8 @@ def backfill():
         if r.get("city") == "En ligne":
             country = "En ligne"
         spec, division = guess_spec(r["title"], r.get("cat"))
-        out.append({"id": r["id"], "firm": r["firm"], "title": r["title"], "country": country,
+        out.append({"id": r["id"], "firm": r["firm"], "title": r["title"], "url": r["url"], "kind": r.get("kind") or "event",
+                    "country": country,
                     "division": division, "specialisation": spec,
                     "start_label": guess_start(r["title"], r.get("kind") or "event", r.get("event_start"), ""),
                     "link_label": "Voir l'offre"})

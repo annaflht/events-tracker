@@ -91,11 +91,17 @@ CITIES = {
     "Tokyo": ("Japon", ["tokyo"]), "Shanghai": ("Chine", ["shanghai"]), "Pékin": ("Chine", ["beijing"]),
     "Mumbai": ("Inde", ["mumbai"]), "Bangalore": ("Inde", ["bangalore", "bengaluru"]), "Gurgaon": ("Inde", ["gurgaon", "gurugram"]),
     "Sydney": ("Australie", ["sydney"]), "Melbourne": ("Australie", ["melbourne"]),
+    "Mexico": ("Mexique", ["mexico city", "mexico"]), "Dallas": ("États-Unis", ["dallas"]),
+    "Knutsford": ("Royaume-Uni", ["knutsford"]), "Northampton": ("Royaume-Uni", ["northampton"]),
+    "Kronberg": ("Allemagne", ["kronberg"]), "Manille": ("Philippines", ["manila", "philippines"]),
+    "Bangkok": ("Thaïlande", ["bangkok", "thailand"]), "Jakarta": ("Indonésie", ["jakarta", "indonesia"]),
+    "Kuala Lumpur": ("Malaisie", ["kuala lumpur", "malaysia"]), "Riyad": ("Arabie saoudite", ["riyadh"]),
+    "Doha": ("Qatar", ["doha"]), "Johannesburg": ("Afrique du Sud", ["johannesburg"]),
     "Séoul": ("Corée du Sud", ["seoul"]), "Taipei": ("Taïwan", ["taipei"]), "São Paulo": ("Brésil", ["são paulo", "sao paulo"]),
 }
 # Ancienne colonne "zone" (gardée pour compatibilité)
 COUNTRY_ZONE = {"France": "France", "Royaume-Uni": "Royaume-Uni", "États-Unis": "États-Unis", "Canada": "États-Unis"}
-ASIA = {"Hong Kong", "Singapour", "Japon", "Chine", "Inde", "Australie", "Corée du Sud", "Taïwan", "Émirats arabes unis", "Israël"}
+ASIA = {"Philippines", "Thaïlande", "Indonésie", "Malaisie", "Arabie saoudite", "Qatar", "Hong Kong", "Singapour", "Japon", "Chine", "Inde", "Australie", "Corée du Sud", "Taïwan", "Émirats arabes unis", "Israël"}
 # Si la page d'un event contient un de ces mots, il s'adresse à des lycéens : on l'écarte.
 PAGE_EXCLUDE_WORDS = ["year 13", "year 12", "sixth form", "a-level", "a level students", "school students",
                       "secondary school", "high school"]
@@ -194,13 +200,17 @@ def date_after(label_regex, text, window=120):
     return parse_date(text[m.end(): m.end() + window])
 
 
+INTERN_RE = re.compile(r"\bintern(s|ship|ships)?\b|summer analyst|summer associate|off[- ]?cycle|placement|\bstage\b|stagiaire|"
+                       r"co-op|vacation scheme|work experience", re.I)
+
+
 def is_intern(title):
-    t = " " + title.lower() + " "
-    return any(w in t for w in INTERN_WORDS)
+    return bool(INTERN_RE.search(title))
 
 
 OFFCYCLE_RE = re.compile(r"off[- ]?cycle|\b(6|six|3|three|4|four|5|five|12|twelve)[- ]months?\b|placement|winter intern|"
-                         r"\b(january|february|march|september|october|november|q1|q3|q4|autumn|fall|h1|h2)\b|stage de", re.I)
+                         r"\b(january|february|march|september|october|november|q1|q3|q4|autumn|fall|h1|h2|janvier|février|mars|septembre|"
+                         r"octobre|novembre)\b|stage de|long[- ]term", re.I)
 
 
 def guess_kind(title, text):
@@ -309,6 +319,10 @@ def guess_start(title, kind, event_start, text):
     m = re.search(r"\b(" + "|".join(list(MONTHS)[:12]) + r")\b", t)
     if m and y:
         return f"{MONTH_FR[MONTHS[m.group(1)] - 1]} {y.group(1)}"
+    fr = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
+    m = re.search(r"\b(" + "|".join(fr) + r")\b", t)
+    if m and y:
+        return f"{MONTH_FR[fr.index(m.group(1))]} {y.group(1)}"
     if "summer" in t and y:
         return f"Été {y.group(1)}"
     if event_start:
@@ -332,6 +346,9 @@ def looks_like_event(title):
     if years and max(years) < CURRENT_YEAR:
         return False
     if any(w in " " + t + " " for w in STAFF_WORDS):
+        return False
+    # stage d'une année déjà commencée (ex : "Summer 2026" vu en novembre 2026)
+    if is_intern(title) and years and max(years) < CURRENT_YEAR + (1 if dt.date.today().month >= 8 else 0):
         return False
     return any(w in t for w in EVENT_WORDS) or is_intern(title)
 

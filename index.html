@@ -3,199 +3,219 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Events Tracker — spring weeks et events des banques</title>
-<meta name="description" content="Toutes les spring weeks, insight days et events des banques d'investissement et des firmes de trading, dès leur mise en ligne, avec le lien d'inscription officiel.">
+<title>Events Tracker : offres finance pour étudiants (events, spring, summer, off-cycle)</title>
+<meta name="description" content="Toutes les offres finance pour étudiants (events, spring weeks, summer et off-cycle internships), classées par pays, dès leur mise en ligne, avec le lien vers l'offre officielle.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#ffffff; --bg2:#f6f6f4; --ink:#0c0d12; --ink2:#3d3f4a; --muted:#6b6e7b; --line:#e8e8ec; --line2:#d9dae0;
-  --accent:#2747f5; --accent-ink:#ffffff; --accent-soft:#eef1ff;
-  --red:#c8341f; --red-bg:#fdeeea; --green:#0e7a4c; --green-bg:#e6f5ed; --amber:#a35a00; --amber-bg:#fdf3e1;
-  --violet:#6b3fd1; --violet-bg:#f2edfd;
-  --r:12px; --font:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  --bg:#fff; --bg2:#f7f8fa; --ink:#0d1220; --ink2:#384052; --muted:#6b7384; --line:#e7e9ee; --line2:#d8dbe3;
+  --accent:#2f5bea; --accent2:#2449c9; --accent-soft:#eef2fd; --navy:#14203d;
+  --green:#12804f; --green-bg:#e7f6ee; --red:#c2361f; --red-bg:#fdeeea;
+  --font:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"Geist Mono",ui-monospace,Menlo,monospace;
   color-scheme:light;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-button,input,select{font:inherit;color:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:inherit} button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
-.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1360px;margin:0 auto;padding:0 24px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none !important}
 
-/* En-tête */
-header.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.88);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:28px;height:64px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:16px;letter-spacing:-.01em}
-.mark{width:28px;height:28px;border-radius:8px;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:500}
-nav.main{display:flex;gap:4px;margin-left:auto;align-items:center}
-nav.main a{text-decoration:none;padding:8px 14px;border-radius:8px;color:var(--ink2);font-weight:500;font-size:14.5px}
-nav.main a:hover{background:var(--bg2);color:var(--ink)}
-nav.main a[aria-current="page"]{color:var(--ink);background:var(--bg2)}
-nav.main a.cta{background:var(--ink);color:#fff;margin-left:8px}
-.short{display:none}
-nav.main a.cta:hover{background:#262833}
-nav.main a.cta[aria-current="page"]{background:var(--accent)}
-.count{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:4px}
+header.top{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.top>.wrap{display:flex;align-items:center;gap:32px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-.02em}
+.mark{width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:500}
+nav.main{display:flex;align-items:stretch;gap:6px;height:100%;margin:0 auto}
+nav.main>a,nav.main>button{display:flex;align-items:center;gap:8px;padding:0 14px;border:0;background:none;text-decoration:none;color:var(--ink2);font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+nav.main>a:hover,nav.main>button:hover{color:var(--ink)}
+nav.main [aria-current="page"]{color:var(--accent);border-bottom-color:var(--accent)}
+.chev{width:8px;height:8px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg) translateY(-3px);display:inline-block}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;background:var(--accent);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn:hover{background:var(--accent2)}
+.btn.dark{background:var(--navy)} .btn.dark:hover{background:#0b1430}
+.btn svg{width:17px;height:17px}
 
-/* Hero */
-.hero{padding:64px 0 36px;text-align:center}
-.live{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 10px;font-size:13px;color:var(--ink2);background:#fff}
-.dot{width:7px;height:7px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 3px #16a34a22}
-.hero h1{font-size:clamp(34px,5.2vw,58px);line-height:1.04;letter-spacing:-.035em;font-weight:700;margin:20px auto 16px;max-width:860px}
-.hero h1 em{font-style:normal;color:var(--accent)}
-.hero p.sub{font-size:17.5px;color:var(--ink2);max-width:640px;margin:0 auto 28px}
-form.search{display:flex;gap:8px;max-width:620px;margin:0 auto;background:#fff;border:1px solid var(--line2);border-radius:14px;padding:6px;box-shadow:0 1px 2px #0000000a,0 8px 24px -12px #0c0d1222}
-form.search input{flex:1;border:0;outline:0;padding:10px 12px;font-size:16px;min-width:0;background:transparent}
-.btn{border:0;border-radius:10px;padding:10px 18px;font-weight:600;cursor:pointer;background:var(--ink);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-.btn:hover{background:#262833}
-.btn.blue{background:var(--accent)} .btn.blue:hover{background:#1c38d6}
-.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line2)} .btn.ghost:hover{background:var(--bg2)}
-.popular{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-top:18px;font-size:13.5px;color:var(--muted)}
-.chip{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:6px 12px;font-size:13.5px;cursor:pointer;color:var(--ink2)}
-.chip:hover{border-color:var(--ink2)}
-.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
-.browse{display:inline-block;margin-top:18px;font-size:14px;color:var(--ink2)}
+.mega{position:absolute;left:0;right:0;top:64px;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 24px 48px -24px #0d122033;z-index:39}
+.mega .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;padding-top:24px;padding-bottom:28px}
+.mega h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:600}
+.mega a{display:flex;justify-content:space-between;gap:12px;padding:6px 8px;margin:0 -8px;border-radius:7px;text-decoration:none;font-size:14.5px}
+.mega a:hover{background:var(--bg2)} .mega a span{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.mega a.all{font-weight:600}
 
-/* Bandeau des dernières offres */
-.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);overflow:hidden;position:relative}
-.ticker .lab{position:absolute;left:0;top:0;bottom:0;z-index:2;display:flex;align-items:center;padding:0 16px 0 24px;background:linear-gradient(90deg,var(--bg2) 80%,transparent);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.track{display:flex;gap:12px;padding:12px 0 12px 130px;width:max-content;animation:roll 70s linear infinite}
-.ticker:hover .track{animation-play-state:paused}
-@keyframes roll{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){.track{animation:none}}
-.tk{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 12px 7px 8px;text-decoration:none;font-size:13.5px;white-space:nowrap}
-.tk:hover{border-color:var(--line2)}
-.tk b{font-weight:600}
-.tk .t{color:var(--ink2);max-width:320px;overflow:hidden;text-overflow:ellipsis}
-.tk .ago{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.title{padding:28px 0 18px}
+.title h1{font-size:clamp(24px,3vw,32px);letter-spacing:-.025em;margin:0;line-height:1.15}
+.title p{margin:6px 0 0;color:var(--muted)}
+.crumbs{font-size:13.5px;color:var(--muted);margin-bottom:8px}
+.crumbs a{text-decoration:none} .crumbs a:hover{text-decoration:underline}
 
-/* Logos */
-.logo{flex:none;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;overflow:hidden;font-weight:600;font-size:13px;color:var(--ink2)}
-.logo img{width:70%;height:70%;object-fit:contain}
-.logo.sm{width:26px;height:26px;border-radius:7px;font-size:10px}
-.logo.lg{width:48px;height:48px;border-radius:12px}
+.kinds{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.kinds button{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:9px 18px;font-size:15px;cursor:pointer;font-weight:500;display:flex;gap:8px;align-items:center}
+.kinds button span{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.kinds button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.kinds button[aria-pressed="true"] span{color:#c9d1e6}
 
-/* Chiffres */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r);margin:40px 0 0;overflow:hidden}
-.stat{padding:20px 22px;border-right:1px solid var(--line)}
-.stat:last-child{border-right:0}
-.stat .n{font-size:30px;font-weight:700;letter-spacing:-.03em}
-.stat .l{font-size:13.5px;color:var(--muted)}
-@media (max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.panel{border:1px solid var(--line);border-radius:16px;background:#fff}
+.searchrow{display:flex;gap:12px;align-items:center;padding:10px 10px 10px 18px;border-bottom:1px solid var(--line)}
+.searchrow svg{width:19px;height:19px;color:var(--muted);flex:none}
+.searchrow input{flex:1;border:0;outline:0;font-size:16px;padding:8px 0;min-width:0;background:transparent}
+.filters{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;padding:8px 12px}
+.dd{position:relative}
+.dd>button{border:0;background:none;border-radius:9px;padding:9px 12px;cursor:pointer;display:flex;gap:8px;align-items:center;color:var(--ink2);font-size:14.5px}
+.dd>button:hover{background:var(--bg2)}
+.dd>button.on{background:var(--accent-soft);color:var(--accent)}
+.dd>button .n{background:var(--accent);color:#fff;border-radius:999px;font-size:11.5px;min-width:19px;height:19px;display:grid;place-items:center;padding:0 5px}
+.menu{position:absolute;top:calc(100% + 6px);left:0;z-index:30;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px -16px #0d122040;min-width:250px;max-height:360px;overflow:auto;padding:6px}
+.menu label{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:14px}
+.menu label:hover{background:var(--bg2)}
+.menu label .c{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.menu input{accent-color:var(--accent);width:15px;height:15px}
+.menu .mh{font-size:12px;color:var(--muted);padding:8px 10px}
+.filters .sp{flex:1}
+.clear{border:0;background:none;color:var(--muted);cursor:pointer;padding:9px 10px;font-size:14px}
+.clear:hover{color:var(--ink)}
+.sort{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;padding-left:12px;border-left:1px solid var(--line)}
+.sort select{border:0;background:none;font-weight:500;color:var(--ink);cursor:pointer;padding:8px 4px;font-size:14.5px}
 
-/* Sections */
-section.block{padding:64px 0 0}
-.head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}
-.head h2{font-size:28px;letter-spacing:-.025em;margin:0;line-height:1.15}
-.head p{margin:6px 0 0;color:var(--muted)}
-.eyebrow{font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.resbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px 4px 12px}
+.resbar .count{font-size:16px;font-weight:500;margin-right:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:5px 8px 5px 12px;font-size:14px}
+.pill button{border:0;background:none;color:inherit;cursor:pointer;font-size:15px;line-height:1;padding:0 3px}
+.views{margin-left:auto;display:flex;gap:4px}
+.views button{border:0;background:none;padding:7px 12px;border-radius:8px;cursor:pointer;color:var(--muted);display:flex;gap:7px;align-items:center;font-size:14px}
+.views button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.views svg{width:16px;height:16px}
 
-/* Barre de filtres */
-.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);margin-bottom:14px}
-.sel{position:relative}
-.sel select{appearance:none;border:1px solid var(--line2);background:#fff;border-radius:9px;padding:8px 32px 8px 12px;font-size:14px;cursor:pointer}
-.sel::after{content:"";position:absolute;right:12px;top:50%;width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
-.seg{display:flex;background:#fff;border:1px solid var(--line2);border-radius:9px;padding:3px;gap:2px;flex-wrap:wrap}
-.seg button{border:0;background:transparent;padding:5px 10px;border-radius:6px;font-size:13.5px;cursor:pointer;color:var(--ink2)}
-.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
-.toolbar .grow{flex:1}
-.result{font-size:13.5px;color:var(--muted)}
-.firmtag{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:5px 8px 5px 12px;font-size:13.5px;font-weight:500}
-.firmtag button{border:0;background:transparent;color:inherit;cursor:pointer;font-size:15px;line-height:1;padding:0 4px}
+.fresh{display:grid;grid-template-columns:auto 1fr auto;align-items:center;border:1px solid #cdd8fa;border-radius:16px;overflow:hidden;margin:4px 0 18px;background:var(--accent-soft)}
+.fresh .big{background:var(--accent);color:#fff;padding:18px 28px;display:flex;align-items:center;gap:16px;height:100%}
+.fresh .big b{font-size:44px;letter-spacing:-.03em;line-height:1}
+.fresh .big span{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;font-weight:600}
+.fresh .txt{padding:14px 26px}
+.fresh .txt b{display:block;font-size:17px}
+.fresh .txt span{color:var(--ink2);font-size:14.5px}
+.fresh .go{margin-right:18px}
+@media (max-width:760px){.fresh{grid-template-columns:1fr}.fresh .go{margin:0 18px 16px}}
 
-/* Offres */
-.list{display:flex;flex-direction:column;gap:10px}
-.row{display:grid;grid-template-columns:auto minmax(0,1fr) 150px 130px auto;gap:18px;align-items:center;border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;background:#fff;transition:border-color .15s,box-shadow .15s}
-.row:hover{border-color:var(--line2);box-shadow:0 6px 20px -14px #0c0d1240}
-.row.closed{opacity:.55}
-.row .ti{font-weight:600;font-size:15.5px;letter-spacing:-.005em}
-.row .meta{font-size:13.5px;color:var(--muted);margin-top:2px}
-.row .meta b{color:var(--ink2);font-weight:500}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.tag{font-size:12px;border-radius:6px;padding:2px 8px;background:var(--bg2);color:var(--ink2);border:1px solid var(--line)}
-.tag.w{background:var(--violet-bg);color:var(--violet);border-color:transparent}
-.tag.new{background:var(--green-bg);color:var(--green);border-color:transparent;font-weight:600}
-.k{font-size:12px;color:var(--muted)}
-.v{font-size:14px;font-weight:500}
-.v.mono{font-family:var(--mono);font-size:13.5px}
-.badge{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:500;border-radius:999px;padding:2px 8px;margin-top:3px}
-.b-soon{background:var(--red-bg);color:var(--red)} .b-open{background:var(--green-bg);color:var(--green)}
-.b-upcoming{background:var(--amber-bg);color:var(--amber)} .b-closed{background:var(--bg2);color:var(--muted)}
-.acts{display:flex;align-items:center;gap:8px}
-.star{width:38px;height:38px;border-radius:10px;border:1px solid var(--line2);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--muted)}
-.star[aria-pressed="true"]{color:#d99a00;border-color:#f0d27a;background:#fff9e8}
-.star svg{width:18px;height:18px}
-.empty{border:1px dashed var(--line2);border-radius:var(--r);padding:36px;text-align:center;color:var(--muted)}
-.more{display:flex;justify-content:center;margin-top:16px}
-@media (max-width:900px){
-  .row{grid-template-columns:auto minmax(0,1fr);gap:12px 14px}
-  .row .c3,.row .c4{grid-column:2}
-  .row .acts{grid-column:1/-1}
-  .row .acts .btn{flex:1;justify-content:center}
-}
+.tbox{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tscroll{overflow-x:auto}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1320px}
+thead th{background:var(--bg2);text-align:left;font-weight:500;color:var(--ink2);font-size:14px;padding:14px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:14.5px;background:#fff}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#fbfcfe}
+.stick{position:sticky;z-index:1}
+th.stick{z-index:2}
+.stick1{right:72px;box-shadow:-10px 0 12px -10px #0d122030}
+.stick2{right:0;width:72px;text-align:center}
+.det{white-space:nowrap;color:var(--ink2)}
+.det.new{color:var(--green);font-weight:500}
+.det.new::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#1aa36a;margin-right:8px;vertical-align:1px}
+.co{display:flex;align-items:center;gap:12px;min-width:190px}
+.co b{font-weight:600}
+.logo{flex:none;width:36px;height:36px;border-radius:9px;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-weight:600;font-size:12px;color:var(--accent);background:#f4f6fd}
+.logo img{width:72%;height:72%;object-fit:contain}
+.logo:has(img){background:#fff}
+.role{min-width:250px;max-width:340px}
+.role a{text-decoration:none;font-weight:500}
+.role a:hover{color:var(--accent);text-decoration:underline}
+.tag{display:inline-block;border-radius:7px;padding:3px 9px;font-size:13px;white-space:nowrap;border:1px solid var(--line2);background:#fff;color:var(--ink2)}
+.t-type{border-color:#d6dcea;background:#f6f8fc}
+.t-bb{background:#eef0f5;border-color:#d3d8e3;color:#26324d}
+.t-cib{background:#ecf4ff;border-color:#bcd6f8;color:#1b5fae}
+.t-eb{background:#f3efff;border-color:#d8cbfb;color:#5b3fbf}
+.t-pe{background:#fff7e6;border-color:#f6d99a;color:#9a6200}
+.t-am{background:#eaf7ef;border-color:#bfe5cd;color:#16794a}
+.t-hf{background:#e9f6f6;border-color:#b9e1e1;color:#13706f}
+.t-tq{background:#fdeef6;border-color:#f6c6de;color:#b0306d}
+.k-event{background:#f3efff;border-color:#d8cbfb;color:#5b3fbf}
+.k-spring{background:#fff0f3;border-color:#f8c3cf;color:#c42a52}
+.k-summer{background:#ecf4ff;border-color:#bcd6f8;color:#1b5fae}
+.k-offcycle{background:#e9f6f6;border-color:#b9e1e1;color:#13706f}
+.s-tag{border-color:transparent;background:var(--accent-soft);color:var(--accent)}
+.s-Quant,.s-SalesTrading,.s-Research{background:#f1edff;color:#5b3fbf}
+.s-AssetManagement,.s-WealthManagement{background:#eaf7ef;color:#16794a}
+.s-PrivateEquity,.s-PrivateCredit,.s-VentureCapital{background:#fff4e0;color:#9a6200}
+.s-Technology,.s-OperationsFinance,.s-Fonctionssupport,.s-Gnraliste{background:#eef0f5;color:#3a4560}
+.s-RiskCompliance{background:#fdeef0;color:#b23a48}
+.s-RealEstate,.s-Infrastructure,.s-Restructuring,.s-CorporateBanking{background:#fff0e6;color:#b4541a}
+.loc{white-space:nowrap;color:var(--ink2)}
+.dl{white-space:nowrap}
+.dl small{display:block;color:var(--muted);font-size:13px}
+.dl.soon small{color:var(--red);font-weight:500}
+.mut{color:var(--muted)}
+.apply{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--navy);border-radius:10px;padding:8px 14px;text-decoration:none;font-weight:600;white-space:nowrap;background:#fff}
+.apply:hover{background:var(--navy);color:#fff}
+.save{border:0;background:none;cursor:pointer;color:var(--ink2);padding:6px;border-radius:7px;display:grid;place-items:center;margin:auto}
+.save svg{width:20px;height:20px}
+.save[aria-pressed="true"]{color:var(--accent)}
+.save[aria-pressed="true"] svg path{fill:currentColor}
+.empty{padding:48px;text-align:center;color:var(--muted)}
 
-/* Annuaire des banques */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;background:#fff}
+.card .r1{display:flex;gap:12px;align-items:center}
+.card .ti{font-weight:600;line-height:1.3}
+.card .ti a{text-decoration:none} .card .ti a:hover{color:var(--accent)}
+.card .tags{display:flex;gap:6px;flex-wrap:wrap}
+.card .bot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+
+.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:14px;flex-wrap:wrap}
+.pages{display:flex;gap:4px;align-items:center}
+.pages button{border:0;background:none;min-width:34px;height:34px;border-radius:8px;cursor:pointer;color:var(--ink2);padding:0 8px}
+.pages button[aria-current="page"]{background:var(--accent);color:#fff}
+.pages button:disabled{color:#b8bdc8;cursor:default}
+.cards-pager{border:1px solid var(--line);border-radius:14px;margin-top:14px}
+
 .firmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
-.fc{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:#fff;display:flex;flex-direction:column;gap:12px}
-.fc:hover{border-color:var(--line2)}
-.fc .top1{display:flex;gap:12px;align-items:center}
-.fc .nm{font-weight:600;line-height:1.25}
+.fc{border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.fc .r1{display:flex;gap:12px;align-items:center}
+.fc .nm{font-weight:600}
 .fc .ty{font-size:13px;color:var(--muted)}
-.fc .bot{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13.5px;border-top:1px solid var(--line);padding-top:12px}
-.trk{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink2)}
-.trk i{width:7px;height:7px;border-radius:50%;display:inline-block}
-.trk.auto i{background:#16a34a}.trk.page i{background:#e0a100}.trk.lien i{background:#b8bac3}
-.fc .n{font-weight:600}
-.fc .n.z{color:var(--muted);font-weight:400}
-.lnk{color:var(--accent);text-decoration:none;font-weight:600;font-size:13.5px;white-space:nowrap}
+.fc .bot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;font-size:14px}
+.lnk{color:var(--accent);text-decoration:none;font-weight:600}
 .lnk:hover{text-decoration:underline}
-.linkbtn{border:0;background:none;padding:0;cursor:pointer;color:var(--ink);font-weight:600;font-size:13.5px;text-decoration:underline;text-underline-offset:3px}
+.linkbtn{border:0;background:none;padding:0;cursor:pointer;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.trk{font-size:12.5px;color:var(--ink2);display:flex;gap:6px;align-items:center}
+.trk i{width:7px;height:7px;border-radius:50%}
+.trk.auto i{background:#1aa36a}.trk.page i{background:#e0a100}.trk.lien i{background:#b8bcc6}
+.bfilters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.bfilters select,.bfilters input{border:1px solid var(--line2);border-radius:9px;padding:9px 12px;background:#fff;font-size:14.5px}
 
-/* Comment ça marche */
-.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.how div{border:1px solid var(--line);border-radius:var(--r);padding:20px;background:var(--bg2)}
-.how .s{font-family:var(--mono);font-size:12px;color:var(--accent)}
-.how h3{margin:8px 0 6px;font-size:16.5px;letter-spacing:-.01em}
-.how p{margin:0;color:var(--ink2);font-size:14.5px}
-@media (max-width:760px){.how{grid-template-columns:1fr}}
-
-/* Alertes */
-.alert-page{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;padding:64px 0 24px;align-items:start}
-.alert-page h1{font-size:clamp(32px,4.4vw,48px);line-height:1.05;letter-spacing:-.035em;margin:16px 0 14px}
-.alert-page p.sub{font-size:17px;color:var(--ink2);margin:0 0 24px}
-.ticks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
-.ticks li{display:flex;gap:10px;color:var(--ink2)}
-.ticks li::before{content:"";flex:none;width:18px;height:18px;margin-top:2px;border-radius:50%;background:var(--green-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3 3 7-7' fill='none' stroke='%230e7a4c' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
-.card{border:1px solid var(--line);border-radius:16px;padding:24px;background:#fff;box-shadow:0 12px 40px -24px #0c0d1240}
-.card label.f{display:block;font-weight:600;font-size:14px;margin:0 0 8px}
-.card .fld{margin-bottom:20px}
-.card input[type=email]{width:100%;border:1px solid var(--line2);border-radius:10px;padding:11px 12px;font-size:15.5px}
+.alert-page{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:48px 0 24px;align-items:start}
+.alert-page h1{font-size:clamp(30px,4vw,44px);line-height:1.08;letter-spacing:-.03em;margin:0 0 14px}
+.alert-page p.sub{font-size:17px;color:var(--ink2);margin:0 0 22px}
+.ticks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;color:var(--ink2)}
+.ticks li::before{content:"✓";color:var(--green);font-weight:700;margin-right:10px}
+.aform{border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 12px 40px -24px #0d122040}
+.aform .fld{margin-bottom:20px}
+.aform .lab{display:block;font-weight:600;font-size:14px;margin-bottom:8px}
+.aform input[type=email]{width:100%;border:1px solid var(--line2);border-radius:10px;padding:11px 12px;font-size:15.5px}
 .opts{display:flex;flex-wrap:wrap;gap:8px}
 .opt{position:relative}
 .opt input{position:absolute;opacity:0;inset:0;cursor:pointer}
-.opt span{display:inline-block;border:1px solid var(--line2);border-radius:999px;padding:6px 12px;font-size:13.5px;color:var(--ink2);background:#fff}
-.opt input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+.opt span{display:inline-block;border:1px solid var(--line2);border-radius:999px;padding:6px 12px;font-size:14px;color:var(--ink2)}
+.opt input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
 .opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
-.card .fine{font-size:12.5px;color:var(--muted);margin-top:12px}
+.fine{font-size:12.5px;color:var(--muted);margin:12px 0 0}
 .msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:14px;display:none}
 .msg.ok{display:block;background:var(--green-bg);color:var(--green)}
 .msg.err{display:block;background:var(--red-bg);color:var(--red)}
-@media (max-width:860px){.alert-page{grid-template-columns:1fr;gap:28px}}
+@media (max-width:860px){.alert-page{grid-template-columns:1fr}}
 
-footer{margin-top:80px;border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:13.5px}
-footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
-[hidden]{display:none !important}
-@media (max-width:640px){
-  .top .wrap{gap:12px}
-  .brand>span:not(.mark){display:none}
-  .long{display:none}.short{display:inline}
-  nav.main a{padding:8px 9px;font-size:14px}
-  nav.main a.cta{margin-left:2px}
-  .hero{padding-top:40px}
+footer{margin-top:64px;border-top:1px solid var(--line);padding:24px 0 36px;color:var(--muted);font-size:13.5px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+@media (max-width:760px){
+  .wrap{padding:0 16px}
+  .top>.wrap{gap:8px}
+  .brand>span:last-child{display:none}
+  nav.main>a,nav.main>button{padding:0 8px;font-size:14px}
+  .top .btn{padding:8px 10px;font-size:13.5px}
+  .top .btn .long{display:none}
+  .searchrow .btn span{display:none}
+  .sort{border:0;padding-left:0}
+  .stick{position:static;box-shadow:none}
 }
 </style>
 </head>
@@ -203,436 +223,407 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#spring" aria-label="Events Tracker, accueil"><span class="mark" aria-hidden="true">ET</span><span>Events Tracker</span></a>
+    <a class="brand" href="#/"><span class="mark" aria-hidden="true">ET</span><span>Events Tracker</span></a>
     <nav class="main" aria-label="Pages">
-      <a id="nav-events" href="#events">Events<span class="count" id="c-events"></span></a>
-      <a id="nav-spring" href="#spring">Spring<span class="count" id="c-spring"></span></a>
-      <a id="nav-alertes" class="cta" href="#alertes"><span class="long">Recevoir les alertes</span><span class="short">Alertes</span></a>
+      <button type="button" id="navTracker" aria-expanded="false" aria-controls="mega">Tracker <i class="chev" aria-hidden="true"></i></button>
+      <a href="#/banques" id="navBanques">Banques</a>
     </nav>
+    <a class="btn" href="#/alertes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="long">Recevoir les alertes</span></a>
   </div>
+  <div class="mega" id="mega" hidden><div class="wrap" id="megaBody"></div></div>
 </header>
 
-<main id="page-list">
-  <div class="wrap hero">
-    <span class="live"><span class="dot" aria-hidden="true"></span><span id="liveTxt">Robot actif · vérifie les sites toutes les 30 min</span></span>
-    <h1 id="h1"></h1>
-    <p class="sub" id="sub"></p>
-    <form class="search" role="search" id="searchForm">
-      <label class="sr" for="q">Rechercher une banque, un programme ou une ville</label>
-      <input id="q" type="search" placeholder="Rechercher une banque, un programme, une ville…" autocomplete="off">
-      <button class="btn" type="submit">Rechercher</button>
+<main id="v-tracker" class="wrap">
+  <div class="title">
+    <div class="crumbs" id="crumbs"></div>
+    <h1 id="h1">Offres finance pour étudiants</h1>
+    <p id="sub"></p>
+  </div>
+  <div class="kinds" id="kinds" role="group" aria-label="Type d'offre"></div>
+  <div class="panel">
+    <form class="searchrow" role="search" id="sform">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <label class="sr" for="q">Rechercher une offre ou une banque</label>
+      <input id="q" type="search" placeholder="Rechercher une offre ou une banque" autocomplete="off">
+      <a class="btn" href="#/alertes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span>Créer une alerte</span></a>
     </form>
-    <div class="popular" id="popular"><span>Les plus recherchés :</span></div>
-    <a class="browse" href="#offres" id="browse"></a>
+    <div class="filters" id="filters"></div>
   </div>
-
-  <div class="ticker" aria-label="Dernières offres mises en ligne">
-    <div class="lab">Mis en ligne</div>
-    <div class="track" id="track"></div>
+  <div class="resbar">
+    <span class="count" id="count" aria-live="polite"></span>
+    <span id="pills" style="display:contents"></span>
+    <div class="views" role="group" aria-label="Affichage">
+      <button type="button" data-v="table" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>Tableau</button>
+      <button type="button" data-v="cards" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Cartes</button>
+    </div>
   </div>
-
-  <div class="wrap">
-    <div class="stats" id="stats"></div>
-
-    <section class="block" id="offres" aria-labelledby="offresTitle">
-      <div class="head">
-        <div><div class="eyebrow" id="listEyebrow"></div><h2 id="offresTitle"></h2><p id="listSub"></p></div>
-      </div>
-      <div class="toolbar">
-        <div class="sel"><label class="sr" for="fZone">Zone</label><select id="fZone"></select></div>
-        <div class="sel"><label class="sr" for="fType">Type de firme</label><select id="fType"></select></div>
-        <div class="seg" role="group" aria-label="Statut" id="fStatus"></div>
-        <span id="firmFilter"></span>
-        <span class="grow"></span>
-        <span class="result" id="result" aria-live="polite"></span>
-        <div class="sel"><label class="sr" for="fSort">Trier par</label>
-          <select id="fSort">
-            <option value="deadline">Deadline la plus proche</option>
-            <option value="recent">Mis en ligne récemment</option>
-            <option value="event">Date de l'event</option>
-            <option value="az">Banque (A → Z)</option>
-          </select></div>
-      </div>
-      <div class="list" id="list"><div class="empty">Chargement des offres…</div></div>
-      <div class="more" id="moreBox" hidden><button class="btn ghost" id="moreBtn" type="button"></button></div>
-    </section>
-
-    <section class="block" id="banques" aria-labelledby="banquesTitle">
-      <div class="head">
-        <div><div class="eyebrow">Couverture</div><h2 id="banquesTitle">Les banques et fonds suivis</h2>
-        <p>Pour chaque firme, l'accès direct à sa page étudiants officielle, et le nombre d'offres ouvertes ici.</p></div>
-      </div>
-      <div class="toolbar">
-        <div class="sel"><label class="sr" for="bType">Type</label><select id="bType"></select></div>
-        <div class="sel"><label class="sr" for="bCountry">Pays du siège</label><select id="bCountry"></select></div>
-        <div class="seg" role="group" aria-label="Suivi" id="bTrack"></div>
-        <span class="grow"></span>
-        <label class="sr" for="bq">Chercher une firme</label>
-        <input id="bq" type="search" placeholder="Chercher une firme" style="border:1px solid var(--line2);border-radius:9px;padding:8px 12px;font-size:14px;background:#fff;min-width:180px">
-      </div>
-      <div class="firmgrid" id="firmgrid"></div>
-      <div class="more" id="fMoreBox" hidden><button class="btn ghost" id="fMoreBtn" type="button"></button></div>
-    </section>
-
-    <section class="block" aria-labelledby="howTitle">
-      <div class="head"><div><div class="eyebrow">Fonctionnement</div><h2 id="howTitle">Comment le tracker trouve les offres</h2></div></div>
-      <div class="how">
-        <div><span class="s">01</span><h3>Le robot visite les sites des banques</h3><p>Toutes les 30 minutes, il lit directement les sites de candidature des banques (tal.net, Greenhouse, Oracle…) et leurs pages étudiants.</p></div>
-        <div><span class="s">02</span><h3>Il trie chaque nouveauté</h3><p>Event ou spring, zone, ville, dates et deadline. Les stages longs, les apprentissages et les programmes pour lycéens sont écartés.</p></div>
-        <div><span class="s">03</span><h3>L'offre apparaît ici</h3><p>Avec sa date de mise en ligne et le lien vers la page d'inscription officielle de la banque.</p></div>
-      </div>
-    </section>
+  <div class="fresh" id="fresh" hidden>
+    <div class="big"><b id="freshN">0</b><span>offres sorties<br>ces 48 h</span></div>
+    <div class="txt"><b>Le robot vérifie les sites des banques toutes les 30 minutes.</b><span>Reçois un mail dès qu'une offre qui te correspond sort.</span></div>
+    <button class="btn dark go" type="button" id="freshBtn">Voir les nouveautés →</button>
   </div>
+  <div id="results"><div class="tbox"><div class="empty">Chargement des offres…</div></div></div>
 </main>
 
-<main id="page-alertes" hidden>
-  <div class="wrap alert-page">
+<main id="v-banques" class="wrap" hidden>
+  <div class="title"><h1>Les banques et fonds suivis</h1><p>Pour chaque firme : son type, l'accès direct à sa page étudiants officielle et le nombre d'offres ouvertes ici.</p></div>
+  <div class="bfilters">
+    <label class="sr" for="bType">Type</label><select id="bType"></select>
+    <label class="sr" for="bCountry">Pays du siège</label><select id="bCountry"></select>
+    <label class="sr" for="bq">Chercher une firme</label><input id="bq" type="search" placeholder="Chercher une firme">
+  </div>
+  <div class="firmgrid" id="firmgrid"></div>
+</main>
+
+<main id="v-alertes" class="wrap" hidden>
+  <div class="alert-page">
     <div>
-      <span class="live"><span class="dot" aria-hidden="true"></span>Gratuit · premiers envois très bientôt</span>
-      <h1>Sois prévenue dès qu'un programme ouvre.</h1>
-      <p class="sub">Choisis ce qui t'intéresse. Tu reçois un mail avec le lien d'inscription officiel quand le robot trouve une nouvelle offre qui correspond.</p>
+      <h1>Sois prévenue dès qu'une offre sort.</h1>
+      <p class="sub">Choisis les types d'offres et les pays qui t'intéressent. Tu reçois un mail avec le lien vers l'offre dès que le robot la trouve.</p>
       <ul class="ticks">
-        <li>Les nouveautés Events et Spring, filtrées selon tes zones</li>
-        <li>Un rappel quelques jours avant les deadlines</li>
-        <li>Un récapitulatif chaque lundi</li>
-        <li>Désinscription en un clic, dans chaque mail</li>
+        <li>Events, spring weeks, summer et off-cycle internships</li>
+        <li>Filtré par pays</li>
+        <li>Un rappel avant les deadlines</li>
+        <li>Désinscription en un clic</li>
       </ul>
+      <p class="fine" style="margin-top:20px">Gratuit. Les premiers envois arrivent très bientôt : inscris-toi dès maintenant pour les recevoir.</p>
     </div>
-    <form class="card" id="alertForm" novalidate>
-      <div class="fld">
-        <label class="f" for="email">Adresse mail</label>
-        <input id="email" type="email" required autocomplete="email" placeholder="prenom.nom@exemple.com">
-      </div>
-      <div class="fld">
-        <span class="f" style="display:block;font-weight:600;font-size:14px;margin-bottom:8px" id="lblPages">Je veux recevoir</span>
-        <div class="opts" role="group" aria-labelledby="lblPages">
-          <label class="opt"><input type="checkbox" name="pages" value="spring" checked><span>Spring weeks</span></label>
-          <label class="opt"><input type="checkbox" name="pages" value="events" checked><span>Events</span></label>
-        </div>
-      </div>
-      <div class="fld">
-        <span class="f" style="display:block;font-weight:600;font-size:14px;margin-bottom:8px" id="lblZones">Zones</span>
-        <div class="opts" role="group" aria-labelledby="lblZones" id="zoneOpts"></div>
-      </div>
-      <button class="btn blue" type="submit" style="width:100%;justify-content:center;padding:12px">M'inscrire aux alertes</button>
-      <div class="msg" id="alertMsg" role="status"></div>
+    <form class="aform" id="aform" novalidate>
+      <div class="fld"><label class="lab" for="email">Adresse mail</label><input id="email" type="email" required autocomplete="email" placeholder="prenom.nom@exemple.com"></div>
+      <div class="fld"><span class="lab" id="lk">Types d'offres</span><div class="opts" role="group" aria-labelledby="lk" id="aKinds"></div></div>
+      <div class="fld"><span class="lab" id="lc">Pays</span><div class="opts" role="group" aria-labelledby="lc" id="aCountries"></div></div>
+      <button class="btn" type="submit" style="width:100%;justify-content:center;padding:12px">M'inscrire aux alertes</button>
+      <div class="msg" id="amsg" role="status"></div>
       <p class="fine">Ton adresse sert uniquement à t'envoyer ces alertes. Elle n'est ni affichée ni partagée.</p>
     </form>
   </div>
 </main>
 
-<footer>
-  <div class="wrap">
-    <span>Events Tracker · les liens renvoient toujours vers le site officiel de la banque.</span>
-    <span id="foot"></span>
-  </div>
-</footer>
+<footer><div class="wrap"><span>Events Tracker · chaque lien renvoie vers la page officielle de l'offre.</span><span id="foot"></span></div></footer>
 
 <script>
 const SUPABASE_URL = "https://hxrzcdmlipzsmtszbjqo.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_WnuTcYrNCMHbK00d9Xc3Bw_qeiAQd2L";
 const H = { apikey: SUPABASE_PUBLISHABLE_KEY };
+const DAY = 86400000, PER_PAGE = 50;
 
-let EVENTS = [], FIRMS = [], FIRM_BY = new Map();
-const ZONES = ["France", "Royaume-Uni", "Europe", "Virtuel", "États-Unis", "Asie", "Autre"];
-const DAY = 86400000;
-
-async function loadEvents() {
-  const res = await fetch(SUPABASE_URL + "/rest/v1/events?select=*&order=first_seen.desc", { headers: H });
-  if (!res.ok) throw new Error("Supabase a répondu " + res.status);
-  return (await res.json()).map(r => ({
-    id: r.id, firm: r.firm, cat: r.cat || "", type: r.type || "",
-    kind: r.kind === "spring" ? "spring" : "events",
-    title: r.title, zone: r.zone || "Autre", city: r.city || "",
-    eventStart: r.event_start, eventLabel: r.event_label, opens: r.opens, deadline: r.deadline,
-    rolling: !!r.rolling, elig: r.elig || "", url: r.url, linkLabel: r.link_label || "S'inscrire",
-    seen: r.first_seen ? new Date(r.first_seen) : null
-  }));
-}
-async function loadFirms() {
-  try { const r = await fetch("firms.json", { cache: "no-cache" }); return (await r.json()).firms || []; }
-  catch (e) { return []; }
-}
-
-const norm = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
-function firmOf(name) { return FIRM_BY.get(norm(name)) || null; }
-function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
-function initials(n) { const w = String(n).replace(/\(.*?\)/g, "").replace(/[^A-Za-zÀ-ÿ0-9 ]/g, " ").split(/\s+/).filter(x => x && !/^(of|de|du|la|le|and|et|co|the)$/i.test(x)); return (w.length > 1 ? w[0][0] + w[1][0] : (w[0] || "?").slice(0, 2)).toUpperCase(); }
-function logo(name, size) {
-  const f = firmOf(name), cls = "logo" + (size ? " " + size : "");
-  const ini = esc(initials(name));
-  if (!f) return `<span class="${cls}" aria-hidden="true">${ini}</span>`;
-  return `<span class="${cls}" aria-hidden="true"><img alt="" loading="lazy" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(f.domain)}&sz=128" onerror="this.parentNode.textContent='${ini}'"></span>`;
-}
-
-function today() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
-function parse(s) { if (!s) return null; const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
-const fmtD = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" });
-const fmtS = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short" });
-const show = s => { const d = parse(s); return d ? fmtD.format(d) : null; };
-function ago(d) {
-  if (!d) return "";
-  const m = Math.max(1, Math.round((Date.now() - d) / 60000));
-  if (m < 60) return "il y a " + m + " min";
-  const h = Math.round(m / 60); if (h < 24) return "il y a " + h + " h";
-  const j = Math.round(h / 24); return j < 8 ? "il y a " + j + " j" : "le " + fmtS.format(d);
-}
-function status(e) {
-  const t = today(), opens = parse(e.opens), dl = parse(e.deadline), ev = parse(e.eventStart);
-  if (opens && opens > t) return { key: "upcoming", label: "Ouvre le " + fmtS.format(opens) };
-  if (dl && dl < t) return { key: "closed", label: "Fermé" };
-  if (!dl && ev && ev < t) return { key: "closed", label: "Terminé" };
-  if (dl) { const n = Math.round((dl - t) / DAY); if (n <= 14) return { key: "soon", label: n === 0 ? "Ferme aujourd'hui" : "J-" + n }; return { key: "open", label: "J-" + n }; }
-  return { key: "open", label: e.rolling ? "Au fil de l'eau" : "Ouvert" };
-}
-const isNew = e => e.seen && (Date.now() - e.seen) < 2 * DAY;
-const isWomen = e => /women|female|femmes|she\b|her\b|girls/i.test(e.title + " " + e.elig);
-
-const PAGES = {
-  spring: { h1: "Toutes les <em>spring weeks</em>, dès leur mise en ligne.",
-    sub: "Spring weeks et insight programmes de plusieurs jours pour les étudiants de 1re et 2e année, repérés sur les sites des banques, avec le lien d'inscription officiel.",
-    eyebrow: "Spring", title: "Programmes spring", noun: ["programme", "programmes"] },
-  events: { h1: "Tous les <em>events</em> des banques, dès leur mise en ligne.",
-    sub: "Women in Finance, insight days, office visits et compétitions, repérés sur les sites des banques, avec le lien d'inscription officiel.",
-    eyebrow: "Events", title: "Events à venir", noun: ["event", "events"] }
-};
-const POPULAR = [
-  { label: "Women only", f: e => isWomen(e) },
-  { label: "Londres", f: e => /london|londres/i.test(e.city) },
-  { label: "Paris", f: e => /paris/i.test(e.city) || e.zone === "France" },
-  { label: "Trading & quant", f: e => (firmOf(e.firm)?.type === "Trading & quant") || /trading|quant/i.test(e.title + " " + e.cat) },
-  { label: "Banque d'investissement", f: e => /bank|banking|IB|M&A|GCIB/.test(e.title) || ["Bulge bracket", "Boutique M&A", "Banque européenne"].includes(firmOf(e.firm)?.type) }
+const KINDS = [["all", "Toutes les offres"], ["event", "Events"], ["spring", "Spring weeks"], ["summer", "Summer internships"], ["offcycle", "Off-cycle"]];
+const KIND_LABEL = { event: "Event", spring: "Spring", summer: "Summer", offcycle: "Off-cycle" };
+const CONTINENTS = [
+  ["Europe", ["France", "Royaume-Uni", "Allemagne", "Suisse", "Pays-Bas", "Irlande", "Espagne", "Italie", "Luxembourg", "Belgique", "Suède", "Danemark", "Norvège", "Finlande", "Pologne", "Portugal", "Autriche", "Tchéquie", "Chypre"]],
+  ["Amérique du Nord", ["États-Unis", "Canada"]],
+  ["Asie-Pacifique", ["Hong Kong", "Singapour", "Japon", "Chine", "Inde", "Australie", "Corée du Sud", "Taïwan"]],
+  ["Moyen-Orient et autres", ["Émirats arabes unis", "Israël", "Brésil"]],
+  ["Sans lieu fixe", ["En ligne", "Non précisé"]]
 ];
+const CITY_COUNTRY = { "Londres": "Royaume-Uni", "Glasgow": "Royaume-Uni", "Chester": "Royaume-Uni", "Sheffield": "Royaume-Uni", "Birmingham": "Royaume-Uni", "Édimbourg": "Royaume-Uni", "Leeds": "Royaume-Uni", "Manchester": "Royaume-Uni", "Bournemouth": "Royaume-Uni", "Paris": "France", "Dublin": "Irlande", "Amsterdam": "Pays-Bas", "Francfort": "Allemagne", "Munich": "Allemagne", "Madrid": "Espagne", "Milan": "Italie", "Zurich": "Suisse", "Genève": "Suisse", "Luxembourg": "Luxembourg", "Bruxelles": "Belgique", "New York": "États-Unis", "Chicago": "États-Unis", "Hong Kong": "Hong Kong", "Singapour": "Singapour", "En ligne": "En ligne" };
+const TYPE_CLASS = { "Bulge bracket": "t-bb", "Banque européenne": "t-cib", "Boutique M&A": "t-eb", "Private equity": "t-pe", "Asset management": "t-am", "Hedge fund": "t-hf", "Trading & quant": "t-tq" };
+const CAT_TYPE = { "Bulge Bracket": "Bulge bracket", "Banque d'investissement": "Banque européenne", "Elite Boutique": "Boutique M&A", "Private Equity": "Private equity", "Asset Mgmt": "Asset management", "Hedge Fund": "Hedge fund", "Trading & Quant": "Trading & quant" };
 
-function route() { const h = location.hash.replace("#", ""); return h === "alertes" ? "alertes" : h === "events" ? "events" : "spring"; }
-let page = "spring";
-const st = { q: "", zone: "", type: "", status: "live", popular: null, firm: null, sort: "deadline", shown: 20, star: false };
-const bs = { type: "", country: "", track: "", q: "", shown: 24 };
+let ALL = [], FIRMS = [], FIRM_BY = new Map();
+const norm = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+const slug = s => norm(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const firmOf = n => FIRM_BY.get(norm(n)) || null;
+function parse(s) { if (!s) return null; const [y, m, d] = s.slice(0, 10).split("-").map(Number); return new Date(y, m - 1, d); }
+function today() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+const fD = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+const fS = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short" });
 
-function stars() { try { return new Set(JSON.parse(localStorage.getItem("et-stars") || "[]")); } catch (e) { return new Set(); } }
-let STAR = stars();
-function saveStars() { try { localStorage.setItem("et-stars", JSON.stringify([...STAR])); } catch (e) {} }
-
-function pageItems() { return EVENTS.filter(e => e.kind === page).map(e => ({ ...e, _s: status(e) })); }
-
-function setPage() {
-  page = route() === "alertes" ? page : route();
-  const alert = route() === "alertes";
-  document.getElementById("page-list").hidden = alert;
-  document.getElementById("page-alertes").hidden = !alert;
-  ["events", "spring", "alertes"].forEach(k => document.getElementById("nav-" + k).setAttribute("aria-current", route() === k ? "page" : "false"));
-  if (alert) { window.scrollTo(0, 0); return; }
-  const P = PAGES[page];
-  document.getElementById("h1").innerHTML = P.h1;
-  document.getElementById("sub").textContent = P.sub;
-  document.getElementById("listEyebrow").textContent = P.eyebrow;
-  document.getElementById("offresTitle").textContent = P.title;
-  Object.assign(st, { q: "", zone: "", type: "", status: "live", popular: null, firm: null, shown: 20, star: false });
-  document.getElementById("q").value = "";
-  buildFilters(); renderAll();
+function initials(n) { const w = String(n).replace(/\(.*?\)/g, "").replace(/[^A-Za-zÀ-ÿ0-9 ]/g, " ").split(/\s+/).filter(x => x && !/^(of|de|du|la|le|and|et|co|the)$/i.test(x)); return (w.length > 1 ? w[0][0] + w[1][0] : (w[0] || "?").slice(0, 2)).toUpperCase(); }
+function logo(name) {
+  const f = firmOf(name), ini = esc(initials(name));
+  if (!f) return `<span class="logo" aria-hidden="true">${ini}</span>`;
+  return `<span class="logo" aria-hidden="true"><img alt="" loading="lazy" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(f.domain)}&sz=128" onerror="this.parentNode.textContent='${ini}'"></span>`;
 }
 
+async function load() {
+  const [r, f] = await Promise.all([
+    fetch(SUPABASE_URL + "/rest/v1/events?select=*&order=first_seen.desc", { headers: H }),
+    fetch("firms.json", { cache: "no-cache" }).then(x => x.json()).catch(() => ({ firms: [] }))
+  ]);
+  if (!r.ok) throw new Error("Supabase a répondu " + r.status);
+  FIRMS = f.firms || [];
+  FIRMS.forEach(x => [x.name, ...(x.aliases || [])].forEach(n => FIRM_BY.set(norm(n), x)));
+  const t = today();
+  ALL = (await r.json()).map(e => {
+    const country = e.country || CITY_COUNTRY[e.city] || ({ "France": "France", "Royaume-Uni": "Royaume-Uni", "États-Unis": "États-Unis", "Virtuel": "En ligne" }[e.zone]) || "Non précisé";
+    const posted = e.posted_at ? parse(e.posted_at) : (e.first_seen ? new Date(e.first_seen) : null);
+    const fm = firmOf(e.firm), dl = parse(e.deadline), ev = parse(e.event_start);
+    const kind = ["spring", "summer", "offcycle"].includes(e.kind) ? e.kind : "event";
+    const closed = (dl && dl < t) || (!dl && ev && ev < t && kind === "event");
+    return {
+      id: e.id, firm: fm ? fm.name : e.firm, title: e.title, kind,
+      ftype: fm ? fm.type : (CAT_TYPE[e.cat] || e.cat || "—"), city: e.city && e.city !== "À préciser" && e.city !== "En ligne" ? e.city : "",
+      country, division: e.division || "", spec: e.specialisation || "", start: e.start_label || "",
+      deadline: dl, rolling: !!e.rolling, opens: parse(e.opens), url: e.url, posted, closed
+    };
+  }).filter(e => !e.closed);
+}
+
+// ---------- État ----------
+const F = { view: window.matchMedia("(max-width: 760px)").matches ? "cards" : "table", kind: "all", q: "", spec: new Set(), ftype: new Set(), start: new Set(), posted: "", city: new Set(), firm: new Set(), country: null, sort: "recent", page: 1 };
+let SAVED = new Set(); try { SAVED = new Set(JSON.parse(localStorage.getItem("et-saved") || "[]")); } catch (e) {}
+const saveSaved = () => { try { localStorage.setItem("et-saved", JSON.stringify([...SAVED])); } catch (e) {} };
+
+function route() {
+  const h = location.hash.replace(/^#\/?/, "");
+  if (h.startsWith("banques")) return { v: "banques" };
+  if (h.startsWith("alertes")) return { v: "alertes" };
+  const m = h.match(/^pays\/([^/?]+)/);
+  let country = null;
+  if (m) for (const [, cs] of CONTINENTS) for (const c of cs) if (slug(c) === m[1]) country = c;
+  const k = (h.match(/(?:^|\/)(event|spring|summer|offcycle)$/) || [])[1] || "all";
+  return { v: "tracker", country, kind: k };
+}
+function go(country, kind) {
+  const h = "#/" + (country ? "pays/" + slug(country) : "") + (kind && kind !== "all" ? (country ? "/" : "") + kind : "");
+  if (location.hash === h) show(); else location.hash = h;
+}
+
+// ---------- Filtres ----------
+const POSTED = [["", "Toutes les dates"], ["1", "Dernières 24 h"], ["2", "Dernières 48 h"], ["7", "7 derniers jours"], ["30", "30 derniers jours"]];
+function base(skip) {
+  const q = norm(F.q), t = Date.now();
+  return ALL.filter(e =>
+    (!F.country || e.country === F.country) &&
+    (skip === "kind" || F.kind === "all" || e.kind === F.kind) &&
+    (!q || norm(e.firm + " " + e.title + " " + e.city + " " + e.spec).includes(q)) &&
+    (skip === "spec" || !F.spec.size || F.spec.has(e.spec || "—")) &&
+    (skip === "ftype" || !F.ftype.size || F.ftype.has(e.ftype)) &&
+    (skip === "start" || !F.start.size || F.start.has(e.start || "—")) &&
+    (skip === "posted" || !F.posted || (e.posted && t - e.posted < Number(F.posted) * DAY)) &&
+    (skip === "city" || !F.city.size || F.city.has(e.city || "—")) &&
+    (skip === "firm" || !F.firm.size || F.firm.has(e.firm)));
+}
+function counts(list, key) { const m = new Map(); list.forEach(e => { const k = e[key] || "—"; m.set(k, (m.get(k) || 0) + 1); }); return [...m].sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(b[0], "fr")); }
+
+const DD = [["spec", "Spécialisation"], ["ftype", "Type de firme"], ["start", "Début"], ["posted", "Mise en ligne"], ["city", "Ville"], ["firm", "Banque"]];
+function ddLabel(k, l) { const n = k === "posted" ? (F.posted ? 1 : 0) : F[k].size; return [`${l}${n ? `<span class="n">${n}</span>` : ""}<i class="chev" aria-hidden="true"></i>`, n]; }
 function buildFilters() {
-  const items = pageItems();
-  const zones = ZONES.filter(z => items.some(e => e.zone === z));
-  document.getElementById("fZone").innerHTML = `<option value="">Toutes les zones</option>` + zones.map(z => `<option>${esc(z)}</option>`).join("");
-  const types = [...new Set(FIRMS.map(f => f.type))];
-  document.getElementById("fType").innerHTML = `<option value="">Tous les types de firme</option>` + types.map(t => `<option>${esc(t)}</option>`).join("");
-  const S = [["live", "Ouverts"], ["soon", "Ferment bientôt"], ["upcoming", "À venir"], ["all", "Tous"], ["star", "Ma liste"]];
-  const seg = document.getElementById("fStatus");
-  seg.innerHTML = S.map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${st.status === k}">${l}</button>`).join("");
-  seg.querySelectorAll("button").forEach(b => b.onclick = () => { st.status = b.dataset.k; st.shown = 20; seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderList(); });
-  const pop = document.getElementById("popular");
-  pop.querySelectorAll(".chip").forEach(c => c.remove());
-  POPULAR.forEach((p, i) => {
-    const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = p.label;
-    b.setAttribute("aria-pressed", "false");
-    b.onclick = () => { st.popular = st.popular === i ? null : i; st.shown = 20;
-      pop.querySelectorAll(".chip").forEach((c, j) => c.setAttribute("aria-pressed", String(j === st.popular)));
-      renderList(); document.getElementById("offres").scrollIntoView({ behavior: "smooth" }); };
-    pop.appendChild(b);
-  });
+  const box = document.getElementById("filters");
+  box.innerHTML = DD.map(([k, l]) => { const [h, n] = ddLabel(k, l); return `<div class="dd"><button type="button" data-dd="${k}" aria-expanded="false" class="${n ? "on" : ""}">${h}</button></div>`; }).join("") +
+    `<span class="sp"></span><button type="button" class="clear" id="clear">✕ Effacer les filtres</button>
+    <label class="sort">⇅ Trier par <select id="sort"><option value="recent">Plus récentes</option><option value="deadline">Deadline la plus proche</option><option value="az">Banque (A → Z)</option></select></label>`;
+  document.getElementById("sort").value = F.sort;
+  document.getElementById("sort").onchange = e => { F.sort = e.target.value; F.page = 1; renderResults(); };
+  document.getElementById("clear").onclick = () => { ["spec", "ftype", "start", "city", "firm"].forEach(k => F[k].clear()); F.posted = ""; F.q = ""; document.getElementById("q").value = ""; F.page = 1; renderAll(); };
+  box.querySelectorAll("[data-dd]").forEach(b => b.onclick = ev => { ev.stopPropagation(); const open = b.getAttribute("aria-expanded") === "true"; closeMenus(); if (!open) openMenu(b); });
 }
-
-function filtered() {
-  const q = norm(st.q);
-  return pageItems().filter(e => {
-    if (st.status === "live" && !["open", "soon"].includes(e._s.key)) return false;
-    if (st.status === "soon" && e._s.key !== "soon") return false;
-    if (st.status === "upcoming" && e._s.key !== "upcoming") return false;
-    if (st.status === "star" && !STAR.has(e.id)) return false;
-    if (st.zone && e.zone !== st.zone) return false;
-    if (st.type && firmOf(e.firm)?.type !== st.type) return false;
-    if (st.firm && (firmOf(e.firm)?.name || e.firm) !== st.firm) return false;
-    if (st.popular != null && !POPULAR[st.popular].f(e)) return false;
-    if (q && !norm([e.firm, e.title, e.city, e.zone, e.cat, e.type, e.elig].join(" ")).includes(q)) return false;
-    return true;
-  }).sort(sorter);
-}
-function sorter(a, b) {
-  const far = 8.64e15;
-  if (st.sort === "az") return a.firm.localeCompare(b.firm, "fr");
-  if (st.sort === "recent") return (b.seen || 0) - (a.seen || 0);
-  if (st.sort === "event") return (parse(a.eventStart) || far) - (parse(b.eventStart) || far);
-  const rank = { soon: 0, open: 1, upcoming: 2, closed: 3 };
-  if (rank[a._s.key] !== rank[b._s.key]) return rank[a._s.key] - rank[b._s.key];
-  const da = parse(a.deadline) || parse(a.opens) || far, db = parse(b.deadline) || parse(b.opens) || far;
-  return a._s.key === "closed" ? db - da : da - db;
-}
-
-const STAR_SVG = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.6l2.3 4.7 5.1.7-3.7 3.6.9 5.1L10 14.3l-4.6 2.4.9-5.1L2.6 8l5.1-.7z" fill="currentColor"/></svg>';
-
-function renderList() {
-  const P = PAGES[page], rows = filtered(), list = document.getElementById("list");
-  document.getElementById("result").textContent = rows.length + " " + P.noun[rows.length > 1 ? 1 : 0];
-  const ff = document.getElementById("firmFilter");
-  ff.innerHTML = st.firm ? `<span class="firmtag">${esc(st.firm)}<button type="button" aria-label="Retirer le filtre ${esc(st.firm)}">×</button></span>` : "";
-  if (st.firm) ff.querySelector("button").onclick = () => { st.firm = null; renderList(); };
-  if (!rows.length) {
-    list.innerHTML = `<div class="empty">Aucun ${P.noun[0]} ne correspond à ces filtres pour l'instant.<br><a href="#alertes">Recevoir une alerte dès qu'il y en a un →</a></div>`;
-    document.getElementById("moreBox").hidden = true; return;
+function openMenu(btn) {
+  const k = btn.dataset.dd; btn.setAttribute("aria-expanded", "true");
+  const m = document.createElement("div"); m.className = "menu"; m.onclick = e => e.stopPropagation();
+  if (k === "posted") {
+    m.innerHTML = POSTED.map(([v, l]) => `<label><input type="radio" name="posted" value="${v}" ${F.posted === v ? "checked" : ""}>${l}</label>`).join("");
+    m.querySelectorAll("input").forEach(i => i.onchange = () => { F.posted = i.value; F.page = 1; refresh(); });
+  } else {
+    const opts = counts(base(k), k);
+    m.innerHTML = opts.length ? opts.map(([v, c]) => `<label><input type="checkbox" value="${esc(v)}" ${F[k].has(v) ? "checked" : ""}>${esc(v === "—" ? "Non précisé" : v)}<span class="c">${c}</span></label>`).join("") : `<div class="mh">Aucune option</div>`;
+    m.querySelectorAll("input").forEach(i => i.onchange = () => { i.checked ? F[k].add(i.value) : F[k].delete(i.value); F.page = 1; refresh(); });
   }
-  list.innerHTML = rows.slice(0, st.shown).map(e => {
-    const s = e._s, f = firmOf(e.firm);
-    const dates = e.eventLabel || show(e.eventStart) || "À confirmer";
-    const dl = e.deadline ? fmtS.format(parse(e.deadline)) : (e.rolling ? "Au fil de l'eau" : e.opens ? "Ouvre le " + fmtS.format(parse(e.opens)) : "Non publiée");
-    const tags = [];
-    if (isNew(e)) tags.push(`<span class="tag new">Nouveau</span>`);
-    if (isWomen(e)) tags.push(`<span class="tag w">Women</span>`);
-    if (e.type) tags.push(`<span class="tag">${esc(e.type)}</span>`);
-    if (f) tags.push(`<span class="tag">${esc(f.type)}</span>`);
-    return `<article class="row${s.key === "closed" ? " closed" : ""}">
-      ${logo(e.firm, "lg")}
-      <div style="min-width:0"><div class="ti">${esc(e.title)}</div>
-        <div class="meta"><b>${esc(e.firm)}</b> · ${esc(e.city || e.zone)}${e.seen ? " · mis en ligne " + esc(ago(e.seen)) : ""}</div>
-        <div class="tags">${tags.join("")}</div></div>
-      <div class="c3"><div class="k">Dates</div><div class="v">${esc(dates)}</div></div>
-      <div class="c4"><div class="k">Deadline</div><div class="v mono">${esc(dl)}</div><span class="badge b-${s.key}">${esc(s.label)}</span></div>
-      <div class="acts"><button class="star" type="button" data-id="${esc(e.id)}" aria-pressed="${STAR.has(e.id)}" aria-label="Ajouter ${esc(e.title)} à ma liste">${STAR_SVG}</button>
-        <a class="btn${s.key === "closed" ? " ghost" : ""}" href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.linkLabel)} <span aria-hidden="true">↗</span></a></div>
-    </article>`;
+  btn.parentNode.appendChild(m);
+}
+function closeMenus() { document.querySelectorAll(".menu").forEach(m => m.remove()); document.querySelectorAll("[data-dd]").forEach(b => b.setAttribute("aria-expanded", "false")); }
+document.addEventListener("click", () => { closeMenus(); toggleMega(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeMenus(); toggleMega(false); } });
+function refresh() {  // met à jour sans fermer le menu ouvert
+  DD.forEach(([k, l]) => { const b = document.querySelector(`[data-dd="${k}"]`); if (!b) return; const [h, n] = ddLabel(k, l); b.className = n ? "on" : ""; b.innerHTML = h; });
+  renderKinds(); renderResults();
+}
+
+// ---------- Rendu ----------
+function renderKinds() {
+  const list = base("kind");
+  document.getElementById("kinds").innerHTML = KINDS.map(([k, l]) => {
+    const n = k === "all" ? list.length : list.filter(e => e.kind === k).length;
+    return `<button type="button" data-k="${k}" aria-pressed="${F.kind === k}">${l} <span>${n}</span></button>`;
   }).join("");
-  list.querySelectorAll(".star").forEach(b => b.onclick = () => {
-    const id = b.dataset.id; STAR.has(id) ? STAR.delete(id) : STAR.add(id); saveStars();
-    b.setAttribute("aria-pressed", String(STAR.has(id))); if (st.status === "star") renderList();
-  });
-  const left = rows.length - st.shown, mb = document.getElementById("moreBox");
-  mb.hidden = left <= 0;
-  document.getElementById("moreBtn").textContent = `Afficher plus (${left} restant${left > 1 ? "s" : ""})`;
+  document.querySelectorAll("#kinds button").forEach(b => b.onclick = () => go(F.country, b.dataset.k));
 }
-
-function renderTicker() {
-  const items = [...EVENTS].filter(e => e.seen).sort((a, b) => b.seen - a.seen).slice(0, 14);
-  const html = items.map(e => `<a class="tk" href="#${e.kind}" title="${esc(e.title)}">${logo(e.firm, "sm")}<b>${esc(e.firm)}</b><span class="t">${esc(e.title)}</span><span class="ago">${esc(ago(e.seen))}</span></a>`).join("");
-  document.getElementById("track").innerHTML = html + html.replace(/<a /g, '<a tabindex="-1" aria-hidden="true" ');
+function where(c) {
+  if (!c) return "dans le monde";
+  if (c === "En ligne") return "en ligne";
+  if (c === "Non précisé") return "sans lieu précisé";
+  if (["États-Unis", "Pays-Bas", "Émirats arabes unis"].includes(c)) return "aux " + c;
+  if (["Royaume-Uni", "Canada", "Japon", "Luxembourg", "Danemark", "Portugal", "Brésil"].includes(c)) return "au " + c;
+  if (["Hong Kong", "Singapour", "Chypre", "Israël", "Taïwan"].includes(c)) return "à " + c;
+  return "en " + c;
 }
-
-function renderStats() {
-  const items = pageItems(), live = items.filter(e => ["open", "soon"].includes(e._s.key));
-  const week = items.filter(e => e.seen && Date.now() - e.seen < 7 * DAY).length;
-  const P = PAGES[page];
-  const cells = [
-    [live.length, P.noun[1] + " ouverts"],
-    [items.filter(e => e._s.key === "soon").length, "ferment sous 14 jours"],
-    [week, "nouveaux cette semaine"],
-    [FIRMS.length || "—", "banques et fonds suivis"]
-  ];
-  document.getElementById("stats").innerHTML = cells.map(([n, l]) => `<div class="stat"><div class="n">${n}</div><div class="l">${esc(l)}</div></div>`).join("");
-  document.getElementById("browse").textContent = `Voir les ${live.length} ${P.noun[1]} ouverts ↓`;
-  ["events", "spring"].forEach(k => document.getElementById("c-" + k).textContent = EVENTS.filter(e => e.kind === k && ["open", "soon"].includes(status(e).key)).length || "");
+function renderTitle() {
+  const what = { all: "Offres finance pour étudiants", event: "Events finance", spring: "Spring weeks", summer: "Summer internships", offcycle: "Stages off-cycle" }[F.kind];
+  document.getElementById("h1").textContent = `${what} ${where(F.country)}`;
+  const cont = F.country && CONTINENTS.find(([, cs]) => cs.includes(F.country));
+  document.getElementById("crumbs").innerHTML = `<a href="#/">Tous les pays</a>${cont ? ` / ${esc(cont[0])} / <b>${esc(F.country)}</b>` : ""}`;
+  document.getElementById("sub").textContent = "Mises en ligne par les banques, détectées par le robot toutes les 30 minutes. Chaque lien ouvre la page officielle de l'offre.";
+  document.title = `${what} ${where(F.country)} · Events Tracker`;
 }
+function sorted(list) {
+  const far = 8.64e15;
+  return [...list].sort((a, b) =>
+    F.sort === "az" ? a.firm.localeCompare(b.firm, "fr") :
+    F.sort === "deadline" ? ((a.deadline || far) - (b.deadline || far)) || ((b.posted || 0) - (a.posted || 0)) :
+    ((b.posted || 0) - (a.posted || 0)));
+}
+function detected(e) {
+  if (!e.posted) return `<span class="det">—</span>`;
+  const h = (Date.now() - e.posted) / 3600000;
+  if (h < 48 && h >= 0) return `<span class="det new">${h < 1 ? "Il y a moins d'1 h" : h < 24 ? `Il y a ${Math.round(h)} h` : "Hier"}</span>`;
+  return `<span class="det">${fD.format(e.posted)}</span>`;
+}
+function deadline(e) {
+  if (e.deadline) {
+    const n = Math.round((e.deadline - today()) / DAY);
+    return `<div class="dl${n <= 14 ? " soon" : ""}">${fS.format(e.deadline)}<small>${n === 0 ? "Ferme aujourd'hui" : n === 1 ? "1 jour restant" : n + " jours restants"}</small></div>`;
+  }
+  if (e.opens && e.opens > today()) return `<div class="dl">Ouvre le ${fS.format(e.opens)}</div>`;
+  return e.rolling ? `<div class="dl">Au fil de l'eau</div>` : `<span class="mut">—</span>`;
+}
+const specCls = s => "s-" + String(s).replace(/[^A-Za-z]/g, "");
+const SAVE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z" stroke-linejoin="round"/></svg>`;
+const place = e => e.city ? `${esc(e.city)}, ${esc(e.country)}` : esc(e.country);
+const dash = `<span class="mut">—</span>`;
 
+function renderResults() {
+  const list = sorted(base());
+  const pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+  F.page = Math.min(F.page, pages);
+  const rows = list.slice((F.page - 1) * PER_PAGE, F.page * PER_PAGE);
+  document.getElementById("count").textContent = `${list.length} offre${list.length > 1 ? "s" : ""}`;
+  const pills = [];
+  if (F.country) pills.push([F.country, () => go(null, F.kind)]);
+  ["spec", "ftype", "start", "city", "firm"].forEach(k => F[k].forEach(v => pills.push([v === "—" ? "Non précisé" : v, () => { F[k].delete(v); renderAll(); }])));
+  if (F.posted) pills.push([POSTED.find(p => p[0] === F.posted)[1], () => { F.posted = ""; renderAll(); }]);
+  const pb = document.getElementById("pills");
+  pb.innerHTML = pills.map(([l], i) => `<span class="pill">${esc(l)}<button type="button" data-i="${i}" aria-label="Retirer ${esc(l)}">×</button></span>`).join("");
+  pb.querySelectorAll("button").forEach(b => b.onclick = () => pills[b.dataset.i][1]());
+  const fresh = base("posted").filter(e => e.posted && Date.now() - e.posted < 2 * DAY).length;
+  document.getElementById("fresh").hidden = !fresh || F.posted === "2";
+  document.getElementById("freshN").textContent = fresh;
+
+  const box = document.getElementById("results");
+  if (!list.length) { box.innerHTML = `<div class="tbox"><div class="empty">Aucune offre ne correspond pour l'instant. <a href="#/alertes">Crée une alerte</a> pour être prévenue dès qu'il y en a une.</div></div>`; return; }
+  const pager = `<div class="pager${F.view === "cards" ? " cards-pager" : ""}"><span>${list.length} offres · ${{ recent: "plus récentes d'abord", deadline: "deadline la plus proche d'abord", az: "par banque" }[F.sort]}</span>
+    <div class="pages">${pagerButtons(pages)}</div><span>Page ${F.page} / ${pages}</span></div>`;
+  const typeTag = e => `<span class="tag t-type ${TYPE_CLASS[e.ftype] || ""}">${esc(e.ftype)}</span>`;
+  const specTag = e => e.spec ? `<span class="tag s-tag ${specCls(e.spec)}">${esc(e.spec)}</span>` : "";
+  const saveBtn = e => `<button class="save" type="button" data-id="${esc(e.id)}" aria-pressed="${SAVED.has(e.id)}" aria-label="Sauvegarder ${esc(e.title)}">${SAVE_SVG}</button>`;
+  if (F.view === "cards") {
+    box.innerHTML = `<div class="cards">${rows.map(e => `<article class="card">
+      <div class="r1">${logo(e.firm)}<div><b>${esc(e.firm)}</b><div class="mut" style="font-size:13px">${place(e)}</div></div><span style="margin-left:auto">${detected(e)}</span></div>
+      <div class="ti"><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></div>
+      <div class="tags"><span class="tag k-${e.kind}">${KIND_LABEL[e.kind]}</span>${typeTag(e)}${specTag(e)}${e.start ? `<span class="tag">Début ${esc(e.start)}</span>` : ""}</div>
+      <div class="bot">${deadline(e)}<span style="display:flex;gap:6px;align-items:center">${saveBtn(e)}<a class="apply" href="${esc(e.url)}" target="_blank" rel="noopener">Voir l'offre →</a></span></div>
+    </article>`).join("")}</div>${pager}`;
+  } else {
+    box.innerHTML = `<div class="tbox"><div class="tscroll"><table>
+      <thead><tr><th>Mise en ligne</th><th>Type de firme</th><th>Banque</th><th>Offre</th><th>Contrat</th><th>Deadline</th><th>Lieu</th><th>Spécialisation</th><th>Division</th><th>Début</th><th class="stick stick1">Lien</th><th class="stick stick2">Sauver</th></tr></thead>
+      <tbody>${rows.map(e => `<tr>
+        <td>${detected(e)}</td><td>${typeTag(e)}</td>
+        <td><div class="co">${logo(e.firm)}<b>${esc(e.firm)}</b></div></td>
+        <td class="role"><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></td>
+        <td><span class="tag k-${e.kind}">${KIND_LABEL[e.kind]}</span></td>
+        <td>${deadline(e)}</td>
+        <td class="loc">${place(e)}</td>
+        <td>${specTag(e) || dash}</td>
+        <td>${e.division ? `<span class="tag">${esc(e.division)}</span>` : dash}</td>
+        <td class="loc">${e.start ? esc(e.start) : dash}</td>
+        <td class="stick stick1"><a class="apply" href="${esc(e.url)}" target="_blank" rel="noopener">Voir l'offre <span aria-hidden="true">→</span></a></td>
+        <td class="stick stick2">${saveBtn(e)}</td>
+      </tr>`).join("")}</tbody></table></div>${pager}</div>`;
+  }
+  box.querySelectorAll(".save").forEach(b => b.onclick = () => { const id = b.dataset.id; SAVED.has(id) ? SAVED.delete(id) : SAVED.add(id); saveSaved(); b.setAttribute("aria-pressed", String(SAVED.has(id))); });
+  box.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { F.page = Number(b.dataset.p); renderResults(); document.querySelector(".resbar").scrollIntoView({ behavior: "smooth" }); });
+}
+function pagerButtons(pages) {
+  const p = F.page, out = [`<button type="button" data-p="${p - 1}" ${p === 1 ? "disabled" : ""}>‹ Préc.</button>`];
+  const nums = [...new Set([1, p - 1, p, p + 1, pages].filter(n => n >= 1 && n <= pages))].sort((a, b) => a - b);
+  nums.forEach((n, i) => { if (i && n - nums[i - 1] > 1) out.push(`<span>…</span>`); out.push(`<button type="button" data-p="${n}" ${n === p ? 'aria-current="page"' : ""}>${n}</button>`); });
+  out.push(`<button type="button" data-p="${p + 1}" ${p === pages ? "disabled" : ""}>Suiv. ›</button>`);
+  return out.join("");
+}
+function renderAll() { renderTitle(); renderKinds(); buildFilters(); renderResults(); }
+
+// ---------- Menu pays (par continent) ----------
+function buildMega() {
+  const c = new Map(); ALL.forEach(e => c.set(e.country, (c.get(e.country) || 0) + 1));
+  document.getElementById("megaBody").innerHTML = `<div><h3>Tracker</h3><a class="all" href="#/">Tous les pays <span>${ALL.length}</span></a>${KINDS.slice(1).map(([k, l]) => `<a href="#/${k}">${l} <span>${ALL.filter(e => e.kind === k).length}</span></a>`).join("")}</div>` +
+    CONTINENTS.map(([name, cs]) => { const items = cs.filter(x => c.get(x)); return items.length ? `<div><h3>${esc(name)}</h3>${items.map(x => `<a href="#/pays/${slug(x)}">${esc(x)} <span>${c.get(x)}</span></a>`).join("")}</div>` : ""; }).join("");
+  document.getElementById("megaBody").onclick = e => { e.stopPropagation(); if (e.target.closest("a")) toggleMega(false); };
+}
+function toggleMega(open) {
+  const m = document.getElementById("mega"), b = document.getElementById("navTracker");
+  open = open ?? m.hidden; m.hidden = !open; b.setAttribute("aria-expanded", String(open));
+}
+document.getElementById("navTracker").onclick = e => { e.stopPropagation(); closeMenus(); toggleMega(); };
+
+// ---------- Banques ----------
 const TRACK = { auto: "Suivi automatique", page: "Page surveillée", lien: "Accès direct" };
-function buildFirmFilters() {
-  const types = [...new Set(FIRMS.map(f => f.type))], countries = [...new Set(FIRMS.map(f => f.country))].sort((a, b) => a.localeCompare(b, "fr"));
-  document.getElementById("bType").innerHTML = `<option value="">Tous les types</option>` + types.map(t => `<option>${esc(t)}</option>`).join("");
-  document.getElementById("bCountry").innerHTML = `<option value="">Tous les pays</option>` + countries.map(t => `<option>${esc(t)}</option>`).join("");
-  const seg = document.getElementById("bTrack");
-  seg.innerHTML = [["", "Toutes"], ["open", "Avec offres"], ["auto", "Suivi auto"]].map(([k, l]) => `<button type="button" data-k="${k}" aria-pressed="${bs.track === k}">${l}</button>`).join("");
-  seg.querySelectorAll("button").forEach(b => b.onclick = () => { bs.track = b.dataset.k; bs.shown = 24; seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderFirms(); });
-}
-function firmCounts() {
-  const m = new Map();
-  pageItems().filter(e => ["open", "soon"].includes(e._s.key)).forEach(e => { const k = firmOf(e.firm)?.name || e.firm; m.set(k, (m.get(k) || 0) + 1); });
-  return m;
-}
 function renderFirms() {
-  const counts = firmCounts(), q = norm(bs.q), P = PAGES[page];
-  const rows = FIRMS.filter(f =>
-    (!bs.type || f.type === bs.type) && (!bs.country || f.country === bs.country) &&
-    (bs.track !== "open" || counts.get(f.name)) && (bs.track !== "auto" || f.suivi === "auto") &&
-    (!q || norm(f.name + " " + f.aliases.join(" ")).includes(q))
-  ).sort((a, b) => (counts.get(b.name) || 0) - (counts.get(a.name) || 0) || a.name.localeCompare(b.name, "fr"));
-  const grid = document.getElementById("firmgrid");
-  grid.innerHTML = rows.length ? rows.slice(0, bs.shown).map(f => {
-    const n = counts.get(f.name) || 0;
-    return `<div class="fc">
-      <div class="top1">${logo(f.name, "lg")}<div style="min-width:0"><div class="nm">${esc(f.name)}</div><div class="ty">${esc(f.type)} · ${esc(f.country)}</div></div></div>
-      <span class="trk ${f.suivi}"><i aria-hidden="true"></i>${TRACK[f.suivi]}</span>
-      <div class="bot">${n ? `<button type="button" class="linkbtn" data-firm="${esc(f.name)}">Voir ${n} offre${n > 1 ? "s" : ""}</button>` : `<span class="n z">Rien d'ouvert</span>`}
-        <a class="lnk" href="${esc(f.url)}" target="_blank" rel="noopener">Page étudiants ↗</a></div>
-    </div>`;
-  }).join("") : `<div class="empty" style="grid-column:1/-1">Aucune firme ne correspond.</div>`;
-  grid.querySelectorAll(".linkbtn").forEach(b => b.onclick = () => {
-    st.firm = b.dataset.firm; st.status = "live"; st.shown = 50;
-    document.querySelectorAll("#fStatus button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.k === "live")));
-    renderList(); document.getElementById("offres").scrollIntoView({ behavior: "smooth" });
-  });
-  const left = rows.length - bs.shown;
-  document.getElementById("fMoreBox").hidden = left <= 0;
-  document.getElementById("fMoreBtn").textContent = `Afficher plus (${left} restante${left > 1 ? "s" : ""})`;
+  const t = document.getElementById("bType"), c = document.getElementById("bCountry");
+  if (!t.options.length) {
+    t.innerHTML = `<option value="">Tous les types</option>` + [...new Set(FIRMS.map(f => f.type))].map(x => `<option>${esc(x)}</option>`).join("");
+    c.innerHTML = `<option value="">Tous les pays du siège</option>` + [...new Set(FIRMS.map(f => f.country))].sort((a, b) => a.localeCompare(b, "fr")).map(x => `<option>${esc(x)}</option>`).join("");
+    [t, c].forEach(s => s.onchange = renderFirms); document.getElementById("bq").oninput = renderFirms;
+  }
+  const n = new Map(); ALL.forEach(e => n.set(e.firm, (n.get(e.firm) || 0) + 1));
+  const q = norm(document.getElementById("bq").value);
+  const list = FIRMS.filter(f => (!t.value || f.type === t.value) && (!c.value || f.country === c.value) && (!q || norm(f.name + " " + (f.aliases || []).join(" ")).includes(q)))
+    .sort((a, b) => (n.get(b.name) || 0) - (n.get(a.name) || 0) || a.name.localeCompare(b.name, "fr"));
+  const g = document.getElementById("firmgrid");
+  g.innerHTML = list.map(f => { const k = n.get(f.name) || 0; return `<div class="fc">
+    <div class="r1">${logo(f.name)}<div><div class="nm">${esc(f.name)}</div><div class="ty">${esc(f.type)} · siège : ${esc(f.country)}</div></div></div>
+    <span class="trk ${f.suivi}"><i aria-hidden="true"></i>${TRACK[f.suivi]}</span>
+    <div class="bot">${k ? `<button type="button" class="linkbtn" data-f="${esc(f.name)}">Voir ${k} offre${k > 1 ? "s" : ""}</button>` : `<span class="mut">Aucune offre ouverte</span>`}<a class="lnk" href="${esc(f.url)}" target="_blank" rel="noopener">Page étudiants ↗</a></div>
+  </div>`; }).join("") || `<p class="mut">Aucune firme ne correspond.</p>`;
+  g.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { F.firm = new Set([b.dataset.f]); go(null, "all"); });
 }
 
-function renderAll() { renderStats(); renderList(); renderFirms(); }
-
-// Événements de l'interface
-document.getElementById("searchForm").onsubmit = ev => { ev.preventDefault(); st.status = "all"; document.querySelectorAll("#fStatus button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.k === "all"))); renderList(); document.getElementById("offres").scrollIntoView({ behavior: "smooth" }); };
-document.getElementById("q").oninput = e => { st.q = e.target.value; st.shown = 20; renderList(); };
-document.getElementById("fZone").onchange = e => { st.zone = e.target.value; st.shown = 20; renderList(); };
-document.getElementById("fType").onchange = e => { st.type = e.target.value; st.shown = 20; renderList(); };
-document.getElementById("fSort").onchange = e => { st.sort = e.target.value; renderList(); };
-document.getElementById("moreBtn").onclick = () => { st.shown += 20; renderList(); };
-document.getElementById("bType").onchange = e => { bs.type = e.target.value; bs.shown = 24; renderFirms(); };
-document.getElementById("bCountry").onchange = e => { bs.country = e.target.value; bs.shown = 24; renderFirms(); };
-document.getElementById("bq").oninput = e => { bs.q = e.target.value; bs.shown = 24; renderFirms(); };
-document.getElementById("fMoreBtn").onclick = () => { bs.shown += 24; renderFirms(); };
-window.addEventListener("hashchange", () => { if (["events", "spring", "alertes", ""].includes(location.hash.replace("#", ""))) setPage(); });
-
-// Page alertes
-document.getElementById("zoneOpts").innerHTML = ["France", "Royaume-Uni", "Europe", "Virtuel", "États-Unis", "Asie"].map(z =>
-  `<label class="opt"><input type="checkbox" name="zones" value="${z}" ${["France", "Royaume-Uni", "Europe", "Virtuel"].includes(z) ? "checked" : ""}><span>${z}</span></label>`).join("");
-document.getElementById("alertForm").onsubmit = async ev => {
+// ---------- Alertes ----------
+function buildAlertForm() {
+  document.getElementById("aKinds").innerHTML = KINDS.slice(1).map(([k, l]) => `<label class="opt"><input type="checkbox" name="k" value="${k}" checked><span>${l}</span></label>`).join("");
+  const cs = ["France", "Royaume-Uni", "Allemagne", "Suisse", "Pays-Bas", "Irlande", "Espagne", "Italie", "États-Unis", "Hong Kong", "Singapour", "En ligne"];
+  document.getElementById("aCountries").innerHTML = cs.map(c => `<label class="opt"><input type="checkbox" name="c" value="${c}" ${["France", "Royaume-Uni", "En ligne"].includes(c) ? "checked" : ""}><span>${c}</span></label>`).join("");
+}
+document.getElementById("aform").onsubmit = async ev => {
   ev.preventDefault();
-  const msg = document.getElementById("alertMsg"), email = document.getElementById("email").value.trim().toLowerCase();
-  const pages = [...document.querySelectorAll("input[name=pages]:checked")].map(i => i.value);
-  const zones = [...document.querySelectorAll("input[name=zones]:checked")].map(i => i.value);
-  msg.className = "msg";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.className = "msg err"; msg.textContent = "Cette adresse mail ne semble pas valide."; return; }
-  if (!pages.length) { msg.className = "msg err"; msg.textContent = "Choisis au moins Spring ou Events."; return; }
+  const msg = document.getElementById("amsg"), email = document.getElementById("email").value.trim().toLowerCase();
+  const kinds = [...document.querySelectorAll("input[name=k]:checked")].map(i => i.value);
+  const countries = [...document.querySelectorAll("input[name=c]:checked")].map(i => i.value);
+  const say = (cls, t) => { msg.className = "msg " + cls; msg.textContent = t; };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return say("err", "Cette adresse mail ne semble pas valide.");
+  if (!kinds.length) return say("err", "Choisis au moins un type d'offre.");
   try {
-    const r = await fetch(SUPABASE_URL + "/rest/v1/subscribers", {
-      method: "POST", headers: { ...H, "Content-Type": "application/json", Prefer: "return=minimal" },
-      body: JSON.stringify({ email, wants_spring: pages.includes("spring"), wants_events: pages.includes("events"), zones })
-    });
-    if (r.status === 409) { msg.className = "msg ok"; msg.textContent = "Cette adresse est déjà inscrite. Tu recevras bien les alertes."; return; }
+    const r = await fetch(SUPABASE_URL + "/rest/v1/subscribers", { method: "POST", headers: { ...H, "Content-Type": "application/json", Prefer: "return=minimal" },
+      body: JSON.stringify({ email, kinds, countries, wants_spring: kinds.includes("spring"), wants_events: kinds.includes("event"), zones: [] }) });
+    if (r.status === 409) return say("ok", "Cette adresse est déjà inscrite.");
     if (!r.ok) throw new Error(r.status);
-    msg.className = "msg ok"; msg.textContent = "C'est noté. Tu recevras les alertes à cette adresse.";
-    ev.target.reset();
-  } catch (e) { msg.className = "msg err"; msg.textContent = "L'inscription n'a pas marché. Réessaie dans un instant."; }
+    say("ok", "C'est noté : tu recevras les alertes à cette adresse."); ev.target.reset(); buildAlertForm();
+  } catch (e) { say("err", "L'inscription n'a pas marché. Réessaie dans un instant."); }
 };
 
-// Démarrage
-Promise.all([loadEvents(), loadFirms()]).then(([ev, firms]) => {
-  EVENTS = ev; FIRMS = firms;
-  FIRMS.forEach(f => [f.name, ...(f.aliases || [])].forEach(n => FIRM_BY.set(norm(n), f)));
-  const last = EVENTS.reduce((m, e) => e.seen && e.seen > m ? e.seen : m, null);
-  if (last) document.getElementById("liveTxt").textContent = `Robot actif · dernière nouveauté ${ago(last)} · ${FIRMS.length} banques suivies`;
-  document.getElementById("foot").textContent = "Page chargée le " + new Intl.DateTimeFormat("fr-FR", { dateStyle: "long", timeStyle: "short" }).format(new Date());
-  renderTicker(); buildFirmFilters(); setPage();
-}).catch(err => {
-  document.getElementById("list").innerHTML = `<div class="empty">Impossible de charger les offres (${esc(err.message)}).</div>`;
-  setPage();
-});
+// ---------- Navigation ----------
+document.getElementById("sform").onsubmit = e => e.preventDefault();
+document.getElementById("q").oninput = e => { F.q = e.target.value; F.page = 1; renderKinds(); renderResults(); };
+document.querySelectorAll(".views button").forEach(b => b.onclick = () => { F.view = b.dataset.v; document.querySelectorAll(".views button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderResults(); });
+document.getElementById("freshBtn").onclick = () => { F.posted = "2"; F.page = 1; renderAll(); };
+function show() {
+  const r = route();
+  ["tracker", "banques", "alertes"].forEach(v => document.getElementById("v-" + v).hidden = v !== r.v);
+  document.getElementById("navTracker").setAttribute("aria-current", r.v === "tracker" ? "page" : "false");
+  document.getElementById("navBanques").setAttribute("aria-current", r.v === "banques" ? "page" : "false");
+  toggleMega(false); closeMenus();
+  if (r.v === "tracker") { F.country = r.country; F.kind = r.kind; F.page = 1; renderAll(); }
+  if (r.v === "banques") renderFirms();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", show);
+document.querySelectorAll(".views button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.v === F.view)));
+buildAlertForm();
+load().then(() => {
+  buildMega();
+  document.getElementById("foot").textContent = `${ALL.length} offres ouvertes · ${FIRMS.length} banques suivies · page chargée le ${new Intl.DateTimeFormat("fr-FR", { dateStyle: "long", timeStyle: "short" }).format(new Date())}`;
+  show();
+}).catch(err => { document.getElementById("results").innerHTML = `<div class="tbox"><div class="empty">Impossible de charger les offres (${esc(err.message)}).</div></div>`; });
 </script>
 </body>
 </html>

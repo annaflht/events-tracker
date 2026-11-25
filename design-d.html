@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[Monochrome] Events Tracker : offres finance pour étudiants (events, spring, summer, off-cycle)</title>
+<meta name="description" content="Toutes les offres finance pour étudiants (events, spring weeks, summer et off-cycle internships), classées par pays, dès leur mise en ligne, avec le lien vers l'offre officielle.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fff; --bg2:#f7f8fa; --ink:#0d1220; --ink2:#384052; --muted:#6b7384; --line:#e7e9ee; --line2:#d8dbe3;
+  --accent:#2f5bea; --accent2:#2449c9; --accent-soft:#eef2fd; --navy:#14203d;
+  --green:#12804f; --green-bg:#e7f6ee; --red:#c2361f; --red-bg:#fdeeea;
+  --font:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"Geist Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{color:inherit} button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1360px;margin:0 auto;padding:0 24px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none !important}
+
+header.top{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.top>.wrap{display:flex;align-items:center;gap:32px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px;letter-spacing:-.02em}
+.mark{width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:500}
+nav.main{display:flex;align-items:stretch;gap:6px;height:100%;margin:0 auto}
+nav.main>a,nav.main>button{display:flex;align-items:center;gap:8px;padding:0 16px;font-size:16.5px;border:0;background:none;text-decoration:none;color:var(--ink2);font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+nav.main>a:hover,nav.main>button:hover{color:var(--ink)}
+nav.main [aria-current="page"],nav.main [aria-expanded="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+nav.main [aria-expanded="true"] .chev{transform:rotate(-135deg) translateY(-1px)}
+.chev{width:8px;height:8px;border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(45deg) translateY(-3px);display:inline-block}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;background:var(--accent);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn:hover{background:var(--accent2)}
+.btn.dark{background:var(--navy)} .btn.dark:hover{background:#0b1430}
+.btn svg{width:17px;height:17px}
+
+/* Menus déroulants de l'en-tête (cartes flottantes) */
+.pop{position:absolute;top:72px;left:50%;transform:translateX(-50%);z-index:45;background:#fff;border:1px solid var(--line);border-radius:20px;
+  box-shadow:0 30px 60px -20px #0d12202e,0 8px 20px -10px #0d12201a;padding:26px 30px 28px;width:min(760px,calc(100vw - 32px))}
+.pop.small{width:min(620px,calc(100vw - 32px))}
+.pop .lead{display:flex;gap:16px;align-items:center;text-decoration:none;padding:6px;margin:-6px -6px 18px;border-radius:12px}
+.pop .lead:hover{background:var(--bg2)}
+.pop .ico{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.pop .ico svg{width:21px;height:21px}
+.pop .lead b{display:block;color:var(--accent);font-size:17px;font-weight:600}
+.pop .lead span{color:var(--ink2);font-size:15px}
+.pop hr{border:0;border-top:1px solid var(--line);margin:0 0 20px}
+.pop .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 28px}
+.pop h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin:0 0 12px;font-weight:600}
+.pop .cols a{display:block;padding:7px 10px;margin:0 -10px;border-radius:9px;text-decoration:none;font-size:16.5px;color:var(--ink)}
+.pop .cols a:hover{background:var(--bg2);color:var(--accent)}
+.pop .cols a small{color:var(--muted);font-size:13px;margin-left:8px;font-family:var(--mono)}
+.pop .kindrow{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 20px}
+.pop .kindrow a{border:1px solid var(--line2);border-radius:999px;padding:6px 13px;text-decoration:none;font-size:14.5px;color:var(--ink2)}
+.pop .kindrow a:hover{border-color:var(--accent);color:var(--accent)}
+.pop .eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);font-weight:600;margin:0 0 18px}
+.pop .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pop .two a{display:flex;gap:16px;text-decoration:none;padding:10px;margin:-10px;border-radius:12px}
+.pop .two a:hover{background:var(--bg2)}
+.pop .two b{display:block;font-size:17px;margin-bottom:4px}
+.pop .two span{color:var(--ink2);font-size:15px;line-height:1.45}
+@media (max-width:640px){.pop .cols,.pop .two{grid-template-columns:1fr}.pop{top:66px;padding:20px}}
+
+.title{padding:28px 0 18px}
+.title h1{font-size:clamp(24px,3vw,32px);letter-spacing:-.025em;margin:0;line-height:1.15}
+.title p{margin:6px 0 0;color:var(--muted)}
+.crumbs{font-size:13.5px;color:var(--muted);margin-bottom:8px}
+.crumbs a{text-decoration:none} .crumbs a:hover{text-decoration:underline}
+
+.kinds{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.kinds button{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:11px 20px;font-size:16.5px;cursor:pointer;font-weight:500;display:flex;gap:8px;align-items:center}
+.kinds button span{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.kinds button[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.kinds button[aria-pressed="true"] span{color:#c9d1e6}
+
+.panel{border:1px solid var(--line);border-radius:16px;background:#fff}
+.searchrow{display:flex;gap:12px;align-items:center;padding:10px 10px 10px 18px;border-bottom:1px solid var(--line)}
+.searchrow svg{width:19px;height:19px;color:var(--muted);flex:none}
+.searchrow input{flex:1;border:0;outline:0;font-size:17px;padding:8px 0;min-width:0;background:transparent}
+.filters{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;padding:8px 12px}
+.dd{position:relative}
+.dd>button{border:0;background:none;border-radius:10px;padding:10px 14px;cursor:pointer;display:flex;gap:9px;align-items:center;color:var(--ink);font-size:16px}
+.dd>button:hover,.dd>button[aria-expanded="true"]{background:var(--bg2)}
+.dd>button.on{background:var(--accent-soft);color:var(--accent)}
+.dd>button .n{background:var(--accent);color:#fff;border-radius:999px;font-size:11.5px;min-width:19px;height:19px;display:grid;place-items:center;padding:0 5px}
+.menu{position:absolute;top:calc(100% + 8px);left:0;z-index:30;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 50px -18px #0d12202e,0 6px 16px -8px #0d12201a;min-width:290px;padding:10px}
+.menu .list{max-height:330px;overflow:auto;margin:0 -4px;padding:0 4px}
+.menu .msearch{width:100%;border:1px solid var(--line2);border-radius:10px;padding:9px 12px;font-size:15px;margin-bottom:8px}
+.menu .mfoot{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin:8px -10px -10px;padding:10px 14px}
+.menu .mfoot button{border:0;background:none;cursor:pointer;font-size:14.5px;color:var(--muted)}
+.menu .mfoot button.ok{color:var(--accent);font-weight:600}
+.menu label{display:flex;gap:12px;align-items:center;padding:9px 10px;border-radius:9px;cursor:pointer;font-size:15.5px}
+.menu label:hover{background:var(--bg2)}
+.menu label .c{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.menu input[type=checkbox],.menu input[type=radio]{accent-color:var(--accent);width:17px;height:17px;flex:none}
+.menu .mh{font-size:12px;color:var(--muted);padding:8px 10px}
+.filters .sp{flex:1}
+.clear{border:0;background:none;color:var(--muted);cursor:pointer;padding:9px 10px;font-size:14px}
+.clear:hover{color:var(--ink)}
+.sort{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;padding-left:12px;border-left:1px solid var(--line)}
+.sort select{border:0;background:none;font-weight:500;color:var(--ink);cursor:pointer;padding:8px 4px;font-size:14.5px}
+
+.resbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px 4px 12px}
+.resbar .count{font-size:16px;font-weight:500;margin-right:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:5px 8px 5px 12px;font-size:14px}
+.pill button{border:0;background:none;color:inherit;cursor:pointer;font-size:15px;line-height:1;padding:0 3px}
+.views{margin-left:auto;display:flex;gap:4px}
+.views button{border:0;background:none;padding:7px 12px;border-radius:8px;cursor:pointer;color:var(--muted);display:flex;gap:7px;align-items:center;font-size:14px}
+.views button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.views svg{width:16px;height:16px}
+
+.fresh{display:grid;grid-template-columns:auto 1fr auto;align-items:center;border:1px solid #cdd8fa;border-radius:16px;overflow:hidden;margin:4px 0 18px;background:var(--accent-soft)}
+.fresh .big{background:var(--accent);color:#fff;padding:18px 28px;display:flex;align-items:center;gap:16px;height:100%}
+.fresh .big b{font-size:44px;letter-spacing:-.03em;line-height:1}
+.fresh .big span{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.35;font-weight:600}
+.fresh .txt{padding:14px 26px}
+.fresh .txt b{display:block;font-size:17px}
+.fresh .txt span{color:var(--ink2);font-size:14.5px}
+.fresh .go{margin-right:18px}
+@media (max-width:760px){.fresh{grid-template-columns:1fr}.fresh .go{margin:0 18px 16px}}
+
+.tbox{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.tscroll{overflow-x:auto}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1420px}
+thead th{background:var(--bg2);text-align:left;font-weight:500;color:var(--ink2);font-size:15.5px;padding:17px 18px;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody td{padding:20px 18px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:16px;background:#fff}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#fbfcfe}
+.stick{position:sticky;z-index:1}
+th.stick{z-index:2}
+.stick1{right:84px;box-shadow:-10px 0 12px -10px #0d122030}
+.stick2{right:0;width:84px;text-align:center}
+.more{position:absolute;left:-17px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;border:1px solid var(--line2);background:#fff;cursor:pointer;font-size:20px;line-height:1;color:var(--ink2);box-shadow:0 2px 6px #0d12201a}
+.more:hover{color:var(--accent);border-color:var(--accent)}
+.det{white-space:nowrap;color:var(--ink2);font-size:16px}
+.det.new{color:var(--green);font-weight:500}
+.det.new::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#1aa36a;margin-right:8px;vertical-align:1px}
+.co{display:flex;align-items:center;gap:12px;min-width:190px}
+.co b{font-weight:600;font-size:16.5px}
+.logo{flex:none;width:42px;height:42px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-weight:600;font-size:12px;color:var(--accent);background:#f4f6fd}
+.logo img{width:72%;height:72%;object-fit:contain}
+.logo:has(img){background:#fff}
+.role{min-width:260px;max-width:360px;line-height:1.4}
+.role a{text-decoration:none;font-weight:400;font-size:16.5px}
+.role a:hover{color:var(--accent);text-decoration:underline}
+.tag{display:inline-block;border-radius:8px;padding:4px 11px;font-size:14.5px;white-space:nowrap;border:1px solid var(--line2);background:#fff;color:var(--ink2)}
+.t-type{border-color:#d6dcea;background:#f6f8fc}
+.t-bb{background:#eef0f5;border-color:#d3d8e3;color:#26324d}
+.t-cib{background:#ecf4ff;border-color:#bcd6f8;color:#1b5fae}
+.t-eb{background:#f3efff;border-color:#d8cbfb;color:#5b3fbf}
+.t-pe{background:#fff7e6;border-color:#f6d99a;color:#9a6200}
+.t-am{background:#eaf7ef;border-color:#bfe5cd;color:#16794a}
+.t-hf{background:#e9f6f6;border-color:#b9e1e1;color:#13706f}
+.t-tq{background:#fdeef6;border-color:#f6c6de;color:#b0306d}
+.k-event{background:#f3efff;border-color:#d8cbfb;color:#5b3fbf}
+.k-spring{background:#fff0f3;border-color:#f8c3cf;color:#c42a52}
+.k-summer{background:#ecf4ff;border-color:#bcd6f8;color:#1b5fae}
+.k-offcycle{background:#e9f6f6;border-color:#b9e1e1;color:#13706f}
+.k-graduate{background:#e7f6ee;border-color:#a9dcbf;color:#12804f}
+.s-tag{border-color:transparent;background:var(--accent-soft);color:var(--accent)}
+.s-Quant,.s-SalesTrading,.s-Research{background:#f1edff;color:#5b3fbf}
+.s-AssetManagement,.s-WealthManagement{background:#eaf7ef;color:#16794a}
+.s-PrivateEquity,.s-PrivateCredit,.s-VentureCapital{background:#fff4e0;color:#9a6200}
+.s-Technology,.s-OperationsFinance,.s-Fonctionssupport,.s-Gnraliste{background:#eef0f5;color:#3a4560}
+.s-RiskCompliance{background:#fdeef0;color:#b23a48}
+.s-RealEstate,.s-Infrastructure,.s-Restructuring,.s-CorporateBanking{background:#fff0e6;color:#b4541a}
+.loc{white-space:nowrap;color:var(--ink2)}
+.dl{white-space:nowrap}
+.dl small{display:block;color:var(--muted);font-size:14px}
+.dl.soon small{color:var(--red);font-weight:500}
+.mut{color:var(--muted)}
+.apply{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--navy);border-radius:11px;padding:10px 16px;font-size:16px;text-decoration:none;font-weight:600;white-space:nowrap;background:#fff}
+.apply:hover{background:var(--navy);color:#fff}
+.save{border:0;background:none;cursor:pointer;color:var(--ink2);padding:6px;border-radius:7px;display:grid;place-items:center;margin:auto}
+.save svg{width:20px;height:20px}
+.save[aria-pressed="true"]{color:var(--accent)}
+.save[aria-pressed="true"] svg path{fill:currentColor}
+.empty{padding:48px;text-align:center;color:var(--muted)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.card{border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;background:#fff}
+.card .r1{display:flex;gap:12px;align-items:center}
+.card .ti{font-weight:600;line-height:1.3}
+.card .ti a{text-decoration:none} .card .ti a:hover{color:var(--accent)}
+.card .tags{display:flex;gap:6px;flex-wrap:wrap}
+.card .bot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+
+.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-top:1px solid var(--line);background:#fff;color:var(--muted);font-size:14px;flex-wrap:wrap}
+.pages{display:flex;gap:4px;align-items:center}
+.pages button{border:0;background:none;min-width:34px;height:34px;border-radius:8px;cursor:pointer;color:var(--ink2);padding:0 8px}
+.pages button[aria-current="page"]{background:var(--accent);color:#fff}
+.pages button:disabled{color:#b8bdc8;cursor:default}
+.cards-pager{border:1px solid var(--line);border-radius:14px;margin-top:14px}
+
+.firmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.fc{border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.fc .r1{display:flex;gap:12px;align-items:center}
+.fc .nm{font-weight:600}
+.fc .ty{font-size:13px;color:var(--muted)}
+.fc .bot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;font-size:14px}
+.lnk{color:var(--accent);text-decoration:none;font-weight:600}
+.lnk:hover{text-decoration:underline}
+.linkbtn{border:0;background:none;padding:0;cursor:pointer;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.trk{font-size:12.5px;color:var(--ink2);display:flex;gap:6px;align-items:center}
+.trk i{width:7px;height:7px;border-radius:50%}
+.trk.auto i{background:#1aa36a}.trk.page i{background:#e0a100}.trk.lien i{background:#b8bcc6}
+.bfilters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.bfilters select,.bfilters input{border:1px solid var(--line2);border-radius:9px;padding:9px 12px;background:#fff;font-size:14.5px}
+
+.alert-page{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:48px 0 24px;align-items:start}
+.alert-page h1{font-size:clamp(30px,4vw,44px);line-height:1.08;letter-spacing:-.03em;margin:0 0 14px}
+.alert-page p.sub{font-size:17px;color:var(--ink2);margin:0 0 22px}
+.ticks{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;color:var(--ink2)}
+.ticks li::before{content:"✓";color:var(--green);font-weight:700;margin-right:10px}
+.aform{border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 12px 40px -24px #0d122040}
+.aform .fld{margin-bottom:20px}
+.aform .lab{display:block;font-weight:600;font-size:14px;margin-bottom:8px}
+.aform input[type=email]{width:100%;border:1px solid var(--line2);border-radius:10px;padding:11px 12px;font-size:15.5px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.opt span{display:inline-block;border:1px solid var(--line2);border-radius:999px;padding:6px 12px;font-size:14px;color:var(--ink2)}
+.opt input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+.opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.fine{font-size:12.5px;color:var(--muted);margin:12px 0 0}
+.msg{margin-top:14px;padding:12px 14px;border-radius:10px;font-size:14px;display:none}
+.msg.ok{display:block;background:var(--green-bg);color:var(--green)}
+.msg.err{display:block;background:var(--red-bg);color:var(--red)}
+@media (max-width:860px){.alert-page{grid-template-columns:1fr}}
+
+.apps .st{border:1px solid var(--line2);border-radius:9px;padding:8px 10px;font-size:15px;background:#fff}
+.apps .rm{border:0;background:none;color:var(--muted);cursor:pointer;font-size:14.5px;text-decoration:underline}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.stats span{border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:15px;color:var(--ink2)}
+.stats b{font-size:20px;color:var(--ink);margin-right:6px}
+footer{margin-top:64px;border-top:1px solid var(--line);padding:24px 0 36px;color:var(--muted);font-size:13.5px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+@media (max-width:760px){
+  .wrap{padding:0 16px}
+  .top>.wrap{gap:8px}
+  .brand>span:last-child{display:none}
+  nav.main>a,nav.main>button{padding:0 8px;font-size:14px}
+  .top .btn{padding:8px 10px;font-size:13.5px}
+  .top .btn .long{display:none}
+  .searchrow .btn span{display:none}
+  .sort{border:0;padding-left:0}
+  .stick{position:static;box-shadow:none}
+}
+</style>
+<style>/* Variante Monochrome */:root{--font:"IBM Plex Sans",system-ui,sans-serif}
+:root{--accent:#111111;--accent2:#000;--accent-soft:#f1f1f1;--navy:#111111;--ink:#111;--ink2:#3a3a3a;--muted:#6f6f6f;--bg2:#f6f6f6;--line:#e6e6e6;--line2:#d0d0d0;--mono:"IBM Plex Mono",ui-monospace,monospace}
+.btn{background:#ff5a1f;border-radius:6px}
+.btn:hover{background:#e84a12}
+.btn.dark{background:#111}
+.mark{background:#ff5a1f}
+nav.main [aria-current="page"],nav.main [aria-expanded="true"]{color:#111;border-bottom-color:#ff5a1f}
+.kinds button{border-radius:6px}
+.kinds button[aria-pressed="true"]{background:#111;border-color:#111}
+.panel,.tbox,.card,.fc,.aform,.fresh,.menu,.pop{border-radius:8px}
+.tag{border-radius:4px}
+.s-tag{background:#f1f1f1!important;color:#111!important}
+.apply{border-radius:6px;border-color:#111}
+.fresh{background:#fff4ef;border-color:#ffd2c2}
+.fresh .big{background:#ff5a1f}
+.det.new{color:#ff5a1f}.det.new::before{background:#ff5a1f}
+.dd>button.on{background:#fff4ef;color:#c2410c}.dd>button .n{background:#ff5a1f}
+.pill{background:#fff4ef;color:#c2410c}
+thead th{font-family:var(--mono);font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+.title h1{font-weight:600;letter-spacing:-.02em}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#/"><span class="mark" aria-hidden="true">ET</span><span>Events Tracker</span></a>
+    <nav class="main" aria-label="Pages">
+      <button type="button" id="navTracker" aria-expanded="false" aria-controls="popTracker">Tracker <i class="chev" aria-hidden="true"></i></button>
+      <button type="button" id="navWatch" aria-expanded="false" aria-controls="popWatch">Ma watchlist <i class="chev" aria-hidden="true"></i></button>
+      <a href="#/banques" id="navBanques">Banques</a>
+    </nav>
+    <a class="btn" href="#/alertes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="long">Recevoir les alertes</span></a>
+  </div>
+  <div class="pop" id="popTracker" hidden></div>
+  <div class="pop small" id="popWatch" hidden>
+    <p class="eyebrow">Suis les offres qui t'intéressent</p>
+    <div class="two">
+      <a href="#/alertes"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg></span><div><b>Mes alertes</b><span>Un mail dès qu'une offre qui te correspond sort.</span></div></a>
+      <a href="#/candidatures"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z" stroke-linejoin="round"/></svg></span><div><b>Mes candidatures</b><span>Suis chaque candidature, des tests jusqu'à l'offre.</span></div></a>
+    </div>
+  </div>
+</header>
+
+<main id="v-tracker" class="wrap">
+  <div class="title">
+    <div class="crumbs" id="crumbs"></div>
+    <h1 id="h1">Offres finance pour étudiants</h1>
+    <p id="sub"></p>
+  </div>
+  <div class="kinds" id="kinds" role="group" aria-label="Type d'offre"></div>
+  <div class="panel">
+    <form class="searchrow" role="search" id="sform">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <label class="sr" for="q">Rechercher une offre ou une banque</label>
+      <input id="q" type="search" placeholder="Rechercher une offre ou une banque" autocomplete="off">
+      <a class="btn" href="#/alertes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span>Créer une alerte</span></a>
+    </form>
+    <div class="filters" id="filters"></div>
+  </div>
+  <div class="resbar">
+    <span class="count" id="count" aria-live="polite"></span>
+    <span id="pills" style="display:contents"></span>
+    <div class="views" role="group" aria-label="Affichage">
+      <button type="button" data-v="table" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>Tableau</button>
+      <button type="button" data-v="cards" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Cartes</button>
+    </div>
+  </div>
+  <div class="fresh" id="fresh" hidden>
+    <div class="big"><b id="freshN">0</b><span>offres sorties<br>ces 48 h</span></div>
+    <div class="txt"><b>Le robot vérifie les sites des banques toutes les 30 minutes.</b><span>Reçois un mail dès qu'une offre qui te correspond sort.</span></div>
+    <button class="btn dark go" type="button" id="freshBtn">Voir les nouveautés →</button>
+  </div>
+  <div id="results"><div class="tbox"><div class="empty">Chargement des offres…</div></div></div>
+</main>
+
+<main id="v-banques" class="wrap" hidden>
+  <div class="title"><h1>Les banques et fonds suivis</h1><p>Pour chaque firme : son type, l'accès direct à sa page étudiants officielle et le nombre d'offres ouvertes ici.</p></div>
+  <div class="bfilters">
+    <label class="sr" for="bType">Type</label><select id="bType"></select>
+    <label class="sr" for="bCountry">Pays du siège</label><select id="bCountry"></select>
+    <label class="sr" for="bq">Chercher une firme</label><input id="bq" type="search" placeholder="Chercher une firme">
+  </div>
+  <div class="firmgrid" id="firmgrid"></div>
+</main>
+
+<main id="v-candidatures" class="wrap" hidden>
+  <div class="title"><h1>Mes candidatures</h1><p>Les offres que tu as sauvegardées avec le signet. Mets à jour leur statut au fil du processus. Tout reste enregistré dans ce navigateur.</p></div>
+  <div class="stats" id="appStats"></div>
+  <div id="apps"></div>
+</main>
+
+<main id="v-alertes" class="wrap" hidden>
+  <div class="alert-page">
+    <div>
+      <h1>Sois prévenue dès qu'une offre sort.</h1>
+      <p class="sub">Choisis les types d'offres et les pays qui t'intéressent. Tu reçois un mail avec le lien vers l'offre dès que le robot la trouve.</p>
+      <ul class="ticks">
+        <li>Events, spring weeks, summer et off-cycle internships</li>
+        <li>Filtré par pays</li>
+        <li>Un rappel avant les deadlines</li>
+        <li>Désinscription en un clic</li>
+      </ul>
+      <p class="fine" style="margin-top:20px">Gratuit. Les premiers envois arrivent très bientôt : inscris-toi dès maintenant pour les recevoir.</p>
+    </div>
+    <form class="aform" id="aform" novalidate>
+      <div class="fld"><label class="lab" for="email">Adresse mail</label><input id="email" type="email" required autocomplete="email" placeholder="prenom.nom@exemple.com"></div>
+      <div class="fld"><span class="lab" id="lk">Types d'offres</span><div class="opts" role="group" aria-labelledby="lk" id="aKinds"></div></div>
+      <div class="fld"><span class="lab" id="lc">Pays</span><div class="opts" role="group" aria-labelledby="lc" id="aCountries"></div></div>
+      <button class="btn" type="submit" style="width:100%;justify-content:center;padding:12px">M'inscrire aux alertes</button>
+      <div class="msg" id="amsg" role="status"></div>
+      <p class="fine">Ton adresse sert uniquement à t'envoyer ces alertes. Elle n'est ni affichée ni partagée.</p>
+    </form>
+  </div>
+</main>
+
+<footer><div class="wrap"><span>Events Tracker · chaque lien renvoie vers la page officielle de l'offre.</span><span id="foot"></span></div></footer>
+
+<script>
+const SUPABASE_URL = "https://hxrzcdmlipzsmtszbjqo.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_WnuTcYrNCMHbK00d9Xc3Bw_qeiAQd2L";
+const H = { apikey: SUPABASE_PUBLISHABLE_KEY };
+const DAY = 86400000, PER_PAGE = 50;
+
+const KINDS = [["all", "Toutes les offres"], ["event", "Events"], ["spring", "Spring weeks"], ["summer", "Summer internships"], ["offcycle", "Off-cycle"], ["graduate", "Graduate programmes"]];
+const KIND_LABEL = { event: "Event", spring: "Spring", summer: "Summer", offcycle: "Off-cycle", graduate: "Graduate" };
+const CONTINENTS = [
+  ["Europe", ["France", "Royaume-Uni", "Allemagne", "Suisse", "Pays-Bas", "Irlande", "Espagne", "Italie", "Luxembourg", "Belgique", "Suède", "Danemark", "Norvège", "Finlande", "Pologne", "Portugal", "Autriche", "Tchéquie", "Chypre"]],
+  ["Amérique du Nord", ["États-Unis", "Canada"]],
+  ["Asie-Pacifique", ["Hong Kong", "Singapour", "Japon", "Chine", "Inde", "Australie", "Corée du Sud", "Taïwan"]],
+  ["Moyen-Orient et autres", ["Émirats arabes unis", "Israël", "Brésil"]],
+  ["Sans lieu fixe", ["En ligne", "Non précisé"]]
+];
+const CITY_COUNTRY = { "Londres": "Royaume-Uni", "Glasgow": "Royaume-Uni", "Chester": "Royaume-Uni", "Sheffield": "Royaume-Uni", "Birmingham": "Royaume-Uni", "Édimbourg": "Royaume-Uni", "Leeds": "Royaume-Uni", "Manchester": "Royaume-Uni", "Bournemouth": "Royaume-Uni", "Paris": "France", "Dublin": "Irlande", "Amsterdam": "Pays-Bas", "Francfort": "Allemagne", "Munich": "Allemagne", "Madrid": "Espagne", "Milan": "Italie", "Zurich": "Suisse", "Genève": "Suisse", "Luxembourg": "Luxembourg", "Bruxelles": "Belgique", "New York": "États-Unis", "Chicago": "États-Unis", "Hong Kong": "Hong Kong", "Singapour": "Singapour", "En ligne": "En ligne" };
+const TYPE_CLASS = { "Bulge bracket": "t-bb", "Banque européenne": "t-cib", "Boutique M&A": "t-eb", "Private equity": "t-pe", "Asset management": "t-am", "Hedge fund": "t-hf", "Trading & quant": "t-tq" };
+const CAT_TYPE = { "Bulge Bracket": "Bulge bracket", "Banque d'investissement": "Banque européenne", "Elite Boutique": "Boutique M&A", "Private Equity": "Private equity", "Asset Mgmt": "Asset management", "Hedge Fund": "Hedge fund", "Trading & Quant": "Trading & quant" };
+
+let ALL = [], FIRMS = [], FIRM_BY = new Map();
+const norm = s => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+const slug = s => norm(s).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const firmOf = n => FIRM_BY.get(norm(n)) || null;
+function parse(s) { if (!s) return null; const [y, m, d] = s.slice(0, 10).split("-").map(Number); return new Date(y, m - 1, d); }
+function today() { const d = new Date(); d.setHours(0, 0, 0, 0); return d; }
+const fD = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+const fS = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short" });
+
+function initials(n) { const w = String(n).replace(/\(.*?\)/g, "").replace(/[^A-Za-zÀ-ÿ0-9 ]/g, " ").split(/\s+/).filter(x => x && !/^(of|de|du|la|le|and|et|co|the)$/i.test(x)); return (w.length > 1 ? w[0][0] + w[1][0] : (w[0] || "?").slice(0, 2)).toUpperCase(); }
+function logo(name) {
+  const f = firmOf(name), ini = esc(initials(name));
+  if (!f) return `<span class="logo" aria-hidden="true">${ini}</span>`;
+  return `<span class="logo" aria-hidden="true"><img alt="" loading="lazy" src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(f.domain)}&sz=128" onerror="this.parentNode.textContent='${ini}'"></span>`;
+}
+
+async function load() {
+  const [r, f] = await Promise.all([
+    fetch(SUPABASE_URL + "/rest/v1/events?select=*&order=first_seen.desc", { headers: H }),
+    fetch("firms.json", { cache: "no-cache" }).then(x => x.json()).catch(() => ({ firms: [] }))
+  ]);
+  if (!r.ok) throw new Error("Supabase a répondu " + r.status);
+  FIRMS = f.firms || [];
+  FIRMS.forEach(x => [x.name, ...(x.aliases || [])].forEach(n => FIRM_BY.set(norm(n), x)));
+  const t = today();
+  ALL = (await r.json()).map(e => {
+    const country = e.country || CITY_COUNTRY[e.city] || ({ "France": "France", "Royaume-Uni": "Royaume-Uni", "États-Unis": "États-Unis", "Virtuel": "En ligne" }[e.zone]) || "Non précisé";
+    // date de sortie : celle donnée par la banque, sinon l'heure où le robot l'a vue sortir ; inconnue sinon (affiche « — »)
+    const posted = e.posted_at ? parse(e.posted_at) : (e.detected_at ? new Date(e.detected_at) : null);
+    const fm = firmOf(e.firm), dl = parse(e.deadline), ev = parse(e.event_start);
+    const kind = ["spring", "summer", "offcycle", "graduate"].includes(e.kind) ? e.kind : "event";
+    const closed = (dl && dl < t) || (!dl && ev && ev < t && kind === "event");
+    return {
+      id: e.id, firm: fm ? fm.name : e.firm, title: e.title, kind,
+      ftype: fm ? fm.type : (CAT_TYPE[e.cat] || e.cat || "—"), city: e.city && e.city !== "À préciser" && e.city !== "En ligne" ? e.city : "",
+      country, division: e.division || "", spec: e.specialisation || "", start: e.start_label || "",
+      deadline: dl, rolling: !!e.rolling, opens: parse(e.opens), url: e.url, posted, closed
+    };
+  }).filter(e => !e.closed);
+}
+
+// ---------- État ----------
+const F = { view: window.matchMedia("(max-width: 760px)").matches ? "cards" : "table", kind: "all", q: "", spec: new Set(), ftype: new Set(), start: new Set(), posted: "", city: new Set(), firm: new Set(), country: null, sort: "recent", page: 1 };
+let SAVED = new Set(); try { SAVED = new Set(JSON.parse(localStorage.getItem("et-saved") || "[]")); } catch (e) {}
+const saveSaved = () => { try { localStorage.setItem("et-saved", JSON.stringify([...SAVED])); } catch (e) {} };
+
+function route() {
+  const h = location.hash.replace(/^#\/?/, "");
+  if (h.startsWith("banques")) return { v: "banques" };
+  if (h.startsWith("alertes")) return { v: "alertes" };
+  if (h.startsWith("candidatures")) return { v: "candidatures" };
+  const m = h.match(/^pays\/([^/?]+)/);
+  let country = null;
+  if (m) for (const [, cs] of CONTINENTS) for (const c of cs) if (slug(c) === m[1]) country = c;
+  const k = (h.match(/(?:^|\/)(event|spring|summer|offcycle|graduate)$/) || [])[1] || "all";
+  return { v: "tracker", country, kind: k };
+}
+function go(country, kind) {
+  const h = "#/" + (country ? "pays/" + slug(country) : "") + (kind && kind !== "all" ? (country ? "/" : "") + kind : "");
+  if (location.hash === h) show(); else location.hash = h;
+}
+
+// ---------- Filtres ----------
+const POSTED = [["", "Toutes les dates"], ["1", "Dernières 24 h"], ["2", "Dernières 48 h"], ["7", "7 derniers jours"], ["30", "30 derniers jours"]];
+function base(skip) {
+  const q = norm(F.q), t = Date.now();
+  return ALL.filter(e =>
+    (!F.country || e.country === F.country) &&
+    (skip === "kind" || F.kind === "all" || e.kind === F.kind) &&
+    (!q || norm(e.firm + " " + e.title + " " + e.city + " " + e.spec).includes(q)) &&
+    (skip === "spec" || !F.spec.size || F.spec.has(e.spec || "—")) &&
+    (skip === "ftype" || !F.ftype.size || F.ftype.has(e.ftype)) &&
+    (skip === "start" || !F.start.size || F.start.has(e.start || "—")) &&
+    (skip === "posted" || !F.posted || (e.posted && t - e.posted < Number(F.posted) * DAY)) &&
+    (skip === "city" || !F.city.size || F.city.has(e.city || "—")) &&
+    (skip === "firm" || !F.firm.size || F.firm.has(e.firm)));
+}
+function counts(list, key) { const m = new Map(); list.forEach(e => { const k = e[key] || "—"; m.set(k, (m.get(k) || 0) + 1); }); return [...m].sort((a, b) => b[1] - a[1] || String(a[0]).localeCompare(b[0], "fr")); }
+
+const DD = [["spec", "Spécialisation"], ["ftype", "Type de firme"], ["start", "Début"], ["posted", "Mise en ligne"], ["city", "Ville"], ["firm", "Banque"]];
+function ddLabel(k, l) { const n = k === "posted" ? (F.posted ? 1 : 0) : F[k].size; return [`${l}${n ? `<span class="n">${n}</span>` : ""}<i class="chev" aria-hidden="true"></i>`, n]; }
+function buildFilters() {
+  const box = document.getElementById("filters");
+  box.innerHTML = DD.map(([k, l]) => { const [h, n] = ddLabel(k, l); return `<div class="dd"><button type="button" data-dd="${k}" aria-expanded="false" class="${n ? "on" : ""}">${h}</button></div>`; }).join("") +
+    `<span class="sp"></span><button type="button" class="clear" id="clear">✕ Effacer les filtres</button>
+    <label class="sort">⇅ Trier par <select id="sort"><option value="recent">Plus récentes</option><option value="deadline">Deadline la plus proche</option><option value="az">Banque (A → Z)</option></select></label>`;
+  document.getElementById("sort").value = F.sort;
+  document.getElementById("sort").onchange = e => { F.sort = e.target.value; F.page = 1; renderResults(); };
+  document.getElementById("clear").onclick = () => { ["spec", "ftype", "start", "city", "firm"].forEach(k => F[k].clear()); F.posted = ""; F.q = ""; document.getElementById("q").value = ""; F.page = 1; renderAll(); };
+  box.querySelectorAll("[data-dd]").forEach(b => b.onclick = ev => { ev.stopPropagation(); const open = b.getAttribute("aria-expanded") === "true"; closeMenus(); if (!open) openMenu(b); });
+}
+function openMenu(btn) {
+  const k = btn.dataset.dd; btn.setAttribute("aria-expanded", "true");
+  const m = document.createElement("div"); m.className = "menu"; m.onclick = e => e.stopPropagation();
+  if (k === "posted") {
+    m.innerHTML = POSTED.map(([v, l]) => `<label><input type="radio" name="posted" value="${v}" ${F.posted === v ? "checked" : ""}>${l}</label>`).join("");
+    m.querySelectorAll("input").forEach(i => i.onchange = () => { F.posted = i.value; F.page = 1; refresh(); });
+  } else {
+    const opts = counts(base(k), k);
+    m.innerHTML = (opts.length > 8 ? `<input class="msearch" type="search" placeholder="Rechercher" aria-label="Rechercher dans la liste">` : "") +
+      `<div class="list">${opts.length ? opts.map(([v, c]) => `<label data-t="${esc(norm(v))}"><input type="checkbox" value="${esc(v)}" ${F[k].has(v) ? "checked" : ""}>${esc(v === "—" ? "Non précisé" : v)}<span class="c">${c}</span></label>`).join("") : `<div class="mh">Aucune option</div>`}</div>
+      <div class="mfoot"><button type="button" class="rz">Effacer</button><button type="button" class="ok">Fermer</button></div>`;
+    m.querySelectorAll(".list input").forEach(i => i.onchange = () => { i.checked ? F[k].add(i.value) : F[k].delete(i.value); F.page = 1; refresh(); });
+    const ms = m.querySelector(".msearch");
+    if (ms) { ms.oninput = () => m.querySelectorAll(".list label").forEach(l => l.hidden = !l.dataset.t.includes(norm(ms.value))); setTimeout(() => ms.focus(), 0); }
+    m.querySelector(".rz").onclick = () => { F[k].clear(); m.querySelectorAll(".list input").forEach(i => i.checked = false); F.page = 1; refresh(); };
+    m.querySelector(".ok").onclick = closeMenus;
+  }
+  btn.parentNode.appendChild(m);
+}
+function closeMenus() { document.querySelectorAll(".menu").forEach(m => m.remove()); document.querySelectorAll("[data-dd]").forEach(b => b.setAttribute("aria-expanded", "false")); }
+document.addEventListener("click", () => { closeMenus(); togglePop(null); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeMenus(); togglePop(null); } });
+function refresh() {  // met à jour sans fermer le menu ouvert
+  DD.forEach(([k, l]) => { const b = document.querySelector(`[data-dd="${k}"]`); if (!b) return; const [h, n] = ddLabel(k, l); b.className = n ? "on" : ""; b.innerHTML = h; });
+  renderKinds(); renderResults();
+}
+
+// ---------- Rendu ----------
+function renderKinds() {
+  const list = base("kind");
+  document.getElementById("kinds").innerHTML = KINDS.map(([k, l]) => {
+    const n = k === "all" ? list.length : list.filter(e => e.kind === k).length;
+    return `<button type="button" data-k="${k}" aria-pressed="${F.kind === k}">${l} <span>${n}</span></button>`;
+  }).join("");
+  document.querySelectorAll("#kinds button").forEach(b => b.onclick = () => go(F.country, b.dataset.k));
+}
+function where(c) {
+  if (!c) return "dans le monde";
+  if (c === "En ligne") return "en ligne";
+  if (c === "Non précisé") return "sans lieu précisé";
+  if (["États-Unis", "Pays-Bas", "Émirats arabes unis"].includes(c)) return "aux " + c;
+  if (["Royaume-Uni", "Canada", "Japon", "Luxembourg", "Danemark", "Portugal", "Brésil"].includes(c)) return "au " + c;
+  if (["Hong Kong", "Singapour", "Chypre", "Israël", "Taïwan"].includes(c)) return "à " + c;
+  return "en " + c;
+}
+function renderTitle() {
+  const what = { all: "Offres finance pour étudiants", event: "Events finance", spring: "Spring weeks", summer: "Summer internships", offcycle: "Stages off-cycle", graduate: "Graduate programmes" }[F.kind];
+  document.getElementById("h1").textContent = `${what} ${where(F.country)}`;
+  const cont = F.country && CONTINENTS.find(([, cs]) => cs.includes(F.country));
+  document.getElementById("crumbs").innerHTML = `<a href="#/">Tous les pays</a>${cont ? ` / ${esc(cont[0])} / <b>${esc(F.country)}</b>` : ""}`;
+  document.getElementById("sub").textContent = "Mises en ligne par les banques, détectées par le robot toutes les 30 minutes. Chaque lien ouvre la page officielle de l'offre.";
+  document.title = `${what} ${where(F.country)} · Events Tracker`;
+}
+function sorted(list) {
+  const far = 8.64e15;
+  return [...list].sort((a, b) =>
+    F.sort === "az" ? a.firm.localeCompare(b.firm, "fr") :
+    F.sort === "deadline" ? ((a.deadline || far) - (b.deadline || far)) || ((b.posted || 0) - (a.posted || 0)) :
+    ((b.posted || 0) - (a.posted || 0)));
+}
+function detected(e) {
+  if (!e.posted) return `<span class="det">—</span>`;
+  const h = (Date.now() - e.posted) / 3600000;
+  if (h < 48 && h >= 0) return `<span class="det new">${h < 1 ? "Il y a moins d'1 h" : h < 24 ? `Il y a ${Math.round(h)} h` : "Hier"}</span>`;
+  return `<span class="det">${fD.format(e.posted)}</span>`;
+}
+function deadline(e) {
+  if (e.deadline) {
+    const n = Math.round((e.deadline - today()) / DAY);
+    return `<div class="dl${n <= 14 ? " soon" : ""}">${fS.format(e.deadline)}<small>${n === 0 ? "Ferme aujourd'hui" : n === 1 ? "1 jour restant" : n + " jours restants"}</small></div>`;
+  }
+  if (e.opens && e.opens > today()) return `<div class="dl">Ouvre le ${fS.format(e.opens)}</div>`;
+  return e.rolling ? `<div class="dl">Au fil de l'eau</div>` : `<span class="mut">—</span>`;
+}
+const specCls = s => "s-" + String(s).replace(/[^A-Za-z]/g, "");
+const SAVE_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h12v18l-6-4.5L6 21z" stroke-linejoin="round"/></svg>`;
+const place = e => e.city ? `${esc(e.city)}, ${esc(e.country)}` : esc(e.country);
+const dash = `<span class="mut">—</span>`;
+
+function renderResults() {
+  const list = sorted(base());
+  const pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+  F.page = Math.min(F.page, pages);
+  const rows = list.slice((F.page - 1) * PER_PAGE, F.page * PER_PAGE);
+  document.getElementById("count").textContent = `${list.length} offre${list.length > 1 ? "s" : ""}`;
+  const pills = [];
+  if (F.country) pills.push([F.country, () => go(null, F.kind)]);
+  ["spec", "ftype", "start", "city", "firm"].forEach(k => F[k].forEach(v => pills.push([v === "—" ? "Non précisé" : v, () => { F[k].delete(v); renderAll(); }])));
+  if (F.posted) pills.push([POSTED.find(p => p[0] === F.posted)[1], () => { F.posted = ""; renderAll(); }]);
+  const pb = document.getElementById("pills");
+  pb.innerHTML = pills.map(([l], i) => `<span class="pill">${esc(l)}<button type="button" data-i="${i}" aria-label="Retirer ${esc(l)}">×</button></span>`).join("");
+  pb.querySelectorAll("button").forEach(b => b.onclick = () => pills[b.dataset.i][1]());
+  const fresh = base("posted").filter(e => e.posted && Date.now() - e.posted < 2 * DAY).length;
+  document.getElementById("fresh").hidden = !fresh || F.posted === "2";
+  document.getElementById("freshN").textContent = fresh;
+
+  const box = document.getElementById("results");
+  if (!list.length) { box.innerHTML = `<div class="tbox"><div class="empty">Aucune offre ne correspond pour l'instant. <a href="#/alertes">Crée une alerte</a> pour être prévenue dès qu'il y en a une.</div></div>`; return; }
+  const pager = `<div class="pager${F.view === "cards" ? " cards-pager" : ""}"><span>${list.length} offres · ${{ recent: "plus récentes d'abord", deadline: "deadline la plus proche d'abord", az: "par banque" }[F.sort]}</span>
+    <div class="pages">${pagerButtons(pages)}</div><span>Page ${F.page} / ${pages}</span></div>`;
+  const typeTag = e => `<span class="tag t-type ${TYPE_CLASS[e.ftype] || ""}">${esc(e.ftype)}</span>`;
+  const specTag = e => e.spec ? `<span class="tag s-tag ${specCls(e.spec)}">${esc(e.spec)}</span>` : "";
+  const saveBtn = e => `<button class="save" type="button" data-id="${esc(e.id)}" aria-pressed="${SAVED.has(e.id)}" aria-label="Sauvegarder ${esc(e.title)}">${SAVE_SVG}</button>`;
+  if (F.view === "cards") {
+    box.innerHTML = `<div class="cards">${rows.map(e => `<article class="card">
+      <div class="r1">${logo(e.firm)}<div><b>${esc(e.firm)}</b><div class="mut" style="font-size:13px">${place(e)}</div></div><span style="margin-left:auto">${detected(e)}</span></div>
+      <div class="ti"><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></div>
+      <div class="tags"><span class="tag k-${e.kind}">${KIND_LABEL[e.kind]}</span>${typeTag(e)}${specTag(e)}${e.start ? `<span class="tag">Début ${esc(e.start)}</span>` : ""}</div>
+      <div class="bot">${deadline(e)}<span style="display:flex;gap:6px;align-items:center">${saveBtn(e)}<a class="apply" href="${esc(e.url)}" target="_blank" rel="noopener">Voir l'offre →</a></span></div>
+    </article>`).join("")}</div>${pager}`;
+  } else {
+    box.innerHTML = `<div class="tbox"><div class="tscroll"><table>
+      <thead><tr><th>Mise en ligne</th><th>Type de firme</th><th>Banque</th><th>Offre</th><th>Contrat</th><th>Deadline</th><th>Lieu</th><th>Spécialisation</th><th>Division</th><th>Début</th><th class="stick stick1"><button type="button" class="more" id="scrollR" aria-label="Voir les colonnes suivantes">›</button>Lien</th><th class="stick stick2">Sauver</th></tr></thead>
+      <tbody>${rows.map(e => `<tr>
+        <td>${detected(e)}</td><td>${typeTag(e)}</td>
+        <td><div class="co">${logo(e.firm)}<b>${esc(e.firm)}</b></div></td>
+        <td class="role"><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a></td>
+        <td><span class="tag k-${e.kind}">${KIND_LABEL[e.kind]}</span></td>
+        <td>${deadline(e)}</td>
+        <td class="loc">${place(e)}</td>
+        <td>${specTag(e) || dash}</td>
+        <td>${e.division ? `<span class="tag">${esc(e.division)}</span>` : dash}</td>
+        <td class="loc">${e.start ? esc(e.start) : dash}</td>
+        <td class="stick stick1"><a class="apply" href="${esc(e.url)}" target="_blank" rel="noopener">Voir l'offre <span aria-hidden="true">→</span></a></td>
+        <td class="stick stick2">${saveBtn(e)}</td>
+      </tr>`).join("")}</tbody></table></div>${pager}</div>`;
+  }
+  const sr = document.getElementById("scrollR");
+  if (sr) { const sc = box.querySelector(".tscroll"); const upd = () => sr.textContent = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 4 ? "‹" : "›";
+    sr.onclick = () => sc.scrollBy({ left: sr.textContent === "›" ? 420 : -2000, behavior: "smooth" }); sc.onscroll = upd; upd(); }
+  box.querySelectorAll(".save").forEach(b => b.onclick = () => { const id = b.dataset.id; SAVED.has(id) ? SAVED.delete(id) : SAVED.add(id); saveSaved(); b.setAttribute("aria-pressed", String(SAVED.has(id))); });
+  box.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { F.page = Number(b.dataset.p); renderResults(); document.querySelector(".resbar").scrollIntoView({ behavior: "smooth" }); });
+}
+function pagerButtons(pages) {
+  const p = F.page, out = [`<button type="button" data-p="${p - 1}" ${p === 1 ? "disabled" : ""}>‹ Préc.</button>`];
+  const nums = [...new Set([1, p - 1, p, p + 1, pages].filter(n => n >= 1 && n <= pages))].sort((a, b) => a - b);
+  nums.forEach((n, i) => { if (i && n - nums[i - 1] > 1) out.push(`<span>…</span>`); out.push(`<button type="button" data-p="${n}" ${n === p ? 'aria-current="page"' : ""}>${n}</button>`); });
+  out.push(`<button type="button" data-p="${p + 1}" ${p === pages ? "disabled" : ""}>Suiv. ›</button>`);
+  return out.join("");
+}
+function renderAll() { renderTitle(); renderKinds(); buildFilters(); renderResults(); }
+
+// ---------- Menus de l'en-tête ----------
+const POP_COLS = [["Europe", CONTINENTS[0][1]], ["Asie-Pacifique", CONTINENTS[2][1]], ["Reste du monde", [...CONTINENTS[1][1], ...CONTINENTS[3][1], "En ligne"]]];
+const SEARCH_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>`;
+function buildPop() {
+  const c = new Map(); ALL.forEach(e => c.set(e.country, (c.get(e.country) || 0) + 1));
+  document.getElementById("popTracker").innerHTML = `<a class="lead" href="#/"><span class="ico">${SEARCH_SVG}</span><div><b>Toutes les offres</b><span>Toutes les offres suivies, dans tous les pays.</span></div></a>
+    <div class="kindrow">${KINDS.slice(1).map(([k, l]) => `<a href="#/${k}">${l}</a>`).join("")}</div><hr>
+    <div class="cols">${POP_COLS.map(([name, cs]) => { const items = cs.filter(x => c.get(x)); return `<div><h3>${esc(name)}</h3>${items.map(x => `<a href="#/pays/${slug(x)}">${esc(x)}<small>${c.get(x)}</small></a>`).join("") || `<span class="mut">Bientôt</span>`}</div>`; }).join("")}</div>`;
+}
+const POPS = { navTracker: "popTracker", navWatch: "popWatch" };
+function togglePop(btnId) {
+  Object.entries(POPS).forEach(([b, p]) => {
+    const open = b === btnId && document.getElementById(p).hidden;
+    document.getElementById(p).hidden = !open; document.getElementById(b).setAttribute("aria-expanded", String(open));
+  });
+}
+Object.entries(POPS).forEach(([b, p]) => {
+  document.getElementById(b).onclick = e => { e.stopPropagation(); closeMenus(); togglePop(b); };
+  document.getElementById(p).onclick = e => { e.stopPropagation(); if (e.target.closest("a")) togglePop(null); };
+});
+
+// ---------- Mes candidatures ----------
+const STATUSES = ["À postuler", "Postulé", "Tests en ligne", "Entretien", "Assessment centre", "Offre reçue", "Refusé"];
+let STATUS = {}; try { STATUS = JSON.parse(localStorage.getItem("et-status") || "{}"); } catch (e) {}
+const saveStatus = () => { try { localStorage.setItem("et-status", JSON.stringify(STATUS)); } catch (e) {} };
+function renderApps() {
+  const byId = new Map(ALL.map(e => [e.id, e]));
+  const list = [...SAVED].map(id => byId.get(id)).filter(Boolean).sort((a, b) => (a.deadline || 8.64e15) - (b.deadline || 8.64e15));
+  const cnt = s => list.filter(e => (STATUS[e.id] || "À postuler") === s).length;
+  document.getElementById("appStats").innerHTML = list.length ? [["Sauvegardées", list.length], ...STATUSES.filter(cnt).map(s => [s, cnt(s)])].map(([l, n]) => `<span><b>${n}</b>${esc(l)}</span>`).join("") : "";
+  const box = document.getElementById("apps");
+  if (!list.length) { box.innerHTML = `<div class="tbox"><div class="empty">Aucune offre sauvegardée pour l'instant. Dans le <a href="#/">tracker</a>, clique sur le signet d'une offre pour la retrouver ici.</div></div>`; return; }
+  box.innerHTML = `<div class="tbox apps"><div class="tscroll"><table style="min-width:980px"><thead><tr><th>Banque</th><th>Offre</th><th>Contrat</th><th>Deadline</th><th>Statut</th><th>Lien</th><th></th></tr></thead><tbody>${list.map(e => `<tr>
+    <td><div class="co">${logo(e.firm)}<b>${esc(e.firm)}</b></div></td>
+    <td class="role"><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a><div class="mut" style="font-size:14px">${place(e)}</div></td>
+    <td><span class="tag k-${e.kind}">${KIND_LABEL[e.kind]}</span></td><td>${deadline(e)}</td>
+    <td><label class="sr" for="st-${esc(e.id)}">Statut</label><select class="st" id="st-${esc(e.id)}" data-id="${esc(e.id)}">${STATUSES.map(s => `<option${(STATUS[e.id] || "À postuler") === s ? " selected" : ""}>${s}</option>`).join("")}</select></td>
+    <td><a class="apply" href="${esc(e.url)}" target="_blank" rel="noopener">Voir l'offre →</a></td>
+    <td><button class="rm" type="button" data-id="${esc(e.id)}">Retirer</button></td></tr>`).join("")}</tbody></table></div></div>`;
+  box.querySelectorAll(".st").forEach(x => x.onchange = () => { STATUS[x.dataset.id] = x.value; saveStatus(); renderApps(); });
+  box.querySelectorAll(".rm").forEach(x => x.onclick = () => { SAVED.delete(x.dataset.id); saveSaved(); renderApps(); });
+}
+
+// ---------- Banques ----------
+const TRACK = { auto: "Suivi automatique", page: "Page surveillée", lien: "Accès direct" };
+function renderFirms() {
+  const t = document.getElementById("bType"), c = document.getElementById("bCountry");
+  if (!t.options.length) {
+    t.innerHTML = `<option value="">Tous les types</option>` + [...new Set(FIRMS.map(f => f.type))].map(x => `<option>${esc(x)}</option>`).join("");
+    c.innerHTML = `<option value="">Tous les pays du siège</option>` + [...new Set(FIRMS.map(f => f.country))].sort((a, b) => a.localeCompare(b, "fr")).map(x => `<option>${esc(x)}</option>`).join("");
+    [t, c].forEach(s => s.onchange = renderFirms); document.getElementById("bq").oninput = renderFirms;
+  }
+  const n = new Map(); ALL.forEach(e => n.set(e.firm, (n.get(e.firm) || 0) + 1));
+  const q = norm(document.getElementById("bq").value);
+  const list = FIRMS.filter(f => (!t.value || f.type === t.value) && (!c.value || f.country === c.value) && (!q || norm(f.name + " " + (f.aliases || []).join(" ")).includes(q)))
+    .sort((a, b) => (n.get(b.name) || 0) - (n.get(a.name) || 0) || a.name.localeCompare(b.name, "fr"));
+  const g = document.getElementById("firmgrid");
+  g.innerHTML = list.map(f => { const k = n.get(f.name) || 0; return `<div class="fc">
+    <div class="r1">${logo(f.name)}<div><div class="nm">${esc(f.name)}</div><div class="ty">${esc(f.type)} · siège : ${esc(f.country)}</div></div></div>
+    <span class="trk ${f.suivi}"><i aria-hidden="true"></i>${TRACK[f.suivi]}</span>
+    <div class="bot">${k ? `<button type="button" class="linkbtn" data-f="${esc(f.name)}">Voir ${k} offre${k > 1 ? "s" : ""}</button>` : `<span class="mut">Aucune offre ouverte</span>`}<a class="lnk" href="${esc(f.url)}" target="_blank" rel="noopener">Page étudiants ↗</a></div>
+  </div>`; }).join("") || `<p class="mut">Aucune firme ne correspond.</p>`;
+  g.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { F.firm = new Set([b.dataset.f]); go(null, "all"); });
+}
+
+// ---------- Alertes ----------
+function buildAlertForm() {
+  document.getElementById("aKinds").innerHTML = KINDS.slice(1).map(([k, l]) => `<label class="opt"><input type="checkbox" name="k" value="${k}" checked><span>${l}</span></label>`).join("");
+  const cs = ["France", "Royaume-Uni", "Allemagne", "Suisse", "Pays-Bas", "Irlande", "Espagne", "Italie", "États-Unis", "Hong Kong", "Singapour", "En ligne"];
+  document.getElementById("aCountries").innerHTML = cs.map(c => `<label class="opt"><input type="checkbox" name="c" value="${c}" ${["France", "Royaume-Uni", "En ligne"].includes(c) ? "checked" : ""}><span>${c}</span></label>`).join("");
+}
+document.getElementById("aform").onsubmit = async ev => {
+  ev.preventDefault();
+  const msg = document.getElementById("amsg"), email = document.getElementById("email").value.trim().toLowerCase();
+  const kinds = [...document.querySelectorAll("input[name=k]:checked")].map(i => i.value);
+  const countries = [...document.querySelectorAll("input[name=c]:checked")].map(i => i.value);
+  const say = (cls, t) => { msg.className = "msg " + cls; msg.textContent = t; };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return say("err", "Cette adresse mail ne semble pas valide.");
+  if (!kinds.length) return say("err", "Choisis au moins un type d'offre.");
+  try {
+    const r = await fetch(SUPABASE_URL + "/rest/v1/subscribers", { method: "POST", headers: { ...H, "Content-Type": "application/json", Prefer: "return=minimal" },
+      body: JSON.stringify({ email, kinds, countries, wants_spring: kinds.includes("spring"), wants_events: kinds.includes("event"), zones: [] }) });
+    if (r.status === 409) return say("ok", "Cette adresse est déjà inscrite.");
+    if (!r.ok) throw new Error(r.status);
+    say("ok", "C'est noté : tu recevras les alertes à cette adresse."); ev.target.reset(); buildAlertForm();
+  } catch (e) { say("err", "L'inscription n'a pas marché. Réessaie dans un instant."); }
+};
+
+// ---------- Navigation ----------
+document.getElementById("sform").onsubmit = e => e.preventDefault();
+document.getElementById("q").oninput = e => { F.q = e.target.value; F.page = 1; renderKinds(); renderResults(); };
+document.querySelectorAll(".views button").forEach(b => b.onclick = () => { F.view = b.dataset.v; document.querySelectorAll(".views button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderResults(); });
+document.getElementById("freshBtn").onclick = () => { F.posted = "2"; F.page = 1; renderAll(); };
+function show() {
+  const r = route();
+  ["tracker", "banques", "alertes", "candidatures"].forEach(v => document.getElementById("v-" + v).hidden = v !== r.v);
+  document.getElementById("navTracker").setAttribute("aria-current", r.v === "tracker" ? "page" : "false");
+  document.getElementById("navBanques").setAttribute("aria-current", r.v === "banques" ? "page" : "false");
+  togglePop(null); closeMenus();
+  if (r.v === "tracker") { F.country = r.country; F.kind = r.kind; F.page = 1; renderAll(); }
+  if (r.v === "banques") renderFirms();
+  if (r.v === "candidatures") renderApps();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", show);
+document.querySelectorAll(".views button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.v === F.view)));
+buildAlertForm();
+load().then(() => {
+  buildPop();
+  document.getElementById("foot").textContent = `${ALL.length} offres ouvertes · ${FIRMS.length} banques suivies · page chargée le ${new Intl.DateTimeFormat("fr-FR", { dateStyle: "long", timeStyle: "short" }).format(new Date())}`;
+  show();
+}).catch(err => { document.getElementById("results").innerHTML = `<div class="tbox"><div class="empty">Impossible de charger les offres (${esc(err.message)}).</div></div>`; });
+</script>
+</body>
+</html>

@@ -45,43 +45,57 @@ EVENT_WORDS = ["insight", "event", "women", "discover", "open day", "office visi
                "webinar", "spotlight", "breakfast", "evening", "panel", "masterclass", "workshop",
                "challenge", "competition", "spring week", "fair", "session", "spring into", "spring insight",
                "immersion", "winternship", "sneak peek", "launchpad", "accelerate -", "kickstarter"]
+# Stages : summer et off-cycle (les CDI, graduate programmes et apprentissages restent écartés)
+INTERN_WORDS = ["intern", "internship", "summer analyst", "summer associate", "off-cycle", "off cycle", "offcycle",
+                "placement", "stage ", "stagiaire", "co-op", "vacation scheme", "work experience"]
 EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth form", "school leaver",
                  "step in, step up", "career pathways", "high school", "secondary school",
-                 "graduate programme", "graduate program", "summer analyst", "full time", "full-time",
-                 "off-cycle internship", "industrial placement", "interest list", "recruiting news",
-                 "summer internship", "summer intern", "placement year", "12-month", "full-time analyst",
-                 "graduate scheme", "analyst program -", "associate program", "fellowship"]
+                 "graduate programme", "graduate program", "full time", "full-time",
+                 "interest list", "recruiting news", "talent community", "talent network", "expression of interest",
+                 "graduate scheme", "analyst program -", "associate program", "fellowship", "alternance"]
+# Ces mots désignent un poste de salarié, même si "internship" apparaît (ex : "Internship Program Manager")
+STAFF_WORDS = ["manager", "coordinator", "recruiter", "director", "vice president", "head of", "specialist",
+               "planner", "officer", "administrator", "assistant to", "events coordinator", "dean "]
 CURRENT_YEAR = dt.date.today().year
 
 CITIES = {
-    # ville affichée : (zone, mots à chercher)
-    "Paris": ("France", ["paris"]),
-    "Londres": ("Royaume-Uni", ["london", "londres"]),
-    "Glasgow": ("Royaume-Uni", ["glasgow"]),
-    "Édimbourg": ("Royaume-Uni", ["edinburgh"]),
-    "Chester": ("Royaume-Uni", ["chester"]),
-    "Bournemouth": ("Royaume-Uni", ["bournemouth"]),
-    "Sheffield": ("Royaume-Uni", ["sheffield"]),
-    "Birmingham": ("Royaume-Uni", ["birmingham"]),
-    "Leeds": ("Royaume-Uni", ["leeds"]),
-    "Manchester": ("Royaume-Uni", ["manchester"]),
-    "Belfast": ("Royaume-Uni", ["belfast"]),
-    "Bristol": ("Royaume-Uni", ["bristol"]),
-    "Francfort": ("Europe", ["frankfurt", "francfort"]),
-    "Madrid": ("Europe", ["madrid"]),
-    "Milan": ("Europe", ["milan"]),
-    "Amsterdam": ("Europe", ["amsterdam"]),
-    "Zurich": ("Europe", ["zurich", "zürich"]),
-    "Dublin": ("Europe", ["dublin"]),
-    "Luxembourg": ("Europe", ["luxembourg"]),
-    "Munich": ("Europe", ["munich", "münchen"]),
-    "Bruxelles": ("Europe", ["brussels", "bruxelles"]),
-    "Genève": ("Europe", ["geneva", "genève"]),
-    "Stockholm": ("Europe", ["stockholm"]),
-    "New York": ("États-Unis", ["new york"]),
-    "Hong Kong": ("Asie", ["hong kong"]),
-    "Singapour": ("Asie", ["singapore", "singapour"]),
+    # ville affichée : (pays, mots à chercher)
+    "Paris": ("France", ["paris"]), "Lyon": ("France", ["lyon"]),
+    "Londres": ("Royaume-Uni", ["london", "londres"]), "Glasgow": ("Royaume-Uni", ["glasgow"]),
+    "Édimbourg": ("Royaume-Uni", ["edinburgh"]), "Chester": ("Royaume-Uni", ["chester"]),
+    "Bournemouth": ("Royaume-Uni", ["bournemouth"]), "Sheffield": ("Royaume-Uni", ["sheffield"]),
+    "Birmingham": ("Royaume-Uni", ["birmingham"]), "Leeds": ("Royaume-Uni", ["leeds"]),
+    "Manchester": ("Royaume-Uni", ["manchester"]), "Belfast": ("Royaume-Uni", ["belfast"]),
+    "Bristol": ("Royaume-Uni", ["bristol"]), "Oxford": ("Royaume-Uni", ["oxford"]),
+    "Francfort": ("Allemagne", ["frankfurt", "francfort"]), "Munich": ("Allemagne", ["munich", "münchen"]),
+    "Berlin": ("Allemagne", ["berlin"]), "Madrid": ("Espagne", ["madrid"]), "Barcelone": ("Espagne", ["barcelona"]),
+    "Milan": ("Italie", ["milan"]), "Rome": ("Italie", ["rome"]),
+    "Amsterdam": ("Pays-Bas", ["amsterdam"]), "Rotterdam": ("Pays-Bas", ["rotterdam"]),
+    "Zurich": ("Suisse", ["zurich", "zürich"]), "Genève": ("Suisse", ["geneva", "genève"]),
+    "Dublin": ("Irlande", ["dublin"]), "Luxembourg": ("Luxembourg", ["luxembourg"]),
+    "Bruxelles": ("Belgique", ["brussels", "bruxelles"]), "Stockholm": ("Suède", ["stockholm"]),
+    "Copenhague": ("Danemark", ["copenhagen"]), "Aarhus": ("Danemark", ["aarhus"]),
+    "Varsovie": ("Pologne", ["warsaw"]), "Cracovie": ("Pologne", ["krakow", "kraków"]),
+    "Lisbonne": ("Portugal", ["lisbon"]), "Oslo": ("Norvège", ["oslo"]), "Helsinki": ("Finlande", ["helsinki"]),
+    "Vienne": ("Autriche", ["vienna"]), "Prague": ("Tchéquie", ["prague"]), "Limassol": ("Chypre", ["limassol"]),
+    "Dubaï": ("Émirats arabes unis", ["dubai"]), "Abu Dhabi": ("Émirats arabes unis", ["abu dhabi"]),
+    "Tel Aviv": ("Israël", ["tel aviv"]),
+    "New York": ("États-Unis", ["new york", "nyc"]), "Chicago": ("États-Unis", ["chicago"]),
+    "Boston": ("États-Unis", ["boston"]), "San Francisco": ("États-Unis", ["san francisco"]),
+    "Austin": ("États-Unis", ["austin"]), "Miami": ("États-Unis", ["miami"]), "Houston": ("États-Unis", ["houston"]),
+    "Greenwich": ("États-Unis", ["greenwich"]), "Stamford": ("États-Unis", ["stamford"]),
+    "Philadelphie": ("États-Unis", ["philadelphia", "bala cynwyd"]), "Los Angeles": ("États-Unis", ["los angeles"]),
+    "Charlotte": ("États-Unis", ["charlotte"]), "Washington": ("États-Unis", ["washington"]),
+    "Toronto": ("Canada", ["toronto"]), "Montréal": ("Canada", ["montreal", "montréal"]),
+    "Hong Kong": ("Hong Kong", ["hong kong"]), "Singapour": ("Singapour", ["singapore", "singapour"]),
+    "Tokyo": ("Japon", ["tokyo"]), "Shanghai": ("Chine", ["shanghai"]), "Pékin": ("Chine", ["beijing"]),
+    "Mumbai": ("Inde", ["mumbai"]), "Bangalore": ("Inde", ["bangalore", "bengaluru"]), "Gurgaon": ("Inde", ["gurgaon", "gurugram"]),
+    "Sydney": ("Australie", ["sydney"]), "Melbourne": ("Australie", ["melbourne"]),
+    "Séoul": ("Corée du Sud", ["seoul"]), "Taipei": ("Taïwan", ["taipei"]), "São Paulo": ("Brésil", ["são paulo", "sao paulo"]),
 }
+# Ancienne colonne "zone" (gardée pour compatibilité)
+COUNTRY_ZONE = {"France": "France", "Royaume-Uni": "Royaume-Uni", "États-Unis": "États-Unis", "Canada": "États-Unis"}
+ASIA = {"Hong Kong", "Singapour", "Japon", "Chine", "Inde", "Australie", "Corée du Sud", "Taïwan", "Émirats arabes unis", "Israël"}
 # Si la page d'un event contient un de ces mots, il s'adresse à des lycéens : on l'écarte.
 PAGE_EXCLUDE_WORDS = ["year 13", "year 12", "sixth form", "a-level", "a level students", "school students",
                       "secondary school", "high school"]
@@ -180,9 +194,24 @@ def date_after(label_regex, text, window=120):
     return parse_date(text[m.end(): m.end() + window])
 
 
+def is_intern(title):
+    t = " " + title.lower() + " "
+    return any(w in t for w in INTERN_WORDS)
+
+
+OFFCYCLE_RE = re.compile(r"off[- ]?cycle|\b(6|six|3|three|4|four|5|five|12|twelve)[- ]months?\b|placement|winter intern|"
+                         r"\b(january|february|march|september|october|november|q1|q3|q4|autumn|fall|h1|h2)\b|stage de", re.I)
+
+
 def guess_kind(title, text):
-    """'spring' pour une spring week / un programme d'insight de plusieurs jours, sinon 'event'."""
+    """'event', 'spring', 'summer' ou 'offcycle'."""
     t = title.lower()
+    if is_intern(title) and not any(w in t for w in ["spring week", "spring insight", "insight"]):
+        if OFFCYCLE_RE.search(t):
+            return "offcycle"
+        if "summer" in t:
+            return "summer"
+        return "offcycle" if re.search(r"off[- ]?cycle|6[- ]month|six[- ]month", text[:3000], re.I) else "summer"
     if any(w in t for w in ["spring", "insight week", "insight programme", "insight program", "insight 20",
                             "kickstarter", "immersion", "fttp", "discovery programme", "sneak peek",
                             "launchpad", "accelerate -"]):
@@ -207,15 +236,91 @@ def guess_type(title, text):
     return "Networking"
 
 
+def zone_of(country):
+    if country in COUNTRY_ZONE:
+        return COUNTRY_ZONE[country]
+    if country in ASIA:
+        return "Asie"
+    return "Europe" if country else "Autre"
+
+
 def guess_place(title, text):
-    """Renvoie (zone, ville). Regarde d'abord le titre, puis le début de la page."""
+    """Renvoie (zone, ville, pays). Regarde d'abord le titre, puis le lieu indiqué, puis le début de la page."""
     for chunk in (title.lower(), text[:1500].lower()):
-        for city, (zone, words) in CITIES.items():
-            if any(w in chunk for w in words):
-                return zone, city
-        if any(w in chunk for w in VIRTUAL_WORDS):
-            return "Virtuel", "En ligne"
-    return "Autre", "À préciser"
+        for city, (country, words) in CITIES.items():
+            if any(re.search(r"\b" + re.escape(w) + r"\b", chunk) for w in words):
+                return zone_of(country), city, country
+        if any(re.search(r"\b" + w + r"\b", chunk) for w in VIRTUAL_WORDS):
+            return "Virtuel", "En ligne", "En ligne"
+    return "Autre", "À préciser", None
+
+
+# Division et spécialisation (comme Fyntraq)
+SPECS = [  # (mots dans le titre, spécialisation, division)
+    (["m&a", "mergers", "investment banking", "ibd", "corporate finance", "ecm", "dcm", "leveraged finance",
+      "advisory", "gcib", "banking"], "Investment Banking", "Corporate Finance"),
+    (["private equity", "buyout"], "Private Equity", "Corporate Finance"),
+    (["venture"], "Venture Capital", "Corporate Finance"),
+    (["restructuring"], "Restructuring", "Corporate Finance"),
+    (["private credit", "direct lending", "credit invest", "leveraged loan"], "Private Credit", "Corporate Finance"),
+    (["real estate"], "Real Estate", "Corporate Finance"),
+    (["infrastructure"], "Infrastructure", "Corporate Finance"),
+    (["quant", "algorithm", "systematic"], "Quant", "Market Finance"),
+    (["trading", "trader", "sales", "markets", "structuring", "derivatives", "fixed income", "equities", "fx"],
+     "Sales & Trading", "Market Finance"),
+    (["research"], "Research", "Market Finance"),
+    (["asset management", "investment management", "portfolio", "investing", "investment analyst", "academy"],
+     "Asset Management", "Market Finance"),
+    (["wealth", "private bank"], "Wealth Management", "Wealth & Corporate Banking"),
+    (["corporate banking", "transaction banking", "payments", "commercial banking", "enterprise credit"],
+     "Corporate Banking", "Wealth & Corporate Banking"),
+    (["risk", "compliance", "audit", "control"], "Risk & Compliance", "Risk & Control"),
+    (["operations", "finance intern", "finance &", "finance,", "finance -", "accounting", "treasury", "business services"],
+     "Operations & Finance", "Tech & Ops"),
+    (["software", "engineer", "developer", "technology", " tech ", " data ", "cyber", " it "], "Technology", "Tech & Ops"),
+    ([" hr ", "human resources", "legal", "marketing", "communications", "recruiting", "talent"],
+     "Fonctions support", "Tech & Ops"),
+]
+CAT_DEFAULT = {"Trading & Quant": ("Sales & Trading", "Market Finance"), "Hedge Fund": ("Asset Management", "Market Finance"),
+               "Asset Mgmt": ("Asset Management", "Market Finance"), "Private Equity": ("Private Equity", "Corporate Finance"),
+               "Elite Boutique": ("Investment Banking", "Corporate Finance")}
+
+
+def guess_spec(title, cat):
+    t = " " + title.lower() + " "
+    # la tech passe avant la finance quand le titre parle d'ingénieur / développeur
+    if re.search(r"software|developer|engineer|technology|\btech\b|data scien|cyber", t) and not re.search(r"trading|quant research", t):
+        return "Technology", "Tech & Ops"
+    for words, spec, div in SPECS:
+        if any(w in t for w in words):
+            return spec, div
+    return CAT_DEFAULT.get(cat, ("Généraliste", None))
+
+
+MONTH_FR = ["Janv.", "Févr.", "Mars", "Avr.", "Mai", "Juin", "Juil.", "Août", "Sept.", "Oct.", "Nov.", "Déc."]
+
+
+def guess_start(title, kind, event_start, text):
+    """Début du stage / programme, ex : 'Été 2027', 'Janv. 2027'. Rien pour les events."""
+    if kind == "event":
+        return None
+    t = title.lower()
+    y = re.search(r"\b(20\d\d)\b", t)
+    m = re.search(r"\b(" + "|".join(list(MONTHS)[:12]) + r")\b", t)
+    if m and y:
+        return f"{MONTH_FR[MONTHS[m.group(1)] - 1]} {y.group(1)}"
+    if "summer" in t and y:
+        return f"Été {y.group(1)}"
+    if event_start:
+        d = dt.date.fromisoformat(event_start)
+        return f"{MONTH_FR[d.month - 1]} {d.year}"
+    if kind == "summer":
+        yy = y.group(1) if y else str(CURRENT_YEAR + (1 if dt.date.today().month >= 7 else 0))
+        return f"Été {yy}"
+    if kind == "spring":
+        yy = y.group(1) if y else str(CURRENT_YEAR + (1 if dt.date.today().month >= 7 else 0))
+        return f"Printemps {yy}"
+    return None
 
 
 def looks_like_event(title):
@@ -226,7 +331,9 @@ def looks_like_event(title):
     years = [int(y) for y in re.findall(r"\b(20\d\d)\b", t)]
     if years and max(years) < CURRENT_YEAR:
         return False
-    return any(w in t for w in EVENT_WORDS)
+    if any(w in " " + t + " " for w in STAFF_WORDS):
+        return False
+    return any(w in t for w in EVENT_WORDS) or is_intern(title)
 
 
 STUDENT_WORDS = ["spring", "insight program", "insight day", "insight week", "insight event", "insight experience",
@@ -235,7 +342,7 @@ STUDENT_WORDS = ["spring", "insight program", "insight day", "insight week", "in
                  "sneak peek", "launchpad", "accelerate -", "kickstarter", "women's insight"]
 JOB_WORDS = ["manager", "vice president", "director", "engineer", "banker", "associate", "analyst", "representative",
              "specialist", "lead ", "head of", "officer", "planner", "designer", "professional", "hiring event",
-             "investor", "consultant", "developer", "advisor", "executive", "intern ", "internship"]
+             "investor", "consultant", "developer", "advisor", "executive"]
 
 
 def looks_like_student_event(title):
@@ -245,19 +352,21 @@ def looks_like_student_event(title):
         return False
     programme_words = ["spring", "insight program", "insight day", "insight week", "insight event", "early insights",
                        "insight 20", "kickstarter", "sneak peek", "launchpad", "accelerate -"]
+    if is_intern(title):
+        return True
     if any(w in t for w in JOB_WORDS) and not any(w in t for w in programme_words):
         return False
     return any(w in t for w in STUDENT_WORDS)
 
 
-def build_item(src, event_id, url, title, text, extra_text=""):
+def build_item(src, event_id, url, title, text, extra_text="", posted=None):
     """Transforme une annonce (titre + texte de sa page) en ligne pour Supabase. None = à ignorer."""
     full = normalize_ranges((extra_text + " " + text).strip())
     low = full.lower()
     if any(w in low for w in PAGE_EXCLUDE_WORDS):
         log(f"  - ignoré (pour lycéens) : {title}")
         return None
-    zone, city = guess_place(title, extra_text + " " + full)
+    zone, city, country = guess_place(title, extra_text + " " + full)
     deadline = date_after(r"closing date|application deadline|deadline|apply by|applications close|applications will close|close on|closes on|window closes", full)
     event_start = date_after(r"event date|date of event|event will take place|takes place on|will take place from|programme dates|program dates", full)
     if event_start == deadline:
@@ -267,19 +376,27 @@ def build_item(src, event_id, url, title, text, extra_text=""):
         event_start = later[0] if later and deadline else (parse_date(title) or None)
     kind = guess_kind(title, full)
     typ = guess_type(title, full)
+    if kind in ("summer", "offcycle"):
+        typ = "Summer internship" if kind == "summer" else "Off-cycle"
+    elif kind == "spring" and typ != "Women in Finance":
+        typ = "Spring Insight"
+    spec, division = guess_spec(title, src.get("cat"))
+    if not posted:
+        posted = date_after(r"date posted|posted on|posting date|opening date|published on|publication date", full, 60)
     return {
-        "id": event_id, "firm": src["firm"], "title": title, "kind": kind,
-        "type": "Spring Insight" if kind == "spring" and typ != "Women in Finance" else typ,
-        "cat": src.get("cat"), "zone": zone, "city": city,
+        "id": event_id, "firm": src["firm"], "title": title, "kind": kind, "type": typ,
+        "cat": src.get("cat"), "zone": zone, "city": city, "country": country,
+        "division": division, "specialisation": spec,
+        "start_label": guess_start(title, kind, event_start, full), "posted_at": posted,
         "event_start": event_start, "deadline": deadline,
         "rolling": bool(re.search(r"rolling basis|on a rolling", full, re.I)),
         "elig": "Détecté automatiquement : vérifie l'éligibilité sur la page.",
-        "url": url, "link_label": "S'inscrire", "source": src["id"],
+        "url": url, "link_label": "Voir l'offre", "source": src["id"],
     }
 
 
 def log_item(it):
-    log(f"  + NOUVEAU ({it['kind']}) : {it['title']} ({it['city']}, dates {it['event_start']}, deadline {it['deadline']})")
+    log(f"  + NOUVEAU ({it['kind']}) : {it['title']} ({it['city']}, {it['country']} · {it['specialisation']} · début {it['start_label']} · deadline {it['deadline']} · sortie {it['posted_at']})")
 
 
 # =========================================================
@@ -354,12 +471,24 @@ def _keep(title, event_id, known_ids, seen, accept_all=False):
         return False
     if accept_all:
         years = [int(y) for y in re.findall(r"\b(20\d\d)\b", title)]
-        if (years and max(years) < CURRENT_YEAR) or any(w in title.lower() for w in EXCLUDE_WORDS):
+        if (years and max(years) < CURRENT_YEAR) or any(w in title.lower() for w in EXCLUDE_WORDS + STAFF_WORDS):
             return False
     elif not looks_like_student_event(title):
         return False
     seen.add(event_id)
     return True
+
+
+def workday_posted(txt):
+    """'Posted Today', 'Posted Yesterday', 'Posted 3 Days Ago' -> date ISO."""
+    t = (txt or "").lower()
+    today = dt.date.today()
+    if "today" in t:
+        return today.isoformat()
+    if "yesterday" in t:
+        return (today - dt.timedelta(days=1)).isoformat()
+    m = re.search(r"(\d+)\+? days? ago", t)
+    return (today - dt.timedelta(days=int(m.group(1)))).isoformat() if m else None
 
 
 def scan_workday(src, known_ids):
@@ -376,7 +505,7 @@ def scan_workday(src, known_ids):
         sess.get(f"https://{host}/en-US/{site}", headers={"User-Agent": browser_ua}, timeout=30)
     except requests.RequestException:
         pass
-    for word in src.get("search", ["spring", "insight", "women", "discover"]):
+    for word in src.get("search", ["spring", "insight", "women", "discover", "intern", "summer", "off-cycle"]):
         r = None
         for attempt in range(2):
             time.sleep(3 if attempt == 0 else 15)
@@ -404,7 +533,8 @@ def scan_workday(src, known_ids):
                 text = visible_text(d.get("jobPostingInfo", {}).get("jobDescription", ""))
             except Exception:
                 pass
-            it = build_item(src, event_id, f"https://{host}/en-US/{site}{path}", title, text, j.get("locationsText", ""))
+            it = build_item(src, event_id, f"https://{host}/en-US/{site}{path}", title, text, j.get("locationsText", ""),
+                            workday_posted(j.get("postedOn", "")))
             if it:
                 found.append(it); log_item(it)
     log(f"  {len(found)} nouveau(x) trouvé(s)")
@@ -415,7 +545,7 @@ def scan_oracle(src, known_ids):
     """Site carrières Oracle Recruiting Cloud (ex : J.P. Morgan)."""
     host, site_nb = src["host"], src["site"]
     found, seen, ok = [], set(), False
-    for word in src.get("search", ["spring", "insight", "women", "event"]):
+    for word in src.get("search", ["spring", "insight", "women", "event", "intern", "summer analyst", "off-cycle"]):
         url = (f"https://{host}/hcmRestApi/resources/latest/recruitingCEJobRequisitions?onlyData=true"
                f"&expand=requisitionList&finder=findReqs;siteNumber={site_nb},limit=50,keyword=%22{word}%22")
         try:
@@ -435,7 +565,7 @@ def scan_oracle(src, known_ids):
             text = " ".join(str(j.get(k) or "") for k in ("ShortDescriptionStr", "PrimaryLocation", "ExternalQualificationsStr"))
             loc = str(j.get("PrimaryLocation") or "")
             it = build_item(src, event_id, f"https://{host}/hcmUI/CandidateExperience/en/sites/{site_nb}/job/{jid}",
-                            title, text, loc)
+                            title, text, loc, (str(j.get("PostedDate") or "")[:10] or None))
             if it:
                 found.append(it); log_item(it)
     log(f"  {len(found)} nouveau(x) trouvé(s)")
@@ -465,8 +595,9 @@ def scan_greenhouse(src, known_ids):
             continue
         text = visible_text(_html.unescape(j.get("content") or ""))
         loc = (j.get("location") or {}).get("name", "")
-        it = build_item(src, event_id, j.get("absolute_url"), title, text, loc)
-        if it and src.get("kind") and not re.search(r"visit day|insight day|open day", title, re.I):
+        posted = (j.get("first_published") or j.get("updated_at") or "")[:10] or None
+        it = build_item(src, event_id, j.get("absolute_url"), title, text, loc, posted)
+        if it and src.get("kind") and it["kind"] in ("event", "spring") and not re.search(r"visit day|insight day|open day", title, re.I):
             it["kind"] = src["kind"]
             if it["kind"] == "spring" and it["type"] != "Women in Finance":
                 it["type"] = "Spring Insight"
@@ -480,7 +611,7 @@ def scan_talentbrew(src, known_ids):
     """Sites carrières Radancy/TalentBrew (Barclays, Citi, BlackRock…) : ils chargent leurs résultats en JSON."""
     base = src["base"].rstrip("/")
     found, seen, ok = [], set(), False
-    for word in src.get("search", ["spring", "insight"]):
+    for word in src.get("search", ["spring", "insight", "intern", "summer", "off-cycle"]):
         url = (f"{base}/search-jobs/results?ActiveFacetID=0&CurrentPage=1&RecordsPerPage=100&Distance=50"
                f"&RadiusUnitType=0&Keywords={word}&Location=&ShowRadius=False&IsPagination=False&CustomFacetName="
                f"&FacetTerm=&FacetType=0&SearchResultsModuleName=Search+Results&SearchFiltersModuleName=Search+Filters"
@@ -595,9 +726,9 @@ def fmt_date(iso):
 
 def event_line(e):
     return (f"<li><b>{e['firm']}</b> — {e['title']} ({e.get('city') or ''})<br>"
-            f"Event : {fmt_date(e.get('event_start'))} · Deadline : {fmt_date(e.get('deadline'))}"
+            f"{e.get('type') or ''} · Deadline : {fmt_date(e.get('deadline'))}"
             f"{' · au fil de l eau' if e.get('rolling') else ''}<br>"
-            f"<a href=\"{e['url']}\">S'inscrire</a></li>")
+            f"<a href=\"{e['url']}\">Voir l'offre</a></li>")
 
 
 # =========================================================

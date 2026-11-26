@@ -134,7 +134,7 @@
    "type": "Banque européenne",
    "country": "France",
    "url": "https://www.ca-cib.com/careers",
-   "suivi": "lien",
+   "suivi": "auto",
    "aliases": [
     "CACIB"
    ]
@@ -175,7 +175,7 @@
    "type": "Banque européenne",
    "country": "Royaume-Uni",
    "url": "https://www.sc.com/en/global-careers/early-careers/our-programmes/insight-programme",
-   "suivi": "lien",
+   "suivi": "auto",
    "aliases": []
   },
   {
@@ -756,6 +756,87 @@
    "type": "Trading & quant",
    "country": "Royaume-Uni",
    "url": "https://job-boards.greenhouse.io/mako",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Amundi",
+   "domain": "amundi.com",
+   "type": "Asset management",
+   "country": "France",
+   "url": "https://jobs.amundi.com/job/list-of-jobs.aspx?LCID=2057",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Nordea",
+   "domain": "nordea.com",
+   "type": "Banque européenne",
+   "country": "Suède",
+   "url": "https://careers.nordea.com",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "DZ Bank",
+   "domain": "dzbank.de",
+   "type": "Banque européenne",
+   "country": "Allemagne",
+   "url": "https://jobs.dzbank.de",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Deka",
+   "domain": "deka.de",
+   "type": "Asset management",
+   "country": "Allemagne",
+   "url": "https://karriere.deka.de",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Swiss Re",
+   "domain": "swissre.com",
+   "type": "Assurance",
+   "country": "Suisse",
+   "url": "https://careers.swissre.com",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Pareto Securities",
+   "domain": "paretosec.com",
+   "type": "Banque européenne",
+   "country": "Norvège",
+   "url": "https://paretosecurities.teamtailor.com/jobs",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "ABG Sundal Collier",
+   "domain": "abgsc.com",
+   "type": "Banque européenne",
+   "country": "Norvège",
+   "url": "https://abgsc.teamtailor.com/jobs",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "SEB",
+   "domain": "sebgroup.com",
+   "type": "Banque européenne",
+   "country": "Suède",
+   "url": "https://jobs.eu.lever.co/seb",
+   "suivi": "auto",
+   "aliases": []
+  },
+  {
+   "name": "Moody's",
+   "domain": "moodys.com",
+   "type": "Notation & data",
+   "country": "États-Unis",
+   "url": "https://careers.moodys.com/en/category/early-career-opportunities-and-programs-jobs/49841/9442032/1",
    "suivi": "auto",
    "aliases": []
   }

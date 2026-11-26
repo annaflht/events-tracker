@@ -52,11 +52,12 @@ EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth fo
                  "step in, step up", "career pathways", "high school", "secondary school",
                  "full time", "full-time", "graduate research fellowship", "experienced hire", "lateral",
                  "interest list", "recruiting news", "talent community", "talent network", "expression of interest",
-                 "fellowship", "alternance", "phd fellowship"]
+                 "fellowship", "alternance", "phd fellowship", "open application", "spontaneous application",
+                 "candidature spontanée", "initiativbewerbung", "general application", "talent pool"]
 # Graduate programmes (CDI de début de carrière avec un programme de formation)
 GRAD_RE = re.compile(r"\bgraduate\b|\bnew grad|\bcampus (analyst|associate|hire)|\b(analyst|associate|trainee|rotational|"
                      r"leadership|development) (program|programme)\b|management trainee|\bv\.i\.e\b|\bvie\b|jeune diplômé", re.I)
-RULES_VERSION = "2026-11-25b"   # à changer quand les règles changent : les trouvailles suivantes ne comptent pas comme "nouvelles"
+RULES_VERSION = "2026-11-26a"   # à changer quand les règles changent : les trouvailles suivantes ne comptent pas comme "nouvelles"
 # Ces mots désignent un poste de salarié, même si "internship" apparaît (ex : "Internship Program Manager")
 STAFF_WORDS = ["manager", "coordinator", "recruiter", "director", "vice president", "head of", "specialist",
                "planner", "officer", "administrator", "assistant to", "events coordinator", "dean "]
@@ -78,8 +79,13 @@ CITIES = {
     "Zurich": ("Suisse", ["zurich", "zürich"]), "Genève": ("Suisse", ["geneva", "genève"]),
     "Dublin": ("Irlande", ["dublin"]), "Luxembourg": ("Luxembourg", ["luxembourg"]),
     "Bruxelles": ("Belgique", ["brussels", "bruxelles"]), "Stockholm": ("Suède", ["stockholm"]),
-    "Copenhague": ("Danemark", ["copenhagen"]), "Aarhus": ("Danemark", ["aarhus"]),
-    "Varsovie": ("Pologne", ["warsaw"]), "Cracovie": ("Pologne", ["krakow", "kraków"]),
+    "Copenhague": ("Danemark", ["copenhagen", "københavn", "kobenhavn"]), "Göteborg": ("Suède", ["gothenburg", "göteborg"]),
+    "Malmö": ("Suède", ["malmö", "malmo"]), "Bergen": ("Norvège", ["bergen"]), "Tallinn": ("Estonie", ["tallinn"]),
+    "Riga": ("Lettonie", ["riga"]), "Vilnius": ("Lituanie", ["vilnius"]), "Hambourg": ("Allemagne", ["hamburg"]),
+    "Düsseldorf": ("Allemagne", ["düsseldorf", "dusseldorf"]), "Stuttgart": ("Allemagne", ["stuttgart"]),
+    "Cologne": ("Allemagne", ["köln", "cologne"]), "Wrocław": ("Pologne", ["wroclaw", "wrocław"]),
+    "Montrouge": ("France", ["montrouge"]), "Zoug": ("Suisse", ["zug"]), "Lugano": ("Suisse", ["lugano"]), "Aarhus": ("Danemark", ["aarhus"]),
+    "Varsovie": ("Pologne", ["warsaw", "warszawa"]), "Cracovie": ("Pologne", ["krakow", "kraków"]),
     "Lisbonne": ("Portugal", ["lisbon"]), "Oslo": ("Norvège", ["oslo"]), "Helsinki": ("Finlande", ["helsinki"]),
     "Vienne": ("Autriche", ["vienna"]), "Prague": ("Tchéquie", ["prague"]), "Limassol": ("Chypre", ["limassol"]),
     "Dubaï": ("Émirats arabes unis", ["dubai"]), "Abu Dhabi": ("Émirats arabes unis", ["abu dhabi"]),
@@ -205,7 +211,10 @@ def date_after(label_regex, text, window=120):
 
 
 INTERN_RE = re.compile(r"\bintern(s|ship|ships)?\b|summer analyst|summer associate|off[- ]?cycle|placement|\bstage\b|stagiaire|"
-                       r"co-op|vacation scheme|work experience", re.I)
+                       r"co-op|vacation scheme|work experience|winternship|"
+                       # autres langues et jobs étudiants (Allemagne, pays nordiques, Pologne, Italie, Espagne…)
+                       r"praktik|werkstudent|studentermedhj|studentmedarbe|\bstudent (assistant|analyst|worker|position|job)|"
+                       r"\(student\)|student position|^student,|\bstaż|stażyst|tirocin|prácticas|becari", re.I)
 
 
 def is_intern(title):
@@ -216,7 +225,7 @@ def is_grad(title):
     return bool(GRAD_RE.search(title)) and not re.search(r"graduate (recruit|talent|campus manager)|undergraduate", title, re.I)
 
 
-OFFCYCLE_RE = re.compile(r"off[- ]?cycle|\b(6|six|3|three|4|four|5|five|12|twelve)[- ]months?\b|placement|winter intern|"
+OFFCYCLE_RE = re.compile(r"off[- ]?cycle|werkstudent|studentermedhj|studentmedarbe|\bstudent (assistant|analyst|worker|position|job)|\(student\)|student position|^student,|\b(6|six|3|three|4|four|5|five|12|twelve)[- ]months?\b|placement|winter intern|"
                          r"\b(january|february|march|september|october|november|q1|q3|q4|autumn|fall|h1|h2|janvier|février|mars|septembre|"
                          r"octobre|novembre)\b|stage de|long[- ]term", re.I)
 
@@ -229,8 +238,11 @@ def guess_kind(title, text):
     if is_intern(title) and not any(w in t for w in ["spring week", "spring insight", "insight"]):
         if OFFCYCLE_RE.search(t):
             return "offcycle"
-        if "summer" in t:
+        if "summer" in t or re.search(r"\bété\b|sommer", t):
             return "summer"
+        # stages européens (France, Allemagne…) : en général de longue durée, hors période d'été
+        if re.search(r"\bstage\b|stagiaire|praktik|staż|tirocin|prácticas|(\b[3-9]|1[0-2])[- ]?mois", t + " " + text[:1500].lower()):
+            return "offcycle"
         return "offcycle" if re.search(r"off[- ]?cycle|6[- ]month|six[- ]month", text[:3000], re.I) else "summer"
     if any(w in t for w in ["spring", "insight week", "insight programme", "insight program", "insight 20",
                             "kickstarter", "immersion", "fttp", "discovery programme", "sneak peek",
@@ -279,6 +291,9 @@ def guess_place(title, text):
 
 # Division et spécialisation (comme Fyntraq)
 SPECS = [  # (mots dans le titre, spécialisation, division)
+    (["wealth", "private bank"], "Wealth Management", "Wealth & Corporate Banking"),
+    (["corporate banking", "large corporates", "transaction banking", "payments", "commercial banking", "enterprise credit"],
+     "Corporate Banking", "Wealth & Corporate Banking"),
     (["m&a", "mergers", "investment banking", "ibd", "corporate finance", "ecm", "dcm", "leveraged finance",
       "advisory", "gcib", "banking"], "Investment Banking", "Corporate Finance"),
     (["private equity", "buyout"], "Private Equity", "Corporate Finance"),
@@ -287,16 +302,13 @@ SPECS = [  # (mots dans le titre, spécialisation, division)
     (["private credit", "direct lending", "credit invest", "leveraged loan"], "Private Credit", "Corporate Finance"),
     (["real estate"], "Real Estate", "Corporate Finance"),
     (["infrastructure"], "Infrastructure", "Corporate Finance"),
-    (["quant", "algorithm", "systematic"], "Quant", "Market Finance"),
+    (["quant", "algorithm", "systematic", "financial engineer", "ingénierie financière"], "Quant", "Market Finance"),
     (["trading", "trader", "sales", "markets", "structuring", "derivatives", "fixed income", "equities", "fx"],
      "Sales & Trading", "Market Finance"),
-    (["research"], "Research", "Market Finance"),
-    (["asset management", "investment management", "portfolio", "investing", "investment analyst", "academy"],
+    (["research", "recherche", "analyse financière"], "Research", "Market Finance"),
+    (["asset management", "investment management", "gestion d'actifs", "fund analyst", "multi-asset", "investment office", "portfolio", "investing", "investment analyst", "academy"],
      "Asset Management", "Market Finance"),
-    (["wealth", "private bank"], "Wealth Management", "Wealth & Corporate Banking"),
-    (["corporate banking", "transaction banking", "payments", "commercial banking", "enterprise credit"],
-     "Corporate Banking", "Wealth & Corporate Banking"),
-    (["risk", "compliance", "audit", "control"], "Risk & Compliance", "Risk & Control"),
+    (["risk", "risque", "risiko", "compliance", "conformité", "audit", "control", "contrôle"], "Risk & Compliance", "Risk & Control"),
     (["operations", "finance intern", "finance &", "finance,", "finance -", "accounting", "treasury", "business services"],
      "Operations & Finance", "Tech & Ops"),
     (["software", "engineer", "developer", "technology", " tech ", " data ", "cyber", " it "], "Technology", "Tech & Ops"),
@@ -695,12 +707,121 @@ def scan_talentbrew(src, known_ids):
                 continue
             time.sleep(1)
             page = get_page(href)
-            it = build_item(src, event_id, href, title, visible_text(page) if page else "",
-                            re.sub(r"\s+", " ", a.get_text(" ")))
+            text = visible_text(page) if page else ""
+            posted = None
+            m = re.search(r"posted\s*:?\s*(\d{1,2})/(\d{1,2})/(20\d\d)", text, re.I) if src.get("us_dates") else None
+            if m:
+                try:
+                    posted = dt.date(int(m.group(3)), int(m.group(1)), int(m.group(2))).isoformat()
+                except ValueError:
+                    pass
+            it = build_item(src, event_id, href, title, text, re.sub(r"\s+", " ", a.get_text(" ")), posted)
             if it:
                 found.append(it); log_item(it)
     log(f"  {len(found)} nouveau(x) trouvé(s)")
     return found, ok
+
+
+def _rss_items(xml_text):
+    """Lit un flux RSS : liste de dicts (title, link, description, pubDate, + champs propres au site)."""
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(xml_text.encode("utf-8") if isinstance(xml_text, str) else xml_text)
+    out = []
+    for it in root.iter("item"):
+        d = {}
+        for c in it:
+            k, v = c.tag.rsplit("}", 1)[-1], "".join(c.itertext()).strip()
+            d[k] = (d[k] + " · " + v) if k in d and v else (v or d.get(k, ""))
+        out.append(d)
+    return out
+
+
+def _rss_date(txt):
+    try:
+        from email.utils import parsedate_to_datetime
+        return parsedate_to_datetime(txt).date().isoformat()
+    except Exception:
+        return None
+
+
+def scan_rss(src, known_ids):
+    """Flux RSS officiels des sites carrières :
+       talentsoft (Amundi, Crédit Agricole CIB…), successfactors (Nordea, Standard Chartered, DZ Bank…),
+       teamtailor (Pareto, ABG Sundal Collier…)."""
+    flavor, host = src["flavor"], src.get("host", "")
+    if flavor == "talentsoft":
+        urls = [f"https://{host}/handlers/offerRss.ashx?LCID={src.get('lcid', 2057)}"]
+    elif flavor == "successfactors":
+        loc = src.get("locale", "en_GB")
+        urls = [f"https://{host}/services/rss/job/?locale={loc}&keywords=({w})"
+                for w in src.get("search", ["intern", "internship", "student", "graduate", "trainee", "summer", "praktikum", "winternship"])]
+    else:  # teamtailor
+        urls = [f"https://{src['company']}.teamtailor.com/jobs.rss"]
+    found, seen, ok = [], set(), False
+    for url in urls:
+        time.sleep(1)
+        try:
+            r = requests.get(url, headers=HEADERS_WEB, timeout=30)
+        except requests.RequestException as e:
+            log(f"  ! erreur réseau : {e}"); continue
+        if r.status_code != 200:
+            log(f"  ! flux {url} : {r.status_code}"); continue
+        ok = True
+        for d in _rss_items(r.text):
+            title, link = d.get("title", "").strip(), d.get("link", "").strip()
+            desc = visible_text(d.get("description", ""))
+            loc = ""
+            if flavor == "talentsoft":
+                title = re.sub(r"^\s*\d{4}-\d+\s*-\s*", "", title)        # "2026-117086 - Fund Analyst…"
+                contract = desc[:400].lower()
+                if not (is_intern(title) or is_grad(title) or "stage" in contract[:200] or "internship" in contract[:200]):
+                    continue
+                if not is_intern(title) and re.search(r"\bstage\b|internship", contract[:200]):
+                    title = f"{title} (stage)"
+                loc = " ".join(v for k, v in d.items() if k not in ("title", "description", "link", "guid", "pubDate"))
+            elif flavor == "successfactors":
+                m = re.search(r"\(([^()]*)\)\s*$", title)
+                if m:
+                    loc, title = m.group(1), title[:m.start()].strip()
+            else:
+                loc = " ".join(v for k, v in d.items() if "location" in k or k in ("city", "department"))
+            ref = re.sub(r"[?#].*$", "", link).rstrip("/").rsplit("/", 1)[-1] or link
+            m = re.search(r"idOffre=(\d+)", link)
+            event_id = f"{flavor}:{host or src.get('company')}:{m.group(1) if m else ref}"
+            if not _keep(title, event_id, known_ids, seen, src.get("accept_all", False)):
+                continue
+            if len(found) >= MAX_NEW_PAGES_PER_SOURCE * 2:
+                break
+            it = build_item(src, event_id, link, title, desc, loc, _rss_date(d.get("pubDate", "")))
+            if it:
+                found.append(it); log_item(it)
+    log(f"  {len(found)} nouveau(x) trouvé(s)")
+    return found, ok
+
+
+def scan_lever(src, known_ids):
+    """Tableau d'offres Lever (API publique officielle). eu=true pour les comptes européens."""
+    api = "api.eu.lever.co" if src.get("eu") else "api.lever.co"
+    try:
+        r = requests.get(f"https://{api}/v0/postings/{src['company']}?mode=json", headers=HEADERS_WEB, timeout=40)
+    except requests.RequestException as e:
+        log(f"  ! erreur réseau : {e}"); return [], False
+    if r.status_code != 200:
+        log(f"  ! Lever : {r.status_code}"); return [], False
+    found, seen = [], set()
+    for j in r.json():
+        title = (j.get("text") or "").split(" | ")[0].strip()
+        event_id = f"lever:{src['company']}:{j.get('id')}"
+        if not _keep(title, event_id, known_ids, seen, src.get("accept_all", False)):
+            continue
+        cats = j.get("categories") or {}
+        posted = dt.datetime.fromtimestamp(j["createdAt"] / 1000, dt.timezone.utc).date().isoformat() if j.get("createdAt") else None
+        it = build_item(src, event_id, j.get("hostedUrl"), title, j.get("descriptionPlain") or "",
+                        " ".join(str(cats.get(k) or "") for k in ("location", "team", "commitment")), posted)
+        if it:
+            found.append(it); log_item(it)
+    log(f"  {len(found)} nouveau(x) trouvé(s)")
+    return found, True
 
 
 def scan_links(src, known_ids):
@@ -833,9 +954,10 @@ def main():
         log(f"\n== {src['id']} ({src['type']})")
         st = states.get(src["id"], {})
         digest = st.get("last_hash")
-        if src["type"] in ("talnet", "workday", "oracle", "links", "greenhouse", "talentbrew"):
-            scanner = {"talnet": scan_talnet, "workday": scan_workday, "oracle": scan_oracle,
-                       "links": scan_links, "greenhouse": scan_greenhouse, "talentbrew": scan_talentbrew}[src["type"]]
+        scanners = {"talnet": scan_talnet, "workday": scan_workday, "oracle": scan_oracle, "links": scan_links,
+                    "greenhouse": scan_greenhouse, "talentbrew": scan_talentbrew, "rss": scan_rss, "lever": scan_lever}
+        if src["type"] in scanners:
+            scanner = scanners[src["type"]]
             try:
                 new, ok = scanner(src, known_ids)
             except Exception as e:          # une source qui plante ne doit pas bloquer les autres

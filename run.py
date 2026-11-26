@@ -706,8 +706,15 @@ def scan_talentbrew(src, known_ids):
                 continue
             time.sleep(1)
             page = get_page(href)
-            it = build_item(src, event_id, href, title, visible_text(page) if page else "",
-                            re.sub(r"\s+", " ", a.get_text(" ")))
+            text = visible_text(page) if page else ""
+            posted = None
+            m = re.search(r"posted\s*:?\s*(\d{1,2})/(\d{1,2})/(20\d\d)", text, re.I) if src.get("us_dates") else None
+            if m:
+                try:
+                    posted = dt.date(int(m.group(3)), int(m.group(1)), int(m.group(2))).isoformat()
+                except ValueError:
+                    pass
+            it = build_item(src, event_id, href, title, text, re.sub(r"\s+", " ", a.get_text(" ")), posted)
             if it:
                 found.append(it); log_item(it)
     log(f"  {len(found)} nouveau(x) trouvé(s)")
@@ -716,10 +723,13 @@ def scan_talentbrew(src, known_ids):
 
 def _rss_items(xml_text):
     """Lit un flux RSS : liste de dicts (title, link, description, pubDate, + champs propres au site)."""
-    soup = BeautifulSoup(xml_text, "xml")
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(xml_text.encode("utf-8") if isinstance(xml_text, str) else xml_text)
     out = []
-    for it in soup.find_all("item"):
-        d = {c.name: c.get_text(" ", strip=True) for c in it.find_all(recursive=False) if c.name}
+    for it in root.iter("item"):
+        d = {}
+        for c in it:
+            d[c.tag.rsplit("}", 1)[-1]] = "".join(c.itertext()).strip()
         out.append(d)
     return out
 

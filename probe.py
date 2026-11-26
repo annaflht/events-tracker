@@ -1,52 +1,43 @@
-import requests, re, json, time, concurrent.futures as cf
-UA={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36","Accept":"application/json"}
-STU=re.compile(r"intern|graduate|analyst program|spring|insight|summer|off[- ]?cycle|placement|new grad|campus|student|trainee|stage|stagiaire",re.I)
-names="""ardian eqt eqtgroup kkr carlyle apollo baincapital warburgpincus generalatlantic tpg adventinternational cinven permira hgcapital bridgepoint paigroup eurazeo tikehaucapital antin antinip partnersgroup brookfield oaktree oaktreecapital aresmanagement ares hpsinvestmentpartners bluecrest brevanhoward capula capulainvestment rokos rokoscapital exoduspoint lmrpartners verition eislercapital balyasny bamfunds millennium twosigma deshaw hudsonrivertrading sig susquehanna towerresearch gresearch squarepoint mangroup aqrcapital bridgewater pimco wellington wellingtonmanagement schroders jupiter ninetyone abrdn lgim nomura mizuho natixis lazard pjtpartners centerview moelis evercore perellaweinberg guggenheim greenhill houlihanlokey harriswilliams rwbaird raymondjames stifel jefferies tdcowen rothschild macquarie rbc bmo scotiabank cibc natwest lloyds santander bbva unicredit mediobanca keplercheuvreux oddobhf alantra degroofpetercam pictet lombardodier juliusbaer vontobel efginternational ubs bnpparibas societegenerale creditagricole cacib lazardfreres numis peelhunt panmureliberum cavendish investec evelyn rathbones brewin quilter hargreaveslansdown ajbell wise revolut monzo klarna adyen stripe citadel citadelsecurities janestreet optiver imc flowtraders da-vinci davinci davincitrading mako makogroup maven tibra tibracapital akunacapital fiverings ctc chicagotradingcompany drw jumptrading peak6 belvedere wolverine wolverinetrading jaxtrading headlands xtxmarkets qrt quadrature qubert gsacapital marshallwace lansdowne lansdownepartners egerton odey ruffer sloanerobinson trium vitol trafigura glencore gunvor mercuria bpcredit ingrid arrowgrass hiscox lloydsbankinggroup barclays hsbc standardchartered deutschebank commerzbank dzbank lbbw helaba bayernlb abnamro ing rabobank nordea seb danskebank handelsbanken kbc belfius bnymellon statestreet northerntrust fidelity vanguard invesco troweprice nuveen""".split()
-def g(url,**k):
-    try: return requests.get(url,headers=UA,timeout=20,**k)
-    except Exception as e: return None
-def gh(n):
-    r=g(f"https://boards-api.greenhouse.io/v1/boards/{n}/jobs")
-    if r and r.status_code==200:
-        js=r.json().get("jobs",[]); s=[j["title"] for j in js if STU.search(j["title"])]
-        if js: return f"GH {n} {len(js)} | stu {len(s)} | {s[:4]}"
-def lever(n):
-    r=g(f"https://api.lever.co/v0/postings/{n}?mode=json")
-    if r and r.status_code==200:
-        js=r.json(); s=[j["text"] for j in js if STU.search(j["text"])]
-        if js: return f"LEVER {n} {len(js)} | stu {len(s)} | {s[:4]}"
-def ashby(n):
-    r=g(f"https://api.ashbyhq.com/posting-api/job-board/{n}")
-    if r and r.status_code==200:
-        js=r.json().get("jobs",[]); s=[j["title"] for j in js if STU.search(j["title"])]
-        if js: return f"ASHBY {n} {len(js)} | stu {len(s)} | {s[:4]}"
-def sr(n):
-    out=[]
-    for v in {n, n.capitalize(), n.upper()}:
-        r=g(f"https://api.smartrecruiters.com/v1/companies/{v}/postings?limit=100")
-        if r and r.status_code==200:
-            js=r.json().get("content",[]); tot=r.json().get("totalFound",0)
-            if tot: s=[j["name"] for j in js if STU.search(j["name"])]; return f"SR {v} {tot} | stu {len(s)} | {s[:4]}"
-def workable(n):
-    r=g(f"https://apply.workable.com/api/v1/widget/accounts/{n}")
-    if r and r.status_code==200:
-        js=r.json().get("jobs",[]); s=[j["title"] for j in js if STU.search(j["title"])]
-        if js: return f"WORKABLE {n} {len(js)} | stu {len(s)} | {s[:4]}"
-with cf.ThreadPoolExecutor(20) as ex:
-    for f in (gh,lever,ashby,sr,workable):
-        for o in ex.map(f,names):
-            if o: print(o,flush=True)
-# Workday : lentement
-WD=[("blackstone.wd1.myworkdayjobs.com","blackstone","Blackstone_Campus_Careers"),("hl.wd1.myworkdayjobs.com","hl","Campus"),
-    ("db.wd3.myworkdayjobs.com","db","DBWebsite"),("ubs.wd3.myworkdayjobs.com","ubs","UBS_Graduates_and_Interns"),
-    ("mq.wd3.myworkdayjobs.com","mq","CareersatMQ"),("wd1.myworkdaysite.com","wellsfargo","WellsFargoJobs")]
-s=requests.Session()
-for host,ten,site in WD:
-    try: s.get(f"https://{host}/en-US/{site}",headers={"User-Agent":UA["User-Agent"]},timeout=20)
-    except Exception: pass
-    time.sleep(10)
+import requests, re, json, time
+UA={"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36","Accept-Language":"en-GB,en;q=0.9"}
+T=[
+ ("hsbc-search","https://mycareer.hsbc.com/en_GB/external/SearchJobs/?search=intern&jobRecordsPerPage=50"),
+ ("hsbc-feed","https://mycareer.hsbc.com/en_GB/external/SearchJobs/feed/?search=intern"),
+ ("amundi-rss","https://jobs.amundi.com/handlers/offerRss.ashx?LCID=2057"),
+ ("amundi-list","https://jobs.amundi.com/job/list-of-jobs.aspx?LCID=2057"),
+ ("amundi-list-fr","https://jobs.amundi.com/offre-de-emploi/liste-offres.aspx"),
+ ("ca-rss","https://groupecreditagricole.jobs/handlers/offerRss.ashx?LCID=1036"),
+ ("ca-list","https://groupecreditagricole.jobs/fr/nos-offres/"),
+ ("bnp","https://group.bnpparibas/en/careers/all-job-offers?q=intern"),
+ ("nordea-rss","https://careers.nordea.com/services/rss/job/?locale=en_GB&keywords=student"),
+ ("nordea-search","https://careers.nordea.com/search/?q=student&sortColumn=referencedate&sortDirection=desc"),
+ ("ey-rss","https://careers.ey.com/services/rss/job/?locale=en_US&keywords=intern"),
+ ("abg-rss","https://abgsc.teamtailor.com/jobs.rss"),
+ ("pareto-rss","https://paretosecurities.teamtailor.com/jobs.rss"),
+ ("seb-lever","https://api.eu.lever.co/v0/postings/seb?mode=json"),
+ ("gs-sitemap","https://higher.gs.com/sitemap.xml"),
+ ("gs-results","https://higher.gs.com/results?EXPERIENCE_LEVEL=Students&page=1&sort=POSTED_DATE"),
+ ("moodys-jibe","https://careers.moodys.com/api/jobs?keywords=intern&limit=10"),
+ ("muse","https://www.themuse.com/api/public/jobs?level=Internship&category=Accounting%20and%20Finance&page=0"),
+ ("danske","https://danskebank.com/careers/search-jobs"),
+ ("natixis","https://www.natixis.com/en/careers/job-offers"),
+ ("sg-api","https://careers.societegenerale.com/en/search?query=intern"),
+ ("axa","https://careers.axa.com/careers-home/jobs?keywords=intern"),
+ ("allianz","https://careers.allianz.com/en_US/jobs.html"),
+ ("jobteaser-robots","https://www.jobteaser.com/robots.txt"),
+ ("wttj-robots","https://www.welcometothejungle.com/robots.txt"),
+]
+for name,u in T:
     try:
-        r=s.post(f"https://{host}/wday/cxs/{ten}/{site}/jobs",json={"appliedFacets":{},"limit":20,"offset":0,"searchText":"intern"},
-                 headers={**UA,"Content-Type":"application/json","Origin":f"https://{host}","Referer":f"https://{host}/en-US/{site}"},timeout=30)
-        print("WD",ten,r.status_code, (r.json().get("total") if r.status_code==200 else r.text[:80]),flush=True)
-    except Exception as e: print("WD",ten,"ERR",e)
+        r=requests.get(u,headers=UA,timeout=25)
+        b=r.text
+        print(f"=== {name} {r.status_code} {r.headers.get('content-type','')} len={len(b)}")
+        if name.endswith("robots"): print(b[:1500]); continue
+        titles=re.findall(r"<title>(.*?)</title>",b,re.S)[:6]
+        print(" titles:",[t.strip()[:90] for t in titles])
+        links=set(re.findall(r'href="([^"]*(?:JobDetail|/job/|/offre|jobs/\d|PipelineDetail|/roles/)[^"]*)"',b))
+        print(" joblinks:",len(links),list(links)[:4])
+        if "json" in r.headers.get('content-type',''): print(" json:",b[:600])
+        else: print(" snippet:",re.sub(r"\s+"," ",re.sub(r"<[^>]+>"," ",b))[:400])
+    except Exception as e: print("===",name,"ERR",e)
+    time.sleep(1)

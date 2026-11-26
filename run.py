@@ -52,7 +52,8 @@ EXCLUDE_WORDS = ["apprentice", "apprenticeship", "year 12", "year 13", "sixth fo
                  "step in, step up", "career pathways", "high school", "secondary school",
                  "full time", "full-time", "graduate research fellowship", "experienced hire", "lateral",
                  "interest list", "recruiting news", "talent community", "talent network", "expression of interest",
-                 "fellowship", "alternance", "phd fellowship"]
+                 "fellowship", "alternance", "phd fellowship", "open application", "spontaneous application",
+                 "candidature spontanée", "initiativbewerbung", "general application", "talent pool"]
 # Graduate programmes (CDI de début de carrière avec un programme de formation)
 GRAD_RE = re.compile(r"\bgraduate\b|\bnew grad|\bcampus (analyst|associate|hire)|\b(analyst|associate|trainee|rotational|"
                      r"leadership|development) (program|programme)\b|management trainee|\bv\.i\.e\b|\bvie\b|jeune diplômé", re.I)
@@ -290,6 +291,9 @@ def guess_place(title, text):
 
 # Division et spécialisation (comme Fyntraq)
 SPECS = [  # (mots dans le titre, spécialisation, division)
+    (["wealth", "private bank"], "Wealth Management", "Wealth & Corporate Banking"),
+    (["corporate banking", "large corporates", "transaction banking", "payments", "commercial banking", "enterprise credit"],
+     "Corporate Banking", "Wealth & Corporate Banking"),
     (["m&a", "mergers", "investment banking", "ibd", "corporate finance", "ecm", "dcm", "leveraged finance",
       "advisory", "gcib", "banking"], "Investment Banking", "Corporate Finance"),
     (["private equity", "buyout"], "Private Equity", "Corporate Finance"),
@@ -304,9 +308,6 @@ SPECS = [  # (mots dans le titre, spécialisation, division)
     (["research", "recherche", "analyse financière"], "Research", "Market Finance"),
     (["asset management", "investment management", "gestion d'actifs", "fund analyst", "multi-asset", "investment office", "portfolio", "investing", "investment analyst", "academy"],
      "Asset Management", "Market Finance"),
-    (["wealth", "private bank"], "Wealth Management", "Wealth & Corporate Banking"),
-    (["corporate banking", "large corporates", "transaction banking", "payments", "commercial banking", "enterprise credit"],
-     "Corporate Banking", "Wealth & Corporate Banking"),
     (["risk", "risque", "risiko", "compliance", "conformité", "audit", "control", "contrôle"], "Risk & Compliance", "Risk & Control"),
     (["operations", "finance intern", "finance &", "finance,", "finance -", "accounting", "treasury", "business services"],
      "Operations & Finance", "Tech & Ops"),
@@ -729,7 +730,8 @@ def _rss_items(xml_text):
     for it in root.iter("item"):
         d = {}
         for c in it:
-            d[c.tag.rsplit("}", 1)[-1]] = "".join(c.itertext()).strip()
+            k, v = c.tag.rsplit("}", 1)[-1], "".join(c.itertext()).strip()
+            d[k] = (d[k] + " · " + v) if k in d and v else (v or d.get(k, ""))
         out.append(d)
     return out
 
@@ -776,7 +778,7 @@ def scan_rss(src, known_ids):
                     continue
                 if not is_intern(title) and re.search(r"\bstage\b|internship", contract[:200]):
                     title = f"{title} (stage)"
-                loc = desc[:400]
+                loc = " ".join(v for k, v in d.items() if k not in ("title", "description", "link", "guid", "pubDate"))
             elif flavor == "successfactors":
                 m = re.search(r"\(([^()]*)\)\s*$", title)
                 if m:

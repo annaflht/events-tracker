@@ -1,5 +1,5 @@
 {
- "_explications": "Liste des sources surveillées. talnet = liste tal.net ; workday / oracle = sites carrières Workday / Oracle (lus via leur API publique) ; links = page dont on lit les liens ; page = page fixe dont on surveille les changements.",
+ "_explications": "Liste des sources surveillées. talnet = liste tal.net ; workday / oracle = sites carrières Workday / Oracle (lus via leur API publique) ; links = page dont on lit les liens ; page = page fixe dont on surveille les changements. rss = flux RSS officiel (talentsoft, successfactors, teamtailor) ; lever = API publique Lever.",
  "sources": [
   {
    "id": "ms-campus-events",
@@ -503,6 +503,106 @@
    "cat": "Trading & Quant",
    "token": "mako",
    "url": "https://job-boards.greenhouse.io/mako"
+  },
+  {
+   "id": "ts-amundi",
+   "type": "rss",
+   "flavor": "talentsoft",
+   "firm": "Amundi",
+   "cat": "Asset Mgmt",
+   "host": "jobs.amundi.com",
+   "url": "https://jobs.amundi.com/job/list-of-jobs.aspx?LCID=2057"
+  },
+  {
+   "id": "ts-cacib",
+   "type": "rss",
+   "flavor": "talentsoft",
+   "firm": "Crédit Agricole CIB",
+   "cat": "Banque d'investissement",
+   "host": "jobs.ca-cib.com",
+   "url": "https://jobs.ca-cib.com"
+  },
+  {
+   "id": "sf-nordea",
+   "type": "rss",
+   "flavor": "successfactors",
+   "firm": "Nordea",
+   "cat": "Banque d'investissement",
+   "host": "careers.nordea.com",
+   "url": "https://careers.nordea.com"
+  },
+  {
+   "id": "sf-standardchartered",
+   "type": "rss",
+   "flavor": "successfactors",
+   "firm": "Standard Chartered",
+   "cat": "Banque d'investissement",
+   "host": "jobs.standardchartered.com",
+   "url": "https://jobs.standardchartered.com"
+  },
+  {
+   "id": "sf-dzbank",
+   "type": "rss",
+   "flavor": "successfactors",
+   "firm": "DZ Bank",
+   "cat": "Banque d'investissement",
+   "host": "jobs.dzbank.de",
+   "locale": "de_DE",
+   "url": "https://jobs.dzbank.de"
+  },
+  {
+   "id": "sf-deka",
+   "type": "rss",
+   "flavor": "successfactors",
+   "firm": "Deka",
+   "cat": "Asset Mgmt",
+   "host": "karriere.deka.de",
+   "locale": "de_DE",
+   "url": "https://karriere.deka.de"
+  },
+  {
+   "id": "sf-swissre",
+   "type": "rss",
+   "flavor": "successfactors",
+   "firm": "Swiss Re",
+   "cat": "Assurance",
+   "host": "careers.swissre.com",
+   "url": "https://careers.swissre.com"
+  },
+  {
+   "id": "tt-pareto",
+   "type": "rss",
+   "flavor": "teamtailor",
+   "firm": "Pareto Securities",
+   "cat": "Banque d'investissement",
+   "company": "paretosecurities",
+   "url": "https://paretosecurities.teamtailor.com/jobs"
+  },
+  {
+   "id": "tt-abgsc",
+   "type": "rss",
+   "flavor": "teamtailor",
+   "firm": "ABG Sundal Collier",
+   "cat": "Banque d'investissement",
+   "company": "abgsc",
+   "url": "https://abgsc.teamtailor.com/jobs"
+  },
+  {
+   "id": "lever-seb",
+   "type": "lever",
+   "eu": true,
+   "firm": "SEB",
+   "cat": "Banque d'investissement",
+   "company": "seb",
+   "url": "https://jobs.eu.lever.co/seb"
+  },
+  {
+   "id": "tb-moodys",
+   "type": "talentbrew",
+   "firm": "Moody's",
+   "cat": "Notation & data",
+   "base": "https://careers.moodys.com/en",
+   "url": "https://careers.moodys.com/en/search-jobs"
   }
  ]
 }

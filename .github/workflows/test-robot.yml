@@ -27,4 +27,4 @@ jobs:
         run: python run.py
         env:
           DRY_RUN: "1"
-          ONLY: ${{ github.event.inputs.only }}
+          ONLY: ${{ github.event.inputs.only || 'ts-amundi,ts-cacib,sf-nordea,sf-standardchartered,sf-dzbank,sf-deka,sf-swissre,tt-pareto,tt-abgsc,lever-seb,tb-moodys' }}
